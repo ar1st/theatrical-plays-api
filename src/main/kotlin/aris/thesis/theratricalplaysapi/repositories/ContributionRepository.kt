@@ -1,9 +1,7 @@
-package aris.thesis.theratricalplaysapi.repositories;
+package aris.thesis.theratricalplaysapi.repositories
 
-import aris.thesis.theratricalplaysapi.entities.Contributions;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import aris.thesis.theratricalplaysapi.entities.Contribution
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
-public interface ContributionsRepository extends JpaRepository<Contributions, Integer>, JpaSpecificationExecutor<Contributions> {
-
-}
+interface ContributionRepository : JpaRepository<Contribution?, Int?>, JpaSpecificationExecutor<Contribution?>

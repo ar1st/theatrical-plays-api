@@ -1,7 +1,7 @@
 package aris.thesis.theratricalplaysapi.controllers
 
-import aris.thesis.theratricalplaysapi.entities.Persons
-import aris.thesis.theratricalplaysapi.repositories.PersonsRepository
+import aris.thesis.theratricalplaysapi.entities.Person
+import aris.thesis.theratricalplaysapi.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/people")
 class PeopleController {
     @Autowired
-    lateinit var personsRepository: PersonsRepository
+    lateinit var personRepository: PersonRepository
 
     @GetMapping("")
-    fun getAllAuthors(): List<Persons> {
-        return personsRepository.findAll()
+    fun getAllAuthors(): MutableList<Person?> {
+        return personRepository.findAll()
     }
 }

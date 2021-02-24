@@ -1,80 +1,39 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "venue")
-public class Venue implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class Venue : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "Title", nullable = false)
-    private String title;
+    var title: String? = null
 
     @Column(name = "Address", nullable = false)
-    private String address;
+    var address: String? = null
 
     @Column(name = "SystemID", nullable = false)
-    private Integer systemID;
+    var systemID: Int? = null
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setSystemID(Integer systemID) {
-        this.systemID = systemID;
-    }
-
-    public Integer getSystemID() {
-        return systemID;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public String toString() {
+    var timestamp: Date? = null
+    override fun toString(): String {
         return "Venue{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "title=" + title + '\'' +
                 "address=" + address + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }

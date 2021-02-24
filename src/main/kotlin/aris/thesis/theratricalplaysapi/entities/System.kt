@@ -1,43 +1,26 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
+import java.io.Serializable
+import javax.persistence.*
 
 @Entity
 @Table(name = "system")
-public class System implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class System : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "name", nullable = false)
-    private String name;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
+    var name: String? = null
+    override fun toString(): String {
         return "System{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "name=" + name + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }

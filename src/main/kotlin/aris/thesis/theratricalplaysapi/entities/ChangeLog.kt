@@ -1,92 +1,43 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "changeLog")
-public class ChangeLog implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class ChangeLog : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "EventType", nullable = false)
-    private String eventType;
+    var eventType: String? = null
 
     @Column(name = "TableName", nullable = false)
-    private String tableName;
+    var tableName: String? = null
 
     @Column(name = "Value", nullable = false)
-    private String value;
+    var value: String? = null
 
     @Column(name = "CollumnName", nullable = false)
-    private String collumnName;
+    var collumnName: String? = null
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setCollumnName(String collumnName) {
-        this.collumnName = collumnName;
-    }
-
-    public String getCollumnName() {
-        return collumnName;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public String toString() {
+    var timestamp: Date? = null
+    override fun toString(): String {
         return "ChangeLog{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "eventType=" + eventType + '\'' +
                 "tableName=" + tableName + '\'' +
                 "value=" + value + '\'' +
                 "collumnName=" + collumnName + '\'' +
                 "timestamp=" + timestamp + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }

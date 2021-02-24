@@ -1,104 +1,47 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "events")
-public class Events implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class Event : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "ProductionID", nullable = false)
-    private Integer productionID;
+    var productionID: Int? = null
 
     @Column(name = "VenueID", nullable = false)
-    private Integer venueID;
+    var venueID: Int? = null
 
     @Column(name = "DateEvent", nullable = false)
-    private Date dateEvent;
+    var dateEvent: Date? = null
 
     @Column(name = "PriceRange", nullable = false)
-    private String priceRange;
+    var priceRange: String? = null
 
     @Column(name = "SystemID", nullable = false)
-    private Integer systemID;
+    var systemID: Int? = null
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setProductionID(Integer productionID) {
-        this.productionID = productionID;
-    }
-
-    public Integer getProductionID() {
-        return productionID;
-    }
-
-    public void setVenueID(Integer venueID) {
-        this.venueID = venueID;
-    }
-
-    public Integer getVenueID() {
-        return venueID;
-    }
-
-    public void setDateEvent(Date dateEvent) {
-        this.dateEvent = dateEvent;
-    }
-
-    public Date getDateEvent() {
-        return dateEvent;
-    }
-
-    public void setPriceRange(String priceRange) {
-        this.priceRange = priceRange;
-    }
-
-    public String getPriceRange() {
-        return priceRange;
-    }
-
-    public void setSystemID(Integer systemID) {
-        this.systemID = systemID;
-    }
-
-    public Integer getSystemID() {
-        return systemID;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public String toString() {
+    var timestamp: Date? = null
+    override fun toString(): String {
         return "Events{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "productionID=" + productionID + '\'' +
                 "venueID=" + venueID + '\'' +
                 "dateEvent=" + dateEvent + '\'' +
                 "priceRange=" + priceRange + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }

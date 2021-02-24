@@ -1,68 +1,35 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
 
 @Table(name = "persons")
 @Entity
-public class Persons implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class Person : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "Fullname", nullable = false)
-    private String fullname;
+    var fullname: String? = null
 
     @Column(name = "SystemID", nullable = false)
-    private Integer systemID;
+    var systemID: Int? = null
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setSystemID(Integer systemID) {
-        this.systemID = systemID;
-    }
-
-    public Integer getSystemID() {
-        return systemID;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public String toString() {
+    var timestamp: Date? = null
+    override fun toString(): String {
         return "Persons{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "fullname=" + fullname + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }

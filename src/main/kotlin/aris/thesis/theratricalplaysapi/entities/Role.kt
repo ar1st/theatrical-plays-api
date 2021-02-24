@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "roles")
-class Roles : Serializable {
+class Role : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)

@@ -1,104 +1,47 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "contributions")
-public class Contributions implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class Contribution : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "PeopleID", nullable = false)
-    private Integer peopleID;
+    var peopleID: Int? = null
 
     @Column(name = "ProductionID", nullable = false)
-    private Integer productionID;
+    var productionID: Int? = null
 
     @Column(name = "RoleID", nullable = false)
-    private Integer roleID;
+    var roleID: Int? = null
 
     @Column(name = "subRole")
-    private String subRole;
+    var subRole: String? = null
 
     @Column(name = "SystemID", nullable = false)
-    private Integer systemID;
+    var systemID: Int? = null
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setPeopleID(Integer peopleID) {
-        this.peopleID = peopleID;
-    }
-
-    public Integer getPeopleID() {
-        return peopleID;
-    }
-
-    public void setProductionID(Integer productionID) {
-        this.productionID = productionID;
-    }
-
-    public Integer getProductionID() {
-        return productionID;
-    }
-
-    public void setRoleID(Integer roleID) {
-        this.roleID = roleID;
-    }
-
-    public Integer getRoleID() {
-        return roleID;
-    }
-
-    public void setSubRole(String subRole) {
-        this.subRole = subRole;
-    }
-
-    public String getSubRole() {
-        return subRole;
-    }
-
-    public void setSystemID(Integer systemID) {
-        this.systemID = systemID;
-    }
-
-    public Integer getSystemID() {
-        return systemID;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public String toString() {
+    var timestamp: Date? = null
+    override fun toString(): String {
         return "Contributions{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "peopleID=" + peopleID + '\'' +
                 "productionID=" + productionID + '\'' +
                 "roleID=" + roleID + '\'' +
                 "subRole=" + subRole + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }

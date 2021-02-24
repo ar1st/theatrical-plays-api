@@ -1,140 +1,59 @@
-package aris.thesis.theratricalplaysapi.entities;
+package aris.thesis.theratricalplaysapi.entities
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "production")
-public class Production implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+class Production : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    private Integer ID;
+    var iD: Int? = null
 
     @Column(name = "OrganizerID")
-    private Integer organizerID;
+    var organizerID: Int? = null
 
     @Column(name = "Title", nullable = false)
-    private String title;
+    var title: String? = null
 
     @Column(name = "URL", nullable = false)
-    private String URL;
+    var uRL: String? = null
 
     @Column(name = "Producer", nullable = false)
-    private String producer;
+    var producer: String? = null
 
     @Column(name = "MediaURL", nullable = false)
-    private String mediaURL;
+    var mediaURL: String? = null
 
     @Column(name = "Duration", nullable = false)
-    private String duration;
+    var duration: String? = null
 
     @Column(name = "SystemID", nullable = false)
-    private Integer systemID;
+    var systemID: Int? = null
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
+    var timestamp: Date? = null
 
     @Column(name = "Description", nullable = false)
-    private String description;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setOrganizerID(Integer organizerID) {
-        this.organizerID = organizerID;
-    }
-
-    public Integer getOrganizerID() {
-        return organizerID;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setURL(String URL) {
-        this.URL = URL;
-    }
-
-    public String getURL() {
-        return URL;
-    }
-
-    public void setProducer(String producer) {
-        this.producer = producer;
-    }
-
-    public String getProducer() {
-        return producer;
-    }
-
-    public void setMediaURL(String mediaURL) {
-        this.mediaURL = mediaURL;
-    }
-
-    public String getMediaURL() {
-        return mediaURL;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setSystemID(Integer systemID) {
-        this.systemID = systemID;
-    }
-
-    public Integer getSystemID() {
-        return systemID;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public String toString() {
+    var description: String? = null
+    override fun toString(): String {
         return "Production{" +
-                "ID=" + ID + '\'' +
+                "ID=" + iD + '\'' +
                 "organizerID=" + organizerID + '\'' +
                 "title=" + title + '\'' +
-                "URL=" + URL + '\'' +
+                "URL=" + uRL + '\'' +
                 "producer=" + producer + '\'' +
                 "mediaURL=" + mediaURL + '\'' +
                 "duration=" + duration + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
                 "description=" + description + '\'' +
-                '}';
+                '}'
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }
