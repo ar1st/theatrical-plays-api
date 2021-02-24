@@ -1,12 +1,11 @@
 package aris.thesis.theratricalplaysapi.entities
 
-import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "events")
-class Event : Serializable {
+class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -38,10 +37,8 @@ class Event : Serializable {
                 "priceRange=" + priceRange + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
+                "dateEvent=" + dateEvent + '\'' +
+                "priceRange=" + priceRange + '\'' +
                 '}'
-    }
-
-    companion object {
-        private const val serialVersionUID = 1L
     }
 }

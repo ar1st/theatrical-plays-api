@@ -1,12 +1,11 @@
 package aris.thesis.theratricalplaysapi.entities
 
-import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "production")
-class Production : Serializable {
+class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -51,9 +50,5 @@ class Production : Serializable {
                 "timestamp=" + timestamp + '\'' +
                 "description=" + description + '\'' +
                 '}'
-    }
-
-    companion object {
-        private const val serialVersionUID = 1L
     }
 }

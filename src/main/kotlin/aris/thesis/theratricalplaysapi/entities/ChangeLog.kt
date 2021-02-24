@@ -1,12 +1,11 @@
 package aris.thesis.theratricalplaysapi.entities
 
-import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "changeLog")
-class ChangeLog : Serializable {
+class ChangeLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -35,9 +34,5 @@ class ChangeLog : Serializable {
                 "collumnName=" + collumnName + '\'' +
                 "timestamp=" + timestamp + '\'' +
                 '}'
-    }
-
-    companion object {
-        private const val serialVersionUID = 1L
     }
 }
