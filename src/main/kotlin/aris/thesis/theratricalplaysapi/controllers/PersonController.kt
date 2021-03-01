@@ -14,12 +14,6 @@ class PersonController {
     @Autowired
     lateinit var personService: PersonService
 
-    @GetMapping("/{pageNo}/{pageSize}")
-    fun findPaginated(@PathVariable pageNo: Int,
-                      @PathVariable pageSize: Int) : List<Person> {
-        return personService.findPaginated(pageNo, pageSize)
-    }
-
     @GetMapping
     fun findPaginatedQueryParams(@RequestParam pageNo: Int?,
                                  @RequestParam pageSize: Int?): List<Person> {
