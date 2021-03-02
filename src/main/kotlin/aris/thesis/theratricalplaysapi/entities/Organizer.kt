@@ -9,7 +9,7 @@ class Organizer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    var iD: Int? = null
+    var id: Int? = null
 
     @Column(name = "Name", nullable = false)
     var name: String? = null
@@ -42,7 +42,7 @@ class Organizer {
     var timestamp: Date? = null
     override fun toString(): String {
         return "Organizer{" +
-                "ID=" + iD + '\'' +
+                "ID=" + id + '\'' +
                 "name=" + name + '\'' +
                 "address=" + address + '\'' +
                 "town=" + town + '\'' +

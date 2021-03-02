@@ -9,7 +9,7 @@ class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    var iD: Int? = null
+    var id: Int? = null
 
     @Column(name = "OrganizerID")
     var organizerID: Int? = null
@@ -18,7 +18,7 @@ class Production {
     var title: String? = null
 
     @Column(name = "URL", nullable = false)
-    var uRL: String? = null
+    var url: String? = null
 
     @Column(name = "Producer", nullable = false)
     var producer: String? = null
@@ -39,10 +39,10 @@ class Production {
     var description: String? = null
     override fun toString(): String {
         return "Production{" +
-                "ID=" + iD + '\'' +
+                "ID=" + id + '\'' +
                 "organizerID=" + organizerID + '\'' +
                 "title=" + title + '\'' +
-                "URL=" + uRL + '\'' +
+                "URL=" + url + '\'' +
                 "producer=" + producer + '\'' +
                 "mediaURL=" + mediaURL + '\'' +
                 "duration=" + duration + '\'' +

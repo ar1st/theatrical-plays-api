@@ -9,10 +9,10 @@ class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    var iD: Int? = null
+    var id: Int? = null
 
     @Column(name = "Fullname", nullable = false)
-    var fullname: String? = null
+    var fullName: String? = null
 
     @Column(name = "SystemID", nullable = false)
     var systemID: Int? = null
@@ -21,8 +21,8 @@ class Person {
     var timestamp: Date? = null
     override fun toString(): String {
         return "Persons{" +
-                "ID=" + iD + '\'' +
-                "fullname=" + fullname + '\'' +
+                "ID=" + id + '\'' +
+                "fullname=" + fullName + '\'' +
                 "systemID=" + systemID + '\'' +
                 "timestamp=" + timestamp + '\'' +
                 '}'

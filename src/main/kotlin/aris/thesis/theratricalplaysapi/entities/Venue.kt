@@ -9,7 +9,7 @@ class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    var iD: Int? = null
+    var id: Int? = null
 
     @Column(name = "Title", nullable = false)
     var title: String? = null
@@ -24,7 +24,7 @@ class Venue {
     var timestamp: Date? = null
     override fun toString(): String {
         return "Venue{" +
-                "ID=" + iD + '\'' +
+                "ID=" + id + '\'' +
                 "title=" + title + '\'' +
                 "address=" + address + '\'' +
                 "systemID=" + systemID + '\'' +
