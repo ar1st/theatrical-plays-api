@@ -2,9 +2,9 @@ package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.executors.PersonExecutor
-import aris.thesis.theatricalplaysapi.responses.ApiResponse
+import aris.thesis.theatricalplaysapi.dtos.ApiResponse
 import aris.thesis.theatricalplaysapi.executors.ProductionExecutor
-import aris.thesis.theatricalplaysapi.responses.PersonAndRoleResponse
+import aris.thesis.theatricalplaysapi.dtos.PersonAndRoleResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

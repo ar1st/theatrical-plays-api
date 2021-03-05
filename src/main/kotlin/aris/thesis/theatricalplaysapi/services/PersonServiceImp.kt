@@ -2,6 +2,7 @@ package aris.thesis.theatricalplaysapi.services
 
 import aris.thesis.theatricalplaysapi.entities.Person
 import aris.thesis.theatricalplaysapi.repositories.PersonRepository
+import aris.thesis.theatricalplaysapi.services.types.PersonService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.data.domain.Page
@@ -10,7 +11,8 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 
 @Service
-class PersonService {
+class PersonServiceImp: PersonService {
+    //repos
     @Autowired
     lateinit var personRepository: PersonRepository
 
@@ -27,7 +29,7 @@ class PersonService {
         return personRepository.findAll()
     }
 
-    fun findById(personId: Int): Person? {
+    override fun findById(personId: Int): Person? {
         return personRepository.findByIdOrNull(personId)
     }
 

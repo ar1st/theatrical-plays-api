@@ -1,4 +1,4 @@
-package aris.thesis.theatricalplaysapi.responses
+package aris.thesis.theatricalplaysapi.dtos
 
 import com.fasterxml.jackson.annotation.JsonAlias
 
