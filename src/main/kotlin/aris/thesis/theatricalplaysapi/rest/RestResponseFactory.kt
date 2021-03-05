@@ -1,7 +1,6 @@
-package aris.thesis.theatricalplaysapi.exceptions
+package aris.thesis.theatricalplaysapi.rest
 
 import aris.thesis.theatricalplaysapi.exceptions.error.RestError
-import aris.thesis.theatricalplaysapi.exceptions.response.RestResponse
 
 interface RestResponseFactory
 {

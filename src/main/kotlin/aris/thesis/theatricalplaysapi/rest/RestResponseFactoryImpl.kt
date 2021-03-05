@@ -1,13 +1,12 @@
-package aris.thesis.theatricalplaysapi.exceptions.response
+package aris.thesis.theatricalplaysapi.rest
 
-import aris.thesis.theatricalplaysapi.exceptions.RestResponseFactory
 import aris.thesis.theatricalplaysapi.exceptions.error.RestAPIError
 import aris.thesis.theatricalplaysapi.exceptions.error.RestError
 import org.springframework.stereotype.Component
 
 @Component
+@Suppress("unused")
 class RestResponseFactoryImpl: RestResponseFactory {
-
 
     override fun createResponse(): RestResponse {
         return RestAPIResponse()

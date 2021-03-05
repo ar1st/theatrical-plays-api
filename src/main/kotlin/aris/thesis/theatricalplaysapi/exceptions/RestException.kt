@@ -1,6 +1,7 @@
 package aris.thesis.theatricalplaysapi.exceptions
 
 import aris.thesis.theatricalplaysapi.exceptions.error.RestError
+import aris.thesis.theatricalplaysapi.rest.RestResponseFactory
 
 abstract class RestException : RuntimeException  {
 

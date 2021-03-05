@@ -1,11 +1,13 @@
 package aris.thesis.theatricalplaysapi.exceptions
 
+import aris.thesis.theatricalplaysapi.rest.RestEntityRegistration
 import org.springframework.http.HttpStatus
 
 
 class RestEntityNotFoundException(var type: String = "T", var id: String = "ID") : RestException() {
 
-    constructor(entityInfo: RestEntityRegistration<*,*>, id: Any?): this(entityInfo.entityName, id.toString())
+    @Suppress("unused")
+    constructor(entityInfo: RestEntityRegistration<*, *>, id: Any?): this(entityInfo.entityName, id.toString())
 
     override fun status(): String {
         return HttpStatus.NOT_FOUND.name

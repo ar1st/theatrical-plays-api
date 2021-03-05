@@ -1,4 +1,4 @@
-package aris.thesis.theatricalplaysapi.exceptions.response
+package aris.thesis.theatricalplaysapi.rest
 
 import aris.thesis.theatricalplaysapi.exceptions.error.RestError
 

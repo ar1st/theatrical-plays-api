@@ -1,6 +1,6 @@
-package aris.thesis.theatricalplaysapi.exceptions
+package aris.thesis.theatricalplaysapi.rest
 
-abstract class RestEntityRegistration<E:RestEntity<E,ID>,ID: Any>(val entityClass: Class<out E>) {
+abstract class RestEntityRegistration<E: RestEntity<E, ID>,ID: Any>(val entityClass: Class<out E>) {
 
     val entityName: String = entityClass.simpleName
     open val entityIDKey = "id"

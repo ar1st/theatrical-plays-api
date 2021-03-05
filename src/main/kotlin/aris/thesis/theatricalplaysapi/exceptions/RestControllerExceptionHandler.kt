@@ -1,8 +1,8 @@
 package aris.thesis.theatricalplaysapi.exceptions
 
 import aris.thesis.theatricalplaysapi.controllers.base.RestActionController
-import aris.thesis.theatricalplaysapi.exceptions.response.RestResponse
-import org.hibernate.exception.ConstraintViolationException
+import aris.thesis.theatricalplaysapi.rest.RestResponse
+import aris.thesis.theatricalplaysapi.rest.RestResponseFactory
 import org.hibernate.exception.DataException
 import org.hibernate.exception.GenericJDBCException
 import org.hibernate.exception.SQLGrammarException
@@ -34,6 +34,7 @@ import org.springframework.web.util.WebUtils
 
 
 @ControllerAdvice(assignableTypes = [RestActionController::class])
+@Suppress("unused")
 class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
 
     @Autowired
@@ -310,7 +311,7 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
         request: WebRequest
     ): ResponseEntity<Any> {
         val builder = StringBuilder()
-        ex.supportedHttpMethods?.forEach { t -> builder.append(t.toString() + ", ") }
+        ex.supportedHttpMethods?.forEach { t -> builder.append("$t, ") }
         builder.replace(builder.length - 3, builder.length - 1, "")
 
         val status = HttpStatus.METHOD_NOT_ALLOWED
@@ -333,7 +334,7 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
         request: WebRequest
     ): ResponseEntity<Any> {
         val builder = StringBuilder()
-        ex.supportedMediaTypes.forEach { t -> builder.append(t.toString() + ", ") }
+        ex.supportedMediaTypes.forEach { t -> builder.append("$t, ") }
         builder.replace(builder.length - 3, builder.length - 1, "")
 
         val status = HttpStatus.UNSUPPORTED_MEDIA_TYPE
@@ -383,7 +384,7 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
         request: WebRequest
     ): ResponseEntity<Any> {
         val builder = StringBuilder()
-        ex.supportedMediaTypes.forEach { t -> builder.append(t.toString() + ", ") }
+        ex.supportedMediaTypes.forEach { t -> builder.append("$t, ") }
         builder.replace(builder.length - 3, builder.length - 1, "")
 
         val status = HttpStatus.UNSUPPORTED_MEDIA_TYPE
