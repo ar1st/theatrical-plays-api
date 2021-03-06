@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ContributionRepository : JpaRepository<Contribution, Int>
+interface ContributionRepository : JpaRepository<Contribution, Int> {
+
+    fun findByPeopleID(personId: Int): List<Contribution>
+}

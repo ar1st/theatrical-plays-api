@@ -14,15 +14,16 @@ class ProductionServiceImpl: ProductionService {
     lateinit var productionRepository: ProductionRepository
 
     @Transactional
-    fun findAll(): List<Production> {
+    override fun findAll(): List<Production> {
         return productionRepository.findAll()
     }
 
-    fun findById(productionId: Int): Production? {
+    override fun findById(productionId: Int): Production? {
         return productionRepository.findById(productionId).orElse(null)
     }
 
-    fun findByPerson(personId: Int): List<Map<String, String>> {
-        return productionRepository.findByPersonId(personId)
+    override fun findByContribution(contributionId: Int): Production {
+        return productionRepository.findByContribution(contributionId)
     }
+
 }
