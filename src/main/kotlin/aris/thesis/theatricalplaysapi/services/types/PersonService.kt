@@ -6,4 +6,6 @@ import aris.thesis.theatricalplaysapi.services.proto.ModelService
 interface PersonService: ModelService {
     fun findById(personId: Int): Person?
 
+    fun findAllPeople(): List<Person>
+
 }

@@ -9,5 +9,7 @@ interface PersonActions: ActionExecutor<Actions.Person> {
 
     fun getPerson(personId: Int): ApiResponse<PersonDTO, String>
 
+    fun getAllPeople(): ApiResponse<List<PersonDTO>, String>
+
 
 }

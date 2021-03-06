@@ -4,11 +4,11 @@ import aris.thesis.theatricalplaysapi.entities.Person
 import aris.thesis.theatricalplaysapi.repositories.PersonRepository
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
 
 @Service
 class PersonServiceImp: PersonService {
@@ -25,13 +25,15 @@ class PersonServiceImp: PersonService {
         return pagedResult.toList()
     }
 
-    fun findAll(): List<Person> {
+    override fun findAllPeople(): List<Person> {
         return personRepository.findAll()
     }
 
     override fun findById(personId: Int): Person? {
         return personRepository.findByIdOrNull(personId)
     }
+
+
 
     fun findByProduction(productionId: Int): List<Map<String, String>> {
         return personRepository.findRoleByProduction(productionId)

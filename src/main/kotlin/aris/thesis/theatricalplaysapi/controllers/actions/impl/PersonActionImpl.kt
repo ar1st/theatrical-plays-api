@@ -3,6 +3,7 @@ package aris.thesis.theatricalplaysapi.controllers.actions.impl
 import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
+import aris.thesis.theatricalplaysapi.exceptions.error.never
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer
 import aris.thesis.theatricalplaysapi.services.types.PersonService
@@ -18,4 +19,12 @@ class PersonActionImpl: PersonActions, ModelServiceConsumer<PersonService>() {
 
         return ApiResponse( PersonDTO(person),null,HttpStatus.OK.name)
     }
+
+    override fun getAllPeople(): ApiResponse<List<PersonDTO>, String> {
+        val people = service.findAllPeople() ?: never()
+
+        return ApiResponse( people.map { PersonDTO(it) },null,HttpStatus.OK.name)
+    }
+
+
 }
