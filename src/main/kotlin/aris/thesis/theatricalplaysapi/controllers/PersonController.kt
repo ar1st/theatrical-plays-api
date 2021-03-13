@@ -30,4 +30,10 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
                                response: HttpServletResponse): ApiResponse<List<ProductionRoleDTO>,String>{
         return executor.getProductionAndRoleByPersonId(personId,page?: -1 ,size ?: -1,response)
     }
+
+    @GetMapping("/search")
+    fun searchPeople(@RequestParam("q") query: String,
+                     response: HttpServletResponse): ApiResponse<List<PersonDTO>, String> {
+        return executor.searchPeople(query,response)
+    }
 }

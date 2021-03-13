@@ -15,4 +15,6 @@ interface PersonActions: ActionExecutor<Actions.Person> {
 
     fun getProductionAndRoleByPersonId( personId: Int,page: Int, size: Int,response: HttpServletResponse): ApiResponse<List<ProductionRoleDTO>,String>
 
+    fun searchPeople(query: String, response: HttpServletResponse): ApiResponse<List<PersonDTO>,String>
+
 }

@@ -13,6 +13,8 @@ import aris.thesis.theatricalplaysapi.services.types.RoleService
 import aris.thesis.theatricalplaysapi.utils.paginated
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import javax.servlet.http.HttpServletResponse
 
 @Component
@@ -51,6 +53,21 @@ class PersonActionImpl: PersonActions, ModelServiceConsumer3<PersonService,Produ
         }.paginated(page,size)
 
         return ApiResponse( dtoToReturn, null,HttpStatus.OK.name)
+    }
+
+    override fun searchPeople(query: String, response: HttpServletResponse): ApiResponse<List<PersonDTO>, String> {
+        val pattern: Pattern = Pattern.compile("(\\w+?)(:|<|>|!)(\\w+?),", Pattern.UNICODE_CHARACTER_CLASS);
+        val matcher: Matcher = pattern.matcher("$query,")
+        while (matcher.find()) {
+            val g1 = matcher.group(1)
+            val g2 = matcher.group(2)
+            val g3 = matcher.group(3)
+
+            println()
+        }
+
+
+        return ApiResponse(null,null,HttpStatus.OK.name)
     }
 
 }
