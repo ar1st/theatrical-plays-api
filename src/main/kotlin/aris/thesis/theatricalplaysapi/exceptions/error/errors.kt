@@ -1,6 +1,6 @@
 package aris.thesis.theatricalplaysapi.exceptions.error
 
-import aris.thesis.theatricalplaysapi.exceptions.NonExistentOperationException
+import aris.thesis.theatricalplaysapi.exceptions.QueryParsingException
 import aris.thesis.theatricalplaysapi.exceptions.RestEntityNotFoundException
 import aris.thesis.theatricalplaysapi.exceptions.UnreachableStatementException
 
@@ -12,6 +12,6 @@ fun never(): Nothing {
     throw UnreachableStatementException()
 }
 
-fun nonExistentOperation(operation: Char): Nothing {
-    throw  NonExistentOperationException(operation)
+fun wrongQuery(): Nothing {
+    throw  QueryParsingException()
 }
