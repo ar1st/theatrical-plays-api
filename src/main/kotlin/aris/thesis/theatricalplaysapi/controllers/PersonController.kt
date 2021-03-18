@@ -32,7 +32,7 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
     }
 
 
-    //query must be: field[:~]value,field2=value2 etc
+    //query: field[:~]value,field2[:~]value2 etc
     //ex q=fullName~μαρια κ,id:1928
     //will search for person where has μαρια in the name AND id=1928
     @GetMapping("/search")
