@@ -1,47 +1,41 @@
-package aris.thesis.theatricalplaysapi.specifications;
+package aris.thesis.theatricalplaysapi.specifications
 
-import aris.thesis.theatricalplaysapi.entities.Person;
-import aris.thesis.theatricalplaysapi.specifications.base.SearchCriteria;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.domain.Specification;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import aris.thesis.theatricalplaysapi.entities.Person
+import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
+import aris.thesis.theatricalplaysapi.specifications.base.SearchCriteria
+import aris.thesis.theatricalplaysapi.specifications.base.SearchOperation
+import org.springframework.data.jpa.domain.Specification
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
 
-import static aris.thesis.theatricalplaysapi.exceptions.error.ErrorsKt.wrongQuery;
-
-
-public class PersonSpecification implements Specification<Person> {
-    private final SearchCriteria criteria;
-
-    public PersonSpecification(SearchCriteria searchCriteria) {
-        this.criteria = searchCriteria;
-    }
-
-    @Override
-    public Predicate toPredicate(
-            @NotNull Root<Person> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
+class PersonSpecification(private val criteria: SearchCriteria) : Specification<Person> {
+    override fun toPredicate(
+        root: Root<Person?>, query: CriteriaQuery<*>, builder: CriteriaBuilder
+    ): Predicate? {
         //todo remove unused operations
-        switch (criteria.getOperation()) {
-            case EQUALITY:
-                return builder.equal(root.get(criteria.getKey()), criteria.getValue());
-            case NEGATION:
-                return builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
-            case GREATER_THAN:
-                return builder.greaterThan(root.get(
-                        criteria.getKey()), criteria.getValue().toString());
-            case LESS_THAN:
-                return builder.lessThan(root.get(
-                        criteria.getKey()), criteria.getValue().toString());
-            case LIKE:
-                return builder.like(root.get(
-                        criteria.getKey()),"%" +  criteria.getValue().toString()  + "%");
-            default:
-                wrongQuery();
-                return null;
+        return when (criteria.operation) {
+            SearchOperation.EQUALITY -> builder.equal(root.get<Any>(criteria.key), criteria.value)
+            SearchOperation.NEGATION -> builder.notEqual(root.get<Any>(criteria.key), criteria.value)
+            SearchOperation.GREATER_THAN -> builder.greaterThan(
+                root.get(
+                    criteria.key
+                ), criteria.value.toString()
+            )
+            SearchOperation.LESS_THAN -> builder.lessThan(
+                root.get(
+                    criteria.key
+                ), criteria.value.toString()
+            )
+            SearchOperation.LIKE -> builder.like(
+                root.get(
+                    criteria.key
+                ), "%" + criteria.value.toString() + "%"
+            )
+            else -> {
+                wrongQuery()
+            }
         }
     }
-
-
 }

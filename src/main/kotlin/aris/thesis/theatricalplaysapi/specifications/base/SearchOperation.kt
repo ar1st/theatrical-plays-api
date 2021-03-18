@@ -1,27 +1,23 @@
-package aris.thesis.theatricalplaysapi.specifications.base;
+package aris.thesis.theatricalplaysapi.specifications.base
 
-import static aris.thesis.theatricalplaysapi.exceptions.error.ErrorsKt.wrongQuery;
+import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
 
-public enum SearchOperation {
-    EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS;
+enum class SearchOperation {
+    EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, CONTAINS;
 
-    public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~" };
-
-    public static SearchOperation getSimpleOperation(char input) {
-        switch (input) {
-            case ':':
-                return EQUALITY;
-            case '!':
-                return NEGATION;
-            case '>':
-                return GREATER_THAN;
-            case '<':
-                return LESS_THAN;
-            case '~':
-                return LIKE;
-            default:
-                wrongQuery();
-                return null;
+    companion object {
+        val SIMPLE_OPERATION_SET = arrayOf(":", "!", ">", "<", "~")
+        fun getSimpleOperation(input: Char): SearchOperation {
+            return when (input) {
+                ':' -> EQUALITY
+                '!' -> NEGATION
+                '>' -> GREATER_THAN
+                '<' -> LESS_THAN
+                '~' -> LIKE
+                else -> {
+                    wrongQuery()
+                }
+            }
         }
     }
 }

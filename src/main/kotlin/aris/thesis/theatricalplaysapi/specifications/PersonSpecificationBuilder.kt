@@ -1,38 +1,32 @@
-package aris.thesis.theatricalplaysapi.specifications;
+package aris.thesis.theatricalplaysapi.specifications
 
-import aris.thesis.theatricalplaysapi.entities.Person;
-import aris.thesis.theatricalplaysapi.specifications.base.SearchCriteria;
-import aris.thesis.theatricalplaysapi.specifications.base.SearchOperation;
-import org.springframework.data.jpa.domain.Specification;
+import aris.thesis.theatricalplaysapi.entities.Person
+import aris.thesis.theatricalplaysapi.specifications.base.SearchCriteria
+import aris.thesis.theatricalplaysapi.specifications.base.SearchOperation
+import org.springframework.data.jpa.domain.Specification
 
-import java.util.ArrayList;
-import java.util.List;
+class PersonSpecificationBuilder {
+    private val params = mutableListOf<SearchCriteria>()
 
-public class PersonSpecificationBuilder {
-
-    private final List<SearchCriteria> params = new ArrayList<>();
-
-    public PersonSpecificationBuilder with(
-            String key, String operation, Object value) {
-
-        SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
-        if (op != null) {
-            params.add(new SearchCriteria(key, op, value));
-        }
-        return this;
+    fun with(key: String, operation: String, value: Any): PersonSpecificationBuilder {
+        val op = SearchOperation.getSimpleOperation(operation[0])
+        params.add(SearchCriteria(key, op, value))
+        return this
     }
 
-    public Specification<Person> build() {
-        if (params.size() == 0) {
-            return null;
+    fun build(): Specification<Person>? {
+        if (params.size == 0) {
+            return null
         }
+        var result: Specification<Person> = PersonSpecification(params[0])
 
-        Specification<Person> result = new PersonSpecification(params.get(0));
-
-        for (int i = 1; i < params.size(); i++) {
-            result =  Specification.where(result).and(new PersonSpecification(params.get(i)));
+        for (i in 1 until params.size) {
+            result = Specification.where(result).and(
+                PersonSpecification(
+                    params[i]
+                )
+            )
         }
-
-        return result;
+        return result
     }
 }
