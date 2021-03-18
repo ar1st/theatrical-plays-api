@@ -1,5 +1,7 @@
 package aris.thesis.theatricalplaysapi.specifications.base;
 
+import static aris.thesis.theatricalplaysapi.exceptions.error.ErrorsKt.nonExistentOperation;
+
 public enum SearchOperation {
     EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS;
 
@@ -18,7 +20,7 @@ public enum SearchOperation {
             case '~':
                 return LIKE;
             default:
-                //todo throw exception
+                nonExistentOperation(input);
                 return null;
         }
     }
