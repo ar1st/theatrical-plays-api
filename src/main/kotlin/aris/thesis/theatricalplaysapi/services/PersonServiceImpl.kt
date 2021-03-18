@@ -6,6 +6,7 @@ import aris.thesis.theatricalplaysapi.repositories.ContributionRepository
 import aris.thesis.theatricalplaysapi.repositories.PersonRepository
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -23,6 +24,10 @@ class PersonServiceImpl: PersonService {
 
     override fun findAllPeople(): List<Person> {
         return personRepository.findAll()
+    }
+
+    override fun findAllPeople(spec: Specification<Person>): List<Person> {
+        return personRepository.findAll(spec)
     }
 
     override fun findContributionsByPersonId(personId: Int): List<Contribution> {
