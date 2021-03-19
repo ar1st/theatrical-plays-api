@@ -1,9 +1,8 @@
-package aris.thesis.theatricalplaysapi.exceptions
+package aris.thesis.theatricalplaysapi.controllers.base
 
-import aris.thesis.theatricalplaysapi.controllers.base.RestActionController
+import aris.thesis.theatricalplaysapi.exceptions.RestException
 import aris.thesis.theatricalplaysapi.rest.RestResponse
 import aris.thesis.theatricalplaysapi.rest.RestResponseFactory
-import javassist.NotFoundException
 import org.hibernate.exception.ConstraintViolationException
 import org.hibernate.exception.DataException
 import org.hibernate.exception.GenericJDBCException
@@ -11,7 +10,6 @@ import org.hibernate.exception.SQLGrammarException
 import org.springframework.beans.ConversionNotSupportedException
 import org.springframework.beans.TypeMismatchException
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -34,8 +32,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import org.springframework.web.util.WebUtils
-import java.util.stream.Collectors
-import javax.xml.bind.ValidationException
 
 
 @ControllerAdvice(assignableTypes = [RestActionController::class])
@@ -253,7 +249,7 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
      */
     override fun handleHttpRequestMethodNotSupported(ex: HttpRequestMethodNotSupportedException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val builder = StringBuilder()
-        ex.supportedHttpMethods?.forEach { t -> builder.append(t.toString() + ", ") }
+        ex.supportedHttpMethods?.forEach { t -> builder.append("$t, ") }
         builder.replace(builder.length - 3, builder.length - 1, "")
 
         val status = HttpStatus.METHOD_NOT_ALLOWED
@@ -269,7 +265,7 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
      */
     override fun handleHttpMediaTypeNotSupported(ex: HttpMediaTypeNotSupportedException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val builder = StringBuilder()
-        ex.supportedMediaTypes.forEach { t -> builder.append(t.toString() + ", ") }
+        ex.supportedMediaTypes.forEach { t -> builder.append("$t, ") }
         builder.replace(builder.length - 3, builder.length - 1, "")
 
         val status = HttpStatus.UNSUPPORTED_MEDIA_TYPE
@@ -298,7 +294,7 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
 
     override fun handleHttpMediaTypeNotAcceptable(ex: HttpMediaTypeNotAcceptableException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val builder = StringBuilder()
-        ex.supportedMediaTypes.forEach { t -> builder.append(t.toString() + ", ") }
+        ex.supportedMediaTypes.forEach { t -> builder.append("$t, ") }
         builder.replace(builder.length - 3, builder.length - 1, "")
 
         val status = HttpStatus.UNSUPPORTED_MEDIA_TYPE
@@ -368,6 +364,16 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
         val status = HttpStatus.INTERNAL_SERVER_ERROR
         val error = createErrorResponse(status, "Exception: SQLGrammarException. " +
                 "\nMessage:Internal SQL Server error. " +
+                "\nDetails:${ex.message}.")
+
+        return ResponseEntity(error, HttpHeaders(), status)
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(ex: IllegalArgumentException,request: WebRequest): ResponseEntity<Any> {
+        val status = HttpStatus.BAD_REQUEST
+        val error = createErrorResponse(status, "Exception: IllegalArgumentException. " +
+                "\nMessage:IllegalArgumentException. " +
                 "\nDetails:${ex.message}.")
 
         return ResponseEntity(error, HttpHeaders(), status)
