@@ -37,7 +37,9 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
     //will search for person where has μαρια in the name AND id=1928
     @GetMapping("/search")
     fun searchPeople(@RequestParam("q") query: String,
+                     @RequestParam(required = false) page: Int?,
+                     @RequestParam(required = false) size: Int?,
                      response: HttpServletResponse): ApiResponse<List<PersonDTO>, String> {
-        return executor.searchPeople(query,response)
+        return executor.searchPeople(query, page?: -1, size ?: -1, response)
     }
 }

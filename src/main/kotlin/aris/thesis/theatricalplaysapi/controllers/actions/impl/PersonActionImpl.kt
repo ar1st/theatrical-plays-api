@@ -58,14 +58,14 @@ class PersonActionImpl: PersonActions, ModelServiceConsumer3<PersonService,Produ
         return ApiResponse( dtoToReturn, null,HttpStatus.OK.name)
     }
 
-    override fun searchPeople(query: String, response: HttpServletResponse): ApiResponse<List<PersonDTO>, String> {
+    override fun searchPeople(query: String,page: Int, size: Int, response: HttpServletResponse): ApiResponse<List<PersonDTO>, String> {
         val parser = PersonSpecificationBuilderParser()
         val builder = parser.parse(query)
 
         //todo check if builder.build returns null
         val spec: Specification<Person> = builder.build() ?: wrongQuery()
 
-        return ApiResponse(firstService.findAllPeople(spec).map { PersonDTO(it) },null,HttpStatus.OK.name)
+        return ApiResponse(firstService.findAllPeople(spec).paginated(page,size).map { PersonDTO(it) },null,HttpStatus.OK.name)
     }
 
 }
