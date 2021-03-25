@@ -1,23 +1,29 @@
 package aris.thesis.theatricalplaysapi.controllers
 
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
+import aris.thesis.theatricalplaysapi.controllers.actions.def.ProductionActions
+import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
+import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
+import org.springframework.data.domain.Page
+import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("/productions")
-class ProductionController {
+@RequestMapping("/api/productions")
+class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
 
+    @GetMapping("")
+    fun findAll(@RequestParam(required = false) page: Int?,
+                @RequestParam(required = false) size: Int?,): ApiResponse<Page<ProductionDTO>, String> {
+        return executor.getProductions(page?: -1, size?: -1)
+    }
 
-//    @GetMapping
-//    fun findAll(): ApiResponse<List<Production>, String> {
-//        return productionExecutor.findAll()
-//    }
-//
-//    @GetMapping("/{productionId}")
-//    fun findById(@PathVariable("productionId") productionId: Int,
-//                 response: HttpServletResponse): ApiResponse<Production, String> {
-//        return productionExecutor.findById(productionId, response)
-//    }
+    @GetMapping("/{productionId}")
+    fun findById(@PathVariable("productionId") productionId: Int,
+                 response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
+        return executor.getProduction(productionId, response)
+    }
 //
 //    @GetMapping("/{productionId}/people")
 //    fun findPeopleByProduction(@PathVariable("productionId") productionId: Int):

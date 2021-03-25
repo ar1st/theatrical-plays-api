@@ -3,8 +3,10 @@ package aris.thesis.theatricalplaysapi.controllers
 import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.dtos.PaginatedResult
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
@@ -17,9 +19,11 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
         return executor.getPerson(personId)
     }
 
+    //page minValue = 0, size minValue=1
+    //values less than the aforementioned will return the all the elements
     @GetMapping("")
     fun getAllPeople(@RequestParam(required = false) page: Int?,
-                     @RequestParam(required = false) size: Int?) : ApiResponse<List<PersonDTO>, String> {
+                     @RequestParam(required = false) size: Int?) : ApiResponse<Page<PersonDTO>, String> {
         return executor.getAllPeople(page?: -1 ,size ?: -1)
     }
 
@@ -27,7 +31,7 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
     fun getProductionAndRoleByPersonId(@PathVariable("ID") personId: Int,
                                @RequestParam(required = false) page: Int?,
                                @RequestParam(required = false) size: Int?,
-                               response: HttpServletResponse): ApiResponse<List<ProductionRoleDTO>,String>{
+                               response: HttpServletResponse): ApiResponse<Page<ProductionRoleDTO>,String>{
         return executor.getProductionAndRoleByPersonId(personId,page?: -1 ,size ?: -1,response)
     }
 
@@ -39,7 +43,7 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
     fun searchPeople(@RequestParam("q") query: String,
                      @RequestParam(required = false) page: Int?,
                      @RequestParam(required = false) size: Int?,
-                     response: HttpServletResponse): ApiResponse<List<PersonDTO>, String> {
+                     response: HttpServletResponse): ApiResponse<Page<PersonDTO>, String> {
         return executor.searchPeople(query, page?: -1, size ?: -1, response)
     }
 }
