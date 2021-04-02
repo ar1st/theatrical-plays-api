@@ -2,11 +2,12 @@ package aris.thesis.theatricalplaysapi.repositories
 
 import aris.thesis.theatricalplaysapi.entities.Production
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ProductionRepository : JpaRepository<Production, Int> {
+interface ProductionRepository : JpaRepository<Production, Int>, JpaSpecificationExecutor<Production> {
 
     @Query(value="SELECT persons.* " +
             "FROM contributions inner join persons on persons.ID = contributions.PeopleID " +

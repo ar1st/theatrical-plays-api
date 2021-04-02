@@ -1,13 +1,14 @@
 package aris.thesis.theatricalplaysapi.parsers
 
 import aris.thesis.theatricalplaysapi.specifications.builder.PersonSpecificationBuilder
+import aris.thesis.theatricalplaysapi.specifications.builder.ProductionSpecificationBuilder
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class PersonSpecificationBuilderParser: Parser<PersonSpecificationBuilder> {
+class ProductionSpecificationBuilderParser: Parser<ProductionSpecificationBuilder> {
 
-    override fun parse(query:String): PersonSpecificationBuilder {
-        val builder = PersonSpecificationBuilder()
+    override fun parse(query: String): ProductionSpecificationBuilder {
+        val builder = ProductionSpecificationBuilder()
         val pattern: Pattern = Pattern.compile("([\\w ]*[^\\W_][\\w ]*?)([:<>!~])([\\w ]*[^\\W_][\\w ]*?),", Pattern.UNICODE_CHARACTER_CLASS)
         val matcher: Matcher = pattern.matcher("$query,")
         while (matcher.find()) {

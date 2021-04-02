@@ -5,14 +5,8 @@ import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestContro
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
-import aris.thesis.theatricalplaysapi.entities.Image
-import aris.thesis.theatricalplaysapi.repositories.ImageRepository
-import aris.thesis.theatricalplaysapi.repositories.PersonRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
-import java.util.*
-import java.util.stream.Stream
 import javax.servlet.http.HttpServletResponse
 
 @RestController

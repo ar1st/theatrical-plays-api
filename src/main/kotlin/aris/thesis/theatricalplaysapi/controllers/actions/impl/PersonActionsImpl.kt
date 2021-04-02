@@ -42,8 +42,6 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
         else
             firstService.getAllPeople(Pageable.unpaged())
 
-   //     val image = fourthService.getById(2000)
-
         val dtoToReturn = paginatedResult.map {
             val image = fourthService.getById(it.id ?: never())
             println(it.id)

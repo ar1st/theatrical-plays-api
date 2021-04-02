@@ -1,6 +1,7 @@
-package aris.thesis.theatricalplaysapi.specifications
+package aris.thesis.theatricalplaysapi.specifications.builder
 
 import aris.thesis.theatricalplaysapi.entities.Person
+import aris.thesis.theatricalplaysapi.specifications.PersonSpecification
 import aris.thesis.theatricalplaysapi.specifications.base.SearchCriteria
 import aris.thesis.theatricalplaysapi.specifications.base.SearchOperation
 import org.springframework.data.jpa.domain.Specification
