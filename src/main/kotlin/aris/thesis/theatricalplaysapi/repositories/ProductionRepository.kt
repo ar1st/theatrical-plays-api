@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProductionRepository : JpaRepository<Production, Int> {
 
-    @Query(value="select production.* " +
-            "from production inner join contributions on production.ID = contributions.ProductionID " +
+    @Query(value="SELECT persons.* " +
+            "FROM contributions inner join persons on persons.ID = contributions.PeopleID " +
             "where contributions.ID = :contributionId", nativeQuery = true)
     fun findByContribution(contributionId: Int): Production
-
 }

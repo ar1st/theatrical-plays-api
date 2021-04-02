@@ -8,17 +8,20 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 
 interface PersonService: ModelService {
-    fun findById(personId: Int): Person?
+    fun getById(personId: Int): Person?
 
-    fun findAllPeople(): List<Person>
+    fun getAllPeople(): List<Person>
 
-    fun findAllPeople(pageable: Pageable): Page<Person>
+    fun getAllPeople(pageable: Pageable): Page<Person>
 
-    fun findPeopleBySpec(spec: Specification<Person>): List<Person>
+    fun getPeopleBySpec(spec: Specification<Person>): List<Person>
 
-    fun findPeopleBySpec(spec: Specification<Person>,pageable: Pageable): Page<Person>
+    fun getPeopleBySpec(spec: Specification<Person>, pageable: Pageable): Page<Person>
 
-    fun findContributionsByPersonId(personId: Int) : List<Contribution>
+    fun getContributionsByPersonId(personId: Int): List<Contribution>
 
-    fun findContributionsByPersonId(personId: Int, pageable: Pageable) : Page<Contribution>
+    fun getContributionsByPersonId(personId: Int, pageable: Pageable): Page<Contribution>
+
+    fun getByContributionId(contributionId: Int): Person?
+
 }

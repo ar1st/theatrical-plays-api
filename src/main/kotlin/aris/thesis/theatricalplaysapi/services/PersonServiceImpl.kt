@@ -20,32 +20,36 @@ class PersonServiceImpl: PersonService {
     @Autowired
     lateinit var contributionRepository: ContributionRepository
 
-    override fun findById(personId: Int): Person? {
+    override fun getById(personId: Int): Person? {
         return personRepository.findByIdOrNull(personId)
     }
 
-    override fun findAllPeople(): List<Person> {
+    override fun getAllPeople(): List<Person> {
         return personRepository.findAll()
     }
 
-    override fun findAllPeople(pageable: Pageable): Page<Person> {
+    override fun getAllPeople(pageable: Pageable): Page<Person> {
         return personRepository.findAll(pageable)
     }
 
-    override fun findPeopleBySpec(spec: Specification<Person>): List<Person> {
+    override fun getPeopleBySpec(spec: Specification<Person>): List<Person> {
         return personRepository.findAll(spec)
     }
 
-    override fun findPeopleBySpec(spec: Specification<Person>, pageable: Pageable): Page<Person> {
+    override fun getPeopleBySpec(spec: Specification<Person>, pageable: Pageable): Page<Person> {
         return personRepository.findAll(spec,pageable)
     }
 
-    override fun findContributionsByPersonId(personId: Int): List<Contribution> {
+    override fun getContributionsByPersonId(personId: Int): List<Contribution> {
         return contributionRepository.findByPeopleID(personId)
     }
 
-    override fun findContributionsByPersonId(personId: Int, pageable: Pageable): Page<Contribution> {
+    override fun getContributionsByPersonId(personId: Int, pageable: Pageable): Page<Contribution> {
         return contributionRepository.findByPeopleID(personId,pageable)
+    }
+
+    override fun getByContributionId(contributionId: Int): Person? {
+        return personRepository.findByContributionId(contributionId)
     }
 
 

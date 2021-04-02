@@ -1,9 +1,9 @@
 package aris.thesis.theatricalplaysapi.controllers
 
-import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
 import aris.thesis.theatricalplaysapi.controllers.actions.def.ProductionActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
@@ -14,20 +14,20 @@ import javax.servlet.http.HttpServletResponse
 class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
 
     @GetMapping("")
-    fun findAll(@RequestParam(required = false) page: Int?,
-                @RequestParam(required = false) size: Int?,): ApiResponse<Page<ProductionDTO>, String> {
-        return executor.getProductions(page?: -1, size?: -1)
+    fun getAll(@RequestParam(required = false) page: Int?,
+               @RequestParam(required = false) size: Int?,): ApiResponse<Page<ProductionDTO>, String> {
+        return executor.getAllProductions(page?: -1, size?: -1)
     }
 
     @GetMapping("/{productionId}")
-    fun findById(@PathVariable("productionId") productionId: Int,
-                 response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
+    fun getById(@PathVariable("productionId") productionId: Int,
+                response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
         return executor.getProduction(productionId, response)
     }
-//
-//    @GetMapping("/{productionId}/people")
-//    fun findPeopleByProduction(@PathVariable("productionId") productionId: Int):
-//            ApiResponse<List<PersonAndRoleResponse>, String> {
-//        return personExecutor.findByProduction(productionId)
-//    }
+
+    @GetMapping("/{productionId}/people")
+    fun findPeopleByProduction(@PathVariable("productionId") productionId: Int):
+            ApiResponse<List<PersonRoleDTO>, String> {
+        return executor.getPeopleByProductionId(productionId)
+    }
 }

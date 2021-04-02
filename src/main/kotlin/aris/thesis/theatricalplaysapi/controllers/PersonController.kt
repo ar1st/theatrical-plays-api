@@ -3,7 +3,6 @@ package aris.thesis.theatricalplaysapi.controllers
 import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
-import aris.thesis.theatricalplaysapi.dtos.PaginatedResult
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
 import org.springframework.data.domain.Page

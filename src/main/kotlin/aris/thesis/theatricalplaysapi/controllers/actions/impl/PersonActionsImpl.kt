@@ -2,7 +2,6 @@ package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
-import aris.thesis.theatricalplaysapi.dtos.PaginatedResult
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
 import aris.thesis.theatricalplaysapi.entities.Person
@@ -14,7 +13,6 @@ import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer3
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import aris.thesis.theatricalplaysapi.services.types.RoleService
-import aris.thesis.theatricalplaysapi.utils.paginated
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -30,16 +28,16 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer3<PersonService, Pr
 
     override fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
 
-        val person = firstService.findById(personId) ?: notFound("Person", personId.toString())
+        val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
 
         return ApiResponse(PersonDTO(person), null, HttpStatus.OK.name)
     }
 
     override fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
         val paginatedResult = if (page >= 0 && size > 0)
-            firstService.findAllPeople(PageRequest.of(page, size))
+            firstService.getAllPeople(PageRequest.of(page, size))
         else
-            firstService.findAllPeople(Pageable.unpaged())
+            firstService.getAllPeople(Pageable.unpaged())
 
         return ApiResponse(paginatedResult.map { PersonDTO(it) }, null, HttpStatus.OK.name)
     }
@@ -50,16 +48,16 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer3<PersonService, Pr
         size: Int,
         response: HttpServletResponse
     ): ApiResponse<Page<ProductionRoleDTO>, String> {
-        firstService.findById(personId) ?: notFound("Person", personId.toString())
+        firstService.getById(personId) ?: notFound("Person", personId.toString())
 
         val pagedResult = if (page >= 0 && size > 0)
-            firstService.findContributionsByPersonId(personId, PageRequest.of(page, size))
+            firstService.getContributionsByPersonId(personId, PageRequest.of(page, size))
         else
-            firstService.findContributionsByPersonId(personId, Pageable.unpaged())
+            firstService.getContributionsByPersonId(personId, Pageable.unpaged())
 
         val dtoToReturn = pagedResult.map {
-            val production = secondService.findByContribution(it.id ?: never()) ?: never()
-            val role = thirdService.findByContribution(it.id ?: never()) ?: never()
+            val production = secondService.getByContribution(it.id ?: never()) ?: never()
+            val role = thirdService.getByContributionId(it.id ?: never()) ?: never()
 
             ProductionRoleDTO(production, role)
         }
@@ -79,9 +77,9 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer3<PersonService, Pr
         val spec: Specification<Person> = builder.build() ?: wrongQuery()
 
         val pagedResult = if (page >= 0 && size > 0)
-            firstService.findPeopleBySpec(spec, PageRequest.of(page, size))
+            firstService.getPeopleBySpec(spec, PageRequest.of(page, size))
         else
-            firstService.findPeopleBySpec(spec, Pageable.unpaged())
+            firstService.getPeopleBySpec(spec, Pageable.unpaged())
         return ApiResponse(pagedResult.map { PersonDTO(it) }, null, HttpStatus.OK.name)
     }
 

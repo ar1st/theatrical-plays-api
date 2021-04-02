@@ -13,4 +13,6 @@ interface ContributionRepository : JpaRepository<Contribution, Int> {
 
 
     fun findByPeopleID(personId: Int, pageable:Pageable): Page<Contribution>
+
+    fun findByProductionID(productionId: Int): List<Contribution>
 }

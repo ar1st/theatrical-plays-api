@@ -11,7 +11,7 @@ class RoleServiceImpl: RoleService {
     @Autowired
     lateinit var roleRepository: RoleRepository
 
-    override fun findByContribution(contributionId: Int): Role? {
+    override fun getByContributionId(contributionId: Int): Role? {
         return roleRepository.findByContribution(contributionId)
     }
 }

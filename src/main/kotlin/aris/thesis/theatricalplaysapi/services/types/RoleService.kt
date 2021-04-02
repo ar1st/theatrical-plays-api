@@ -5,5 +5,5 @@ import aris.thesis.theatricalplaysapi.services.proto.ModelService
 
 interface RoleService: ModelService {
 
-    fun findByContribution(contributionId: Int): Role?
+    fun getByContributionId(contributionId: Int): Role?
 }

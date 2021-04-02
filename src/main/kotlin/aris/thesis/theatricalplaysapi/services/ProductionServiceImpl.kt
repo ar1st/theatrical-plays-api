@@ -1,6 +1,8 @@
 package aris.thesis.theatricalplaysapi.services
 
+import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Production
+import aris.thesis.theatricalplaysapi.repositories.ContributionRepository
 import aris.thesis.theatricalplaysapi.repositories.ProductionRepository
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,22 +17,28 @@ class ProductionServiceImpl: ProductionService {
     //repos
     @Autowired
     lateinit var productionRepository: ProductionRepository
+    @Autowired
+    lateinit var contributionRepository: ContributionRepository
 
     @Transactional
-    override fun findAll(): List<Production> {
+    override fun getAllProductions(): List<Production> {
         return productionRepository.findAll(Sort.by(Sort.Direction.DESC,"title") )
     }
 
-    override fun findAll(pageable: Pageable): Page<Production> {
+    override fun getAllProductions(pageable: Pageable): Page<Production> {
         return productionRepository.findAll(pageable)
     }
 
-    override fun findById(productionId: Int): Production? {
+    override fun getById(productionId: Int): Production? {
         return productionRepository.findById(productionId).orElse(null)
     }
 
-    override fun findByContribution(contributionId: Int): Production {
+    override fun getByContribution(contributionId: Int): Production {
         return productionRepository.findByContribution(contributionId)
+    }
+
+    override fun getContributionsByProductionId(productionId: Int): List<Contribution> {
+        return contributionRepository.findByProductionID(productionId)
     }
 
 }
