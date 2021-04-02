@@ -7,6 +7,8 @@ import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.exceptions.error.never
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer3
+import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer4
+import aris.thesis.theatricalplaysapi.services.types.ImageService
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import aris.thesis.theatricalplaysapi.services.types.RoleService
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Suppress("unused")
-class ProductionActionsImpl: ProductionActions, ModelServiceConsumer3<ProductionService,PersonService,RoleService>() {
+class ProductionActionsImpl: ProductionActions, ModelServiceConsumer4<ProductionService, PersonService, RoleService, ImageService>() {
 
     override fun getProduction(productionId: Int, response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
         val production = firstService.getById(productionId) ?: notFound("Production",productionId.toString())
@@ -47,8 +49,8 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer3<Production
         val dtoToReturn = contributions.map {
             val person = secondService.getByContributionId(it.id ?: never()) ?: never()
             val role = thirdService.getByContributionId(it.id ?: never()) ?: never()
-
-            PersonRoleDTO(person, role)
+            val image = fourthService.getById(it.id ?: never())
+            PersonRoleDTO(person, role,image )
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)

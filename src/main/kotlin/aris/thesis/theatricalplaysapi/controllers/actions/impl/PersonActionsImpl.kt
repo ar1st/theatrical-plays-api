@@ -10,6 +10,8 @@ import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
 import aris.thesis.theatricalplaysapi.parsers.PersonSpecificationBuilderParser
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer3
+import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer4
+import aris.thesis.theatricalplaysapi.services.types.ImageService
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import aris.thesis.theatricalplaysapi.services.types.RoleService
@@ -24,13 +26,14 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Suppress("unused")
-class PersonActionsImpl : PersonActions, ModelServiceConsumer3<PersonService, ProductionService, RoleService>() {
+class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, ProductionService, RoleService, ImageService>() {
 
     override fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
 
         val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
+        val image = fourthService.getById(personId)
 
-        return ApiResponse(PersonDTO(person), null, HttpStatus.OK.name)
+        return ApiResponse(PersonDTO(person,image), null, HttpStatus.OK.name)
     }
 
     override fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
@@ -39,7 +42,16 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer3<PersonService, Pr
         else
             firstService.getAllPeople(Pageable.unpaged())
 
-        return ApiResponse(paginatedResult.map { PersonDTO(it) }, null, HttpStatus.OK.name)
+   //     val image = fourthService.getById(2000)
+
+        val dtoToReturn = paginatedResult.map {
+            val image = fourthService.getById(it.id ?: never())
+            println(it.id)
+            PersonDTO(it, image)
+        }
+
+
+        return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
     }
 
     override fun getProductionAndRoleByPersonId(
@@ -80,7 +92,7 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer3<PersonService, Pr
             firstService.getPeopleBySpec(spec, PageRequest.of(page, size))
         else
             firstService.getPeopleBySpec(spec, Pageable.unpaged())
-        return ApiResponse(pagedResult.map { PersonDTO(it) }, null, HttpStatus.OK.name)
+        return ApiResponse(pagedResult.map { PersonDTO(it, fourthService.getById(it.id!!)) }, null, HttpStatus.OK.name)
     }
 
 }
