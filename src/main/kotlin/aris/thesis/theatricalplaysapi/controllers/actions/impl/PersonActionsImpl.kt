@@ -9,7 +9,6 @@ import aris.thesis.theatricalplaysapi.exceptions.error.never
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
 import aris.thesis.theatricalplaysapi.parsers.PersonSpecificationBuilderParser
-import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer3
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer4
 import aris.thesis.theatricalplaysapi.services.types.ImageService
 import aris.thesis.theatricalplaysapi.services.types.PersonService
@@ -38,19 +37,32 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
 
     override fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
         val paginatedResult = if (page >= 0 && size > 0)
-            firstService.getAllPeople(PageRequest.of(page, size))
-        else
-            firstService.getAllPeople(Pageable.unpaged())
+                                    firstService.getAllPeople(PageRequest.of(page, size))
+                                else
+                                    firstService.getAllPeople(Pageable.unpaged())
 
         val dtoToReturn = paginatedResult.map {
             val image = fourthService.getById(it.id ?: never())
-            println(it.id)
             PersonDTO(it, image)
         }
 
+        return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
+    }
+
+    override fun getPeopleByRole(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
+        val paginatedResult = if (page >= 0 && size > 0)
+                            firstService.getPeopleByRole(value,PageRequest.of(page, size))
+                        else
+                            firstService.getPeopleByRole(value,Pageable.unpaged())
+
+        val dtoToReturn = paginatedResult.map {
+            val image = fourthService.getById(it.id ?: never())
+            PersonDTO(it, image)
+        }
 
         return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
     }
+
 
     override fun getProductionAndRoleByPersonId(
         personId: Int,

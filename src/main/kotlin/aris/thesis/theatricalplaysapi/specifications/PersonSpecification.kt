@@ -15,6 +15,11 @@ import javax.persistence.criteria.Root
 class PersonSpecification(private val criteria: SearchCriteria) : Specification<Person> {
 
     override fun toPredicate(root: Root<Person?>, query: CriteriaQuery<*>, builder: CriteriaBuilder): Predicate? {
+
+        if (root.get<String>(criteria.key).equals("role") ) {
+
+        }
+
         //todo remove unused operations and throw IllegalArgumentException
         return try {
             when (criteria.operation) {

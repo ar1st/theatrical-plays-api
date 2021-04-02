@@ -14,6 +14,8 @@ interface PersonService: ModelService {
 
     fun getAllPeople(pageable: Pageable): Page<Person>
 
+    fun getPeopleByRole(value: String, pageable: Pageable): Page<Person>
+
     fun getPeopleBySpec(spec: Specification<Person>): List<Person>
 
     fun getPeopleBySpec(spec: Specification<Person>, pageable: Pageable): Page<Person>

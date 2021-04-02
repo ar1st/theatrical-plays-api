@@ -32,6 +32,10 @@ class PersonServiceImpl: PersonService {
         return personRepository.findAll(pageable)
     }
 
+    override fun getPeopleByRole(value: String, pageable: Pageable): Page<Person> {
+        return personRepository.findPeopleByRole(value, pageable)
+    }
+
     override fun getPeopleBySpec(spec: Specification<Person>): List<Person> {
         return personRepository.findAll(spec)
     }

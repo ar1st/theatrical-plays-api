@@ -23,7 +23,14 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
     @GetMapping("")
     fun getAllPeople(@RequestParam(required = false) page: Int?,
                      @RequestParam(required = false) size: Int?) : ApiResponse<Page<PersonDTO>, String> {
-        return executor.getAllPeople(page?: -1 ,size ?: -1)
+        return executor.getAllPeople(page?: -1 ,size?: -1)
+    }
+
+    @GetMapping("/role")
+    fun getPeopleByRole(@RequestParam(required = true) value: String,
+                     @RequestParam(required = false) page: Int?,
+                     @RequestParam(required = false) size: Int?): ApiResponse<Page<PersonDTO>, String> {
+        return executor.getPeopleByRole(value, page?: -1, size?: -1)
     }
 
     @GetMapping("/{ID}/productions")
