@@ -16,4 +16,5 @@ interface ProductionActions: ActionExecutor<Actions.Production> {
     fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String>
 
     fun searchProduction(query: String, page: Int, size: Int, response: HttpServletResponse): ApiResponse<Page<ProductionDTO>, String>
+    fun getLatestProductions(i: Int, i1: Int): ApiResponse<Page<ProductionDTO>, String>
 }

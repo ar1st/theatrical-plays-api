@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification
 interface ProductionService: ModelService {
     fun getAllProductions(): List<Production>
     fun getAllProductions(pageable: Pageable): Page<Production>
+    fun getLatestProductions(pageable: Pageable): Page<Production>
     fun getById(productionId: Int): Production?
     fun getByContribution(contributionId: Int): Production?
     fun getContributionsByProductionId(productionId: Int): List<Contribution>

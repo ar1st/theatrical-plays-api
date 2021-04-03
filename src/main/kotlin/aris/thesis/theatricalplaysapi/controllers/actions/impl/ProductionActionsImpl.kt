@@ -26,11 +26,7 @@ import javax.servlet.http.HttpServletResponse
 @Suppress("unused")
 class ProductionActionsImpl: ProductionActions, ModelServiceConsumer4<ProductionService, PersonService, RoleService, ImageService>() {
 
-    override fun getProduction(productionId: Int, response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
-        val production = firstService.getById(productionId) ?: notFound("Production",productionId.toString())
 
-        return ApiResponse( ProductionDTO(production),null, HttpStatus.OK.name)
-    }
 
     override fun getAllProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
         val paginatedResult = if (page >= 0 && size > 0)
@@ -40,6 +36,22 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer4<Production
 
 
         return ApiResponse(paginatedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
+    }
+
+    override fun getLatestProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
+        val paginatedResult = if (page >= 0 && size > 0)
+            firstService.getLatestProductions(PageRequest.of(page, size))
+        else
+            firstService.getLatestProductions( Pageable.unpaged())
+
+        return ApiResponse(paginatedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
+
+    }
+
+    override fun getProduction(productionId: Int, response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
+        val production = firstService.getById(productionId) ?: notFound("Production",productionId.toString())
+
+        return ApiResponse( ProductionDTO(production),null, HttpStatus.OK.name)
     }
 
     override fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String> {
@@ -75,4 +87,6 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer4<Production
             firstService.getProductionBySpec(spec, Pageable.unpaged())
         return ApiResponse(pagedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
     }
+
+
 }

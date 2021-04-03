@@ -30,6 +30,10 @@ class ProductionServiceImpl: ProductionService {
         return productionRepository.findAll(pageable)
     }
 
+    override fun getLatestProductions(pageable: Pageable): Page<Production> {
+        return productionRepository.findLatestProductions(pageable)
+    }
+
     override fun getById(productionId: Int): Production? {
         return productionRepository.findById(productionId).orElse(null)
     }

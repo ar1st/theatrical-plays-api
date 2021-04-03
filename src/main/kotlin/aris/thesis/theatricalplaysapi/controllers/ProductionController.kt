@@ -6,11 +6,12 @@ import aris.thesis.theatricalplaysapi.dtos.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import org.springframework.data.domain.Page
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("/api/productions")
+@RequestMapping("/api/productions", produces = [MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8"])
 class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
 
     @GetMapping("")
@@ -24,6 +25,13 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
                 response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
         return executor.getProduction(productionId, response)
     }
+
+    @GetMapping("/latest")
+    fun getLatestProductions(@RequestParam(required = false) page: Int?,
+                             @RequestParam(required = false) size: Int?,): ApiResponse<Page<ProductionDTO>, String> {
+        return executor.getLatestProductions(page?: -1, size?: -1)
+    }
+
 
     @GetMapping("/{productionId}/people")
     fun findPeopleByProduction(@PathVariable("productionId") productionId: Int):

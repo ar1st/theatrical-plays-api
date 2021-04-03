@@ -6,11 +6,12 @@ import aris.thesis.theatricalplaysapi.dtos.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
 import org.springframework.data.domain.Page
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("/api/people")
+@RequestMapping("/api/people", produces = [MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8"])
 class PersonController: TheatricalPlaysRestController<PersonActions>() {
 
     @GetMapping("/{ID}")
