@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProductionRepository : JpaRepository<Production, Int>, JpaSpecificationExecutor<Production> {
 
-    @Query(value="SELECT persons.* " +
-            "FROM contributions inner join persons on persons.ID = contributions.PeopleID " +
+    @Query(value="SELECT production.* " +
+            "FROM contributions inner join production on production.ID = contributions.ProductionID " +
             "where contributions.ID = :contributionId", nativeQuery = true)
     fun findByContribution(contributionId: Int): Production
 }
