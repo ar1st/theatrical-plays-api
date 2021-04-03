@@ -41,9 +41,10 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
                                 else
                                     firstService.getAllPeople(Pageable.unpaged())
 
-        val dtoToReturn = paginatedResult.map {
-            val image = fourthService.getById(it.id ?: never())
-            PersonDTO(it, image)
+        val allImages = fourthService.getAll()
+
+        val dtoToReturn = paginatedResult.map { person ->
+            PersonDTO(person, allImages.firstOrNull{ it.id == person.id })
         }
 
         return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
@@ -55,9 +56,10 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
                         else
                             firstService.getPeopleByRole(value,Pageable.unpaged())
 
-        val dtoToReturn = paginatedResult.map {
-            val image = fourthService.getById(it.id ?: never())
-            PersonDTO(it, image)
+        val allImages = fourthService.getAll()
+
+        val dtoToReturn = paginatedResult.map { person ->
+            PersonDTO(person, allImages.firstOrNull{ it.id == person.id })
         }
 
         return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
@@ -98,11 +100,17 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
 
         val spec: Specification<Person> = builder.build() ?: wrongQuery()
 
-        val pagedResult = if (page >= 0 && size > 0)
+        val paginatedResult = if (page >= 0 && size > 0)
             firstService.getPeopleBySpec(spec, PageRequest.of(page, size))
         else
             firstService.getPeopleBySpec(spec, Pageable.unpaged())
-        return ApiResponse(pagedResult.map { PersonDTO(it, fourthService.getById(it.id!!)) }, null, HttpStatus.OK.name)
+
+        val allImages = fourthService.getAll()
+
+        val dtoToReturn = paginatedResult.map { person ->
+            PersonDTO(person, allImages.firstOrNull{ it.id == person.id })
+        }
+        return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
 }

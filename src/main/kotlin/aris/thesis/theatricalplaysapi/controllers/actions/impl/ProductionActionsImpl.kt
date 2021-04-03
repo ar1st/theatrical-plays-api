@@ -45,14 +45,13 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer4<Production
     override fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String> {
         firstService.getById(productionId) ?: notFound("Production",productionId.toString())
 
-
         val contributions = firstService.getContributionsByProductionId(productionId)
+        val allImages = fourthService.getAll()
 
-
-        val dtoToReturn = contributions.map {
-            val person = secondService.getByContributionId(it.id ?: never()) ?: never()
-            val role = thirdService.getByContributionId(it.id ?: never()) ?: never()
-            val image = fourthService.getById(it.id ?: never())
+        val dtoToReturn = contributions.map { contribution ->
+            val person = secondService.getByContributionId(contribution.id ?: never()) ?: never()
+            val role = thirdService.getByContributionId(contribution.id ?: never()) ?: never()
+            val image = allImages.firstOrNull{ it.id == person.id }
             PersonRoleDTO(person, role,image )
         }
 
