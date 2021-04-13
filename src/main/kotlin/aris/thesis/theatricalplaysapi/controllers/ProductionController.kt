@@ -3,6 +3,7 @@ package aris.thesis.theatricalplaysapi.controllers
 import aris.thesis.theatricalplaysapi.controllers.actions.def.ProductionActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import org.springframework.data.domain.Page
@@ -34,9 +35,15 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
 
 
     @GetMapping("/{productionId}/people")
-    fun findPeopleByProduction(@PathVariable("productionId") productionId: Int):
+    fun getPeopleByProduction(@PathVariable("productionId") productionId: Int):
             ApiResponse<List<PersonRoleDTO>, String> {
         return executor.getPeopleByProductionId(productionId)
+    }
+
+    @GetMapping("/{productionId}/events")
+    fun getEventsAndVenuesByProduction(@PathVariable("productionId") productionId: Int):
+            ApiResponse<List<EventVenueDTO>, String>{
+        return executor.getEventsAndVenuesByProduction(productionId)
     }
 
     @GetMapping("/search")
