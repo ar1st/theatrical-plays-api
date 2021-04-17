@@ -280,7 +280,25 @@ This request is used to retrieve all venues.
 | [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
 
 ---
+**Get Productions By Venue Id**
 
+This request is used to retrieve all productions located in the given venue.
+
+| GET             | /api/venues/ID/productions                 |
+| --------------- | ------------------------------------------ |
+| **Parameters**  |                                            |
+| *ID*            | <u>Path variable</u>                       |
+|                 | The identifier of the venue to retrieve.   |
+| *page*          | <u>Request parameter</u>                   |
+|                 | The index of the page to return. Optional  |
+| *size*          | <u>Request parameter</u>                   |
+|                 | The size of the page. Optional             |
+| **Responses**   |                                            |
+| Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
+
+| [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
+
+---
 ## Change log
 
 
