@@ -67,7 +67,7 @@ This request is used to retrieve all people.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page<PersonDTO> | {id: Int, fullName: String, image: String} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
 
@@ -87,7 +87,7 @@ This request returns people filtered by the provided role.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page<PersonDTO> | {id: Int, fullName: String, image: String} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
 
@@ -107,7 +107,7 @@ This request returns all the productions a person participated in and the corres
 | *size*                  | <u>Request parameter</u>                                     |
 |                         | The size of the page. Optional                               |
 | **Responses**           |                                                              |
-| Page<ProductionRoleDTO> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
+| Page\<ProductionRoleDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
 | [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
 
@@ -121,13 +121,13 @@ This request returns all the productions a person participated in and the corres
 | *q*             | <u>Request parameter</u>                   |
 |                 | The query to search                        |
 |                 | Example: q=fullName~μαρια,id:1928          |
-|                 | Operatos: equals is :, like is ~, not !    |
+|                 | Operatos: equals is :, like is ~, not is !   |
 | *page*          | <u>Request parameter</u>                   |
 |                 | The index of the page to return. Optional  |
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page<PersonDTO> | {id: Int, fullName: String, image: String} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
 
@@ -165,9 +165,9 @@ This request is used to retrieve all productions.
 | *size*              | <u>Request parameter</u>                                     |
 |                     | The size of the page. Optional                               |
 | **Responses**       |                                                              |
-| Page<ProductionDTO> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
+| Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -183,9 +183,9 @@ This request is used to retrieve all productions sorted by their event date.
 | *size*              | <u>Request parameter</u>                                     |
 |                     | The size of the page. Optional                               |
 | **Responses**       |                                                              |
-| Page<ProductionDTO> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
+| Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -199,12 +199,27 @@ This request is used to retrieve all people contributing to a production and the
 | *ID*                | <u>Path variable</u>                                     |
 |                     | The identifier of the production to retrieve.            |
 | **Responses**       |                                                          |
-| List<PersonRoleDTO> | {id: Int, fullName: String, image: String, role: String} |
+| List\<PersonRoleDTO\> | {id: Int, fullName: String, image: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
 
 ---
 
+**Get Events By Production Id**
+
+This request is used to retrieve all the events linked to a production.
+
+| GET                 | /api/productions/ID/events                               |
+| ------------------- | -------------------------------------------------------- |
+| **Parameters**      |                                                          |
+| *ID*                | <u>Path variable</u>                                     |
+|                     | The identifier of the production to retrieve.            |
+| **Responses**       |                                                          |
+| List\<EventVenueDTO\> | {eventId: Int, date: Date, image: String, pricaRange: String </br > venueId: Int, title: String, address: String} |
+
+| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+
+---
 
 
 
