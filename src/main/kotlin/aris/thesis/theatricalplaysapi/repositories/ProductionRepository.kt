@@ -19,9 +19,20 @@ interface ProductionRepository : JpaRepository<Production, Int>, JpaSpecificatio
     @Query(value="select DISTINCT production.* " +
             "from production inner join events on production.ID = events.ProductionID " +
             "order by events.DateEvent DESC",
-            countQuery = "select count(*)" +
+            countQuery = "select count(*) " +
                     "from production inner join events on production.ID = events.ProductionID " +
                     "order by events.DateEvent DESC",
             nativeQuery = true)
     fun findLatestProductions(pageable: Pageable): Page<Production>
+
+    @Query(value ="select DISTINCT production.* " +
+            "from production inner join events on production.ID = events.ProductionID " +
+            "inner join venue on events.VenueID = venue.ID " +
+            "where venue.ID = :venueId",
+            countQuery = "select count(*) " +
+                    "from production inner join events on production.ID = events.ProductionID " +
+                    "inner join venue on events.VenueID = venue.ID " +
+                    "where venue.ID = :venueId",
+            nativeQuery = true)
+    fun findByVenueId(venueId: Int, pageable: Pageable): Page<Production>
 }

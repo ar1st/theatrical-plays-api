@@ -4,6 +4,7 @@ import aris.thesis.theatricalplaysapi.controllers.actions.def.VenueActions
 import aris.thesis.theatricalplaysapi.dtos.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.dtos.VenueDTO
+import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer2
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
@@ -37,6 +38,13 @@ class VenueActionsImpl: VenueActions, ModelServiceConsumer2<VenueService, Produc
     override fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
         val venue = firstService.getVenueById(venueId)?: notFound("Venue", venueId.toString())
 
-        TODO()
+        val paginatedResult: Page<Production>
+        if ( page >= 0 && size > 0 ) {
+            paginatedResult = secondService.getProductionsByVenueId(venueId, PageRequest.of(page, size))
+        } else {
+            paginatedResult = secondService.getProductionsByVenueId(venueId, Pageable.unpaged() )
+        }
+
+        return ApiResponse( paginatedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
     }
 }

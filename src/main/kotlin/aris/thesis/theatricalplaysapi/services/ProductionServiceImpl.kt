@@ -7,6 +7,7 @@ import aris.thesis.theatricalplaysapi.repositories.ProductionRepository
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
@@ -48,6 +49,10 @@ class ProductionServiceImpl: ProductionService {
 
     override fun getProductionBySpec(spec: Specification<Production>, pageable: Pageable): Page<Production> {
         return productionRepository.findAll(spec,pageable)
+    }
+
+    override fun getProductionsByVenueId(venueId: Int, pageable: Pageable): Page<Production> {
+        return productionRepository.findByVenueId(venueId, pageable)
     }
 
 }

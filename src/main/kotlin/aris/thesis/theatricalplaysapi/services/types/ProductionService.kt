@@ -4,6 +4,7 @@ import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.services.proto.ModelService
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 
@@ -16,4 +17,5 @@ interface ProductionService: ModelService {
     fun getContributionsByProductionId(productionId: Int): List<Contribution>
 
     fun getProductionBySpec(spec: Specification<Production>, pageable: Pageable): Page<Production>
+    fun getProductionsByVenueId(venueId: Int, pageable: Pageable): Page<Production>
 }
