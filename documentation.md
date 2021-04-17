@@ -30,6 +30,7 @@ Example:
 1. [Person](#person)
 2. [Production](#production)
 3. [Venue](#venue)
+4. [Change log](#change-log)
 
 ## Api Requests
 
@@ -280,6 +281,7 @@ This request is used to retrieve all venues.
 
 ---
 
+## Change log
 
-
+| [:book: Contents](#api-contents) |
 
