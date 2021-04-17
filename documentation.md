@@ -25,7 +25,7 @@ Example:
 
 
 
-## API Contents
+## Contents
 
 1. [Person](#person)
 2. [Production](#production)
@@ -52,7 +52,7 @@ This request is used to retrieve a person and their image by the provided identi
 | **Responses**  |                                            |
 | PersonDTO      | {id: Int, fullName: String, image: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
 ---
 
@@ -70,7 +70,7 @@ This request is used to retrieve all people.
 | **Responses**   |                                            |
 | Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
 ---
 
@@ -90,7 +90,7 @@ This request returns people filtered by the provided role.
 | **Responses**   |                                            |
 | Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
 ---
 
@@ -110,7 +110,7 @@ This request returns all the productions a person participated in and the corres
 | **Responses**           |                                                              |
 | Page\<ProductionRoleDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
 ---
 
@@ -130,7 +130,7 @@ This request returns all the productions a person participated in and the corres
 | **Responses**   |                                            |
 | Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Person](#person) |
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
 ---
 
@@ -150,7 +150,7 @@ This request is used to retrieve a production by the provided identifier.
 | **Responses**  |                                                              |
 | ProductionDTO  | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -168,7 +168,7 @@ This request is used to retrieve all productions.
 | **Responses**       |                                                              |
 | Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -186,7 +186,7 @@ This request is used to retrieve all productions sorted by their event date.
 | **Responses**       |                                                              |
 | Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -202,7 +202,7 @@ This request is used to retrieve all people contributing to a production and the
 | **Responses**       |                                                          |
 | List\<PersonRoleDTO\> | {id: Int, fullName: String, image: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -218,7 +218,7 @@ This request is used to retrieve all the events linked to a production.
 | **Responses**       |                                                          |
 | List\<EventVenueDTO\> | {eventId: Int, date: Date, image: String, pricaRange: String </br > venueId: Int, title: String, address: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -239,7 +239,7 @@ This request is used to retrieve all the events linked to a production.
 | **Responses**   |                                            |
 | Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
 
 ---
 
@@ -259,7 +259,7 @@ This request is used to retrieve a venue by the provided identifier.
 | **Responses**  |                                            |
 | VenueDTO       | {id: Int, title: String, address: String}  |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Venue](#venue) |
+| [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
 
 ---
 
@@ -277,11 +277,18 @@ This request is used to retrieve all venues.
 | **Responses**   |                                            |
 | Page\<VenueDTO\>| {id: Int, title: String, address: String}  |
 
-| [:book: Contents](#api-contents) | [:earth_africa: Venue](#venue) |
+| [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
 
 ---
 
 ## Change log
 
-| [:book: Contents](#api-contents) |
+
+<details>
+    <summary>17/04/2021</summary>
+    Change log created. </br >
+    Added documentation for person, production and some venue actions.
+</details>
+
+| [:book: Contents](#contents) |
 
