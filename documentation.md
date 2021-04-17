@@ -29,7 +29,7 @@ Example:
 
 1. [Person](#person)
 2. [Production](#production)
-3. Venue
+3. [Venue](#venue)
 
 ## Api Requests
 
@@ -221,19 +221,65 @@ This request is used to retrieve all the events linked to a production.
 
 ---
 
+**Search Productions By Field**
+> :warning: **Prone to errors. Not fully implemented yet**
 
+| GET             | /api/productions/search                         |
+| --------------- | ------------------------------------------ |
+| **Parameters**  |                                            |
+| *q*             | <u>Request parameter</u>                   |
+|                 | The query to search                        |
+|                 | Example: q=fullName~μαρια,id:1928          |
+|                 | Operatos: equals is :, like is ~, not is !   |
+| *page*          | <u>Request parameter</u>                   |
+|                 | The index of the page to return. Optional  |
+| *size*          | <u>Request parameter</u>                   |
+|                 | The size of the page. Optional             |
+| **Responses**   |                                            |
+| Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
 
-
-
-
-
-
-/api/productions/ID/events
-
-/api/productions/search
+| [:book: Contents](#api-contents) | [:earth_africa: Production](#production) |
 
 ---
 
-/api/venues
+## Venue
 
-/api/venues/ID
+This collection contains all the requests regarding a venue.
+
+**Get venue**
+
+This request is used to retrieve a venue by the provided identifier.
+
+| GET            | /api/venue/{ID}                            |
+| -------------- | ------------------------------------------ |
+| **Parameters** |                                            |
+| *ID*           | <u>Path variable</u>                       |
+|                | The identifier of the venue to retrieve.   |
+| **Responses**  |                                            |
+| VenueDTO       | {id: Int, title: String, address: String}  |
+
+| [:book: Contents](#api-contents) | [:earth_africa: Venue](#venue) |
+
+---
+
+**Get Venues**
+
+This request is used to retrieve all venues.
+
+| GET             | /api/venues                                |
+| --------------- | ------------------------------------------ |
+| **Parameters**  |                                            |
+| *page*          | <u>Request parameter</u>                   |
+|                 | The index of the page to return. Optional  |
+| *size*          | <u>Request parameter</u>                   |
+|                 | The size of the page. Optional             |
+| **Responses**   |                                            |
+| Page\<VenueDTO\>| {id: Int, title: String, address: String}  |
+
+| [:book: Contents](#api-contents) | [:earth_africa: Venue](#venue) |
+
+---
+
+
+
+
