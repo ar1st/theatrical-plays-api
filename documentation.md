@@ -304,8 +304,26 @@ This request is used to retrieve all productions located in the given venue.
 
 <details>
     <summary>17/04/2021</summary>
-    Change log created. </br >
-    Added documentation for person, production and some venue actions.
+    1. Change log created. </br >
+    2. Added documentation for person, production and some venue actions.
+        Endpoints added:
+            Person:
+                GET /api/people/
+                GET /api/people/{ID}
+                GET /api/people/role
+                GET /api/people/{ID}/productions
+                GET /api/people/search
+            Production:
+                GET /api/productions/
+                GET /api/productions/{ID}
+                GET /api/productions/latest
+                GET /api/productions/{ID}/people
+                GET /api/productions/{ID}/events
+                GET /api/productions/search
+            Venue:
+                GET /api/venues/
+                GET /api/venues/{ID}
+                GET /api/venues/{ID}/productions
 </details>
 
 | [:book: Contents](#contents) |
