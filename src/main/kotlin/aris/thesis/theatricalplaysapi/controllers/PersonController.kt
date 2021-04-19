@@ -42,7 +42,6 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
         return executor.getProductionAndRoleByPersonId(personId,page?: -1 ,size ?: -1,response)
     }
 
-
     //query: field[:~]value,field2[:~]value2 etc
     //ex q=fullName~μαρια κ,id:1928
     //will search for person where has μαρια in the name AND id=1928

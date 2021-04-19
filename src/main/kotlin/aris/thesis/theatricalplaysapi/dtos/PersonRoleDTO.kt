@@ -8,5 +8,5 @@ class PersonRoleDTO(person: Person, role: Role, image: Image?): DataTransferObje
     val id = person.id
     val fullName = person.fullName
     val role = role.role
-    val image = image?.imgURL
+    val image = image?.imageURL
 }

@@ -25,53 +25,48 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Suppress("unused")
-class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, ProductionService, RoleService, ImageService>() {
+class PersonActionsImpl : PersonActions,
+    ModelServiceConsumer4<PersonService, ProductionService, RoleService, ImageService>() {
 
     override fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
-
         val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
-        val image = fourthService.getById(personId)
+        val image = fourthService.getByPersonId(personId)
 
-        return ApiResponse(PersonDTO(person,image), null, HttpStatus.OK.name)
+        return ApiResponse(PersonDTO(person, image), null, HttpStatus.OK.name)
     }
 
     override fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
         val paginatedResult = if (page >= 0 && size > 0)
-                                    firstService.getAllPeople(PageRequest.of(page, size))
-                                else
-                                    firstService.getAllPeople(Pageable.unpaged())
+            firstService.getAllPeople(PageRequest.of(page, size))
+        else
+            firstService.getAllPeople(Pageable.unpaged())
 
         val allImages = fourthService.getAll()
 
         val dtoToReturn = paginatedResult.map { person ->
-            PersonDTO(person, allImages.firstOrNull{ it.id == person.id })
+            PersonDTO(person, allImages.firstOrNull { it.personId == person.id })
         }
 
-        return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
+        return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
     override fun getPeopleByRole(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
         val paginatedResult = if (page >= 0 && size > 0)
-                            firstService.getPeopleByRole(value,PageRequest.of(page, size))
-                        else
-                            firstService.getPeopleByRole(value,Pageable.unpaged())
+            firstService.getPeopleByRole(value, PageRequest.of(page, size))
+        else
+            firstService.getPeopleByRole(value, Pageable.unpaged())
 
         val allImages = fourthService.getAll()
 
         val dtoToReturn = paginatedResult.map { person ->
-            PersonDTO(person, allImages.firstOrNull{ it.id == person.id })
+            PersonDTO(person, allImages.firstOrNull { it.personId == person.id })
         }
 
-        return ApiResponse( dtoToReturn , null, HttpStatus.OK.name)
+        return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-
-    override fun getProductionAndRoleByPersonId(
-        personId: Int,
-        page: Int,
-        size: Int,
-        response: HttpServletResponse
-    ): ApiResponse<Page<ProductionRoleDTO>, String> {
+    override fun getProductionAndRoleByPersonId( personId: Int, page: Int, size: Int,
+                                                 response: HttpServletResponse ): ApiResponse<Page<ProductionRoleDTO>, String> {
         firstService.getById(personId) ?: notFound("Person", personId.toString())
 
         val pagedResult = if (page >= 0 && size > 0)
@@ -89,12 +84,8 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    override fun searchPeople(
-        query: String,
-        page: Int,
-        size: Int,
-        response: HttpServletResponse
-    ): ApiResponse<Page<PersonDTO>, String> {
+    override fun searchPeople( query: String, page: Int, size: Int,
+                               response: HttpServletResponse): ApiResponse<Page<PersonDTO>, String> {
         val parser = PersonSpecificationBuilderParser()
         val builder = parser.parse(query)
 
@@ -108,7 +99,7 @@ class PersonActionsImpl : PersonActions, ModelServiceConsumer4<PersonService, Pr
         val allImages = fourthService.getAll()
 
         val dtoToReturn = paginatedResult.map { person ->
-            PersonDTO(person, allImages.firstOrNull{ it.id == person.id })
+            PersonDTO(person, allImages.firstOrNull { it.personId == person.id })
         }
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }

@@ -20,7 +20,5 @@ class TestService {
 
     @PostConstruct
     fun test() {
-        val r1 = imageServiceImpl.getById(200330)
-        println()
     }
 }

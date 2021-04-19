@@ -12,11 +12,12 @@ class ImageServiceImpl: ImageService {
     //repos
     @Autowired
     lateinit var imageRepository: ImageRepository
+
     override fun getAll(): List<Image> {
         return imageRepository.findAll()
     }
 
-    override fun getById(imageId: Int): Image? {
-        return imageRepository.findByIdOrNull(imageId)
+    override fun getByPersonId(personId: Int): Image? {
+        return imageRepository.findByPersonId(personId)
     }
 }

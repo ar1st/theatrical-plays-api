@@ -73,7 +73,7 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer6<Production
         val dtoToReturn = contributions.map { contribution ->
             val person = secondService.getByContributionId(contribution.id ?: never()) ?: never()
             val role = thirdService.getByContributionId(contribution.id ?: never()) ?: never()
-            val image = allImages.firstOrNull{ it.id == person.id }
+            val image = allImages.firstOrNull{ it.personId == person.id }
             PersonRoleDTO(person, role,image )
         }
 

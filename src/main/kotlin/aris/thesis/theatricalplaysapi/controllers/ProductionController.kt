@@ -33,7 +33,6 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
         return executor.getLatestProductions(page?: -1, size?: -1)
     }
 
-
     @GetMapping("/{productionId}/people")
     fun getPeopleByProduction(@PathVariable("productionId") productionId: Int):
             ApiResponse<List<PersonRoleDTO>, String> {

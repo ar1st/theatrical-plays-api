@@ -10,6 +10,10 @@ class Image {
     @Column(name = "ID", nullable = false)
     var id: Int? = null
 
-    @Column(name = "imgURL", nullable = false)
-    var imgURL: String? = null
+    @Column(name = "imageURL", nullable = false)
+    var imageURL: String? = null
+
+    @Column(name = "personID", nullable = false)
+    var personId: Int? = null
+
 }

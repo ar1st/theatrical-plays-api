@@ -6,5 +6,5 @@ import aris.thesis.theatricalplaysapi.entities.Person
 class PersonDTO(person: Person, image: Image? = Image()): DataTransferObject<Person> {
     val id = person.id
     val fullName = person.fullName
-    val image: String? = image?.imgURL
+    val image: String? = image?.imageURL
 }
