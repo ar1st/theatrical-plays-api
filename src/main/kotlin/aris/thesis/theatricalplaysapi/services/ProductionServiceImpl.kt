@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ProductionServiceImpl: ProductionService {
@@ -22,17 +20,20 @@ class ProductionServiceImpl: ProductionService {
     @Autowired
     lateinit var contributionRepository: ContributionRepository
 
-    @Transactional
-    override fun getAllProductions(): List<Production> {
-        return productionRepository.findAll(Sort.by(Sort.Direction.DESC,"title") )
+    override fun getAllProductions(page: Int, size: Int): Page<Production> {
+        return if (page >= 0 && size > 0) {
+            productionRepository.findAll(PageRequest.of(page, size))
+        } else {
+            productionRepository.findAll(Pageable.unpaged())
+        }
     }
 
-    override fun getAllProductions(pageable: Pageable): Page<Production> {
-        return productionRepository.findAll(pageable)
-    }
-
-    override fun getLatestProductions(pageable: Pageable): Page<Production> {
-        return productionRepository.findLatestProductions(pageable)
+    override fun getLatestProductions(page: Int, size: Int): Page<Production> {
+        return if (page >= 0 && size > 0) {
+            productionRepository.findLatestProductions(PageRequest.of(page, size))
+        } else {
+            productionRepository.findLatestProductions(Pageable.unpaged())
+        }
     }
 
     override fun getById(productionId: Int): Production? {
@@ -47,12 +48,20 @@ class ProductionServiceImpl: ProductionService {
         return contributionRepository.findByProductionID(productionId)
     }
 
-    override fun getProductionBySpec(spec: Specification<Production>, pageable: Pageable): Page<Production> {
-        return productionRepository.findAll(spec,pageable)
+    override fun getProductionBySpec(spec: Specification<Production>, page: Int, size: Int): Page<Production> {
+        return if (page >= 0 && size > 0) {
+            productionRepository.findAll(spec, PageRequest.of(page, size))
+        } else {
+            productionRepository.findAll(spec, Pageable.unpaged())
+        }
     }
 
-    override fun getProductionsByVenueId(venueId: Int, pageable: Pageable): Page<Production> {
-        return productionRepository.findByVenueId(venueId, pageable)
+    override fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): Page<Production> {
+        return if (page >= 0 && size > 0) {
+            productionRepository.findByVenueId(venueId, PageRequest.of(page, size))
+        } else {
+            productionRepository.findByVenueId(venueId, Pageable.unpaged())
+        }
     }
 
 }

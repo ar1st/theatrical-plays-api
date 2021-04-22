@@ -4,7 +4,6 @@ import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.repositories.ImageRepository
 import aris.thesis.theatricalplaysapi.services.types.ImageService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service

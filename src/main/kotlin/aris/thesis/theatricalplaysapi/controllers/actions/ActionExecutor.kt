@@ -1,4 +1,3 @@
 package aris.thesis.theatricalplaysapi.controllers.actions
 
-interface ActionExecutor<A: Action> {
-}
+interface ActionExecutor<A: Action>

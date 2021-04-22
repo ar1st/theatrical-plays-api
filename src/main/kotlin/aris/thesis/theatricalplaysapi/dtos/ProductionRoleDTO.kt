@@ -14,7 +14,5 @@ class ProductionRoleDTO(production: Production, role: Role): DataTransferObject<
     val role = role.role
 
 
-    constructor() : this(Production(),Role()) {
-
-    }
+    constructor() : this(Production(),Role())
 }

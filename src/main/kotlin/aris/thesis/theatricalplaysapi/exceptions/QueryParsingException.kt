@@ -2,7 +2,7 @@ package aris.thesis.theatricalplaysapi.exceptions
 
 import org.springframework.http.HttpStatus
 
-class QueryParsingException(): RestException() {
+class QueryParsingException: RestException() {
     override fun status(): String {
         return HttpStatus.BAD_REQUEST.name
     }

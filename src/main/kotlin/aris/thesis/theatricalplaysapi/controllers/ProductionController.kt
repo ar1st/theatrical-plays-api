@@ -17,7 +17,7 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
 
     @GetMapping("")
     fun getAll(@RequestParam(required = false) page: Int?,
-               @RequestParam(required = false) size: Int?,): ApiResponse<Page<ProductionDTO>, String> {
+               @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>, String> {
         return executor.getAllProductions(page?: -1, size?: -1)
     }
 
@@ -51,5 +51,13 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
                      @RequestParam(required = false) size: Int?,
                      response: HttpServletResponse): ApiResponse<Page<ProductionDTO>, String> {
         return executor.searchProduction(query, page?: -1, size ?: -1, response)
+    }
+
+    @GetMapping("/date")
+    fun getProductionsByEventDate(@RequestParam(required = false) start: String?,
+                                  @RequestParam(required = false) end: String?,
+                                  @RequestParam(required = false) page: Int?,
+                                  @RequestParam(required = false) size: Int? ): ApiResponse<Page<ProductionDTO>, String> {
+        return executor.getProductionsByEventDate(start, end, page ?:-1, size ?: -1)
     }
 }

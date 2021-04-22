@@ -1,7 +1,6 @@
 package aris.thesis.theatricalplaysapi.specifications
 
 import aris.thesis.theatricalplaysapi.entities.Person
-import aris.thesis.theatricalplaysapi.exceptions.error.never
 import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
 import aris.thesis.theatricalplaysapi.specifications.base.SearchCriteria
 import aris.thesis.theatricalplaysapi.specifications.base.SearchOperation

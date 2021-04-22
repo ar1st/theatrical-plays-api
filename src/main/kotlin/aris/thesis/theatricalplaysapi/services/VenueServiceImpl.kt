@@ -6,6 +6,7 @@ import aris.thesis.theatricalplaysapi.repositories.VenueRepository
 import aris.thesis.theatricalplaysapi.services.types.VenueService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -16,8 +17,12 @@ class VenueServiceImpl: VenueService {
     @Autowired
     lateinit var venueRepository: VenueRepository
 
-    override fun getAllVenues(pageable: Pageable): Page<Venue> {
-        return venueRepository.findAll(pageable)
+    override fun getAllVenues(page: Int, size: Int): Page<Venue> {
+        return if (page >= 0 && size > 0) {
+            venueRepository.findAll(PageRequest.of(page, size))
+        } else {
+            venueRepository.findAll(Pageable.unpaged())
+        }
     }
 
     override fun getVenueById(venueId: Int): Venue? {

@@ -19,4 +19,5 @@ interface ProductionActions: ActionExecutor<Actions.Production> {
     fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String>
 
     fun getEventsAndVenuesByProduction(productionId: Int): ApiResponse<List<EventVenueDTO>, String>
+    fun getProductionsByEventDate(start: String?, end: String?, page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String>
 }

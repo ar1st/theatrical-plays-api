@@ -13,8 +13,6 @@ import aris.thesis.theatricalplaysapi.parsers.ProductionSpecificationBuilderPars
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer6
 import aris.thesis.theatricalplaysapi.services.types.*
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -25,13 +23,9 @@ import javax.servlet.http.HttpServletResponse
 class ProductionActionsImpl: ProductionActions, ModelServiceConsumer6<ProductionService, PersonService, RoleService, ImageService, EventService, VenueService>() {
 
     override fun getAllProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
-        val paginatedResult = if (page >= 0 && size > 0)
-            firstService.getAllProductions(PageRequest.of(page, size))
-        else
-            firstService.getAllProductions( Pageable.unpaged())
+        val productions = firstService.getAllProductions(page, size)
 
-
-        return ApiResponse(paginatedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
+        return ApiResponse(productions.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
     }
 
     override fun getProduction(productionId: Int, response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
@@ -41,13 +35,9 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer6<Production
     }
 
     override fun getLatestProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
-        val paginatedResult = if (page >= 0 && size > 0)
-            firstService.getLatestProductions(PageRequest.of(page, size))
-        else
-            firstService.getLatestProductions( Pageable.unpaged())
+        val latestProductions = firstService.getLatestProductions(page, size)
 
-        return ApiResponse(paginatedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
-
+        return ApiResponse(latestProductions.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
     }
 
     override fun searchProduction(query: String, page: Int, size: Int,
@@ -57,11 +47,8 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer6<Production
 
         val spec: Specification<Production> = builder.build() ?: wrongQuery()
 
-        val pagedResult = if (page >= 0 && size > 0)
-            firstService.getProductionBySpec(spec, PageRequest.of(page, size))
-        else
-            firstService.getProductionBySpec(spec, Pageable.unpaged())
-        return ApiResponse(pagedResult.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
+        val productionsBySpec = firstService.getProductionBySpec(spec, page, size)
+        return ApiResponse(productionsBySpec.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
     }
 
     override fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String> {
@@ -92,5 +79,9 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer6<Production
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
+    }
+
+    override fun getProductionsByEventDate(start: String?, end: String?, page: Int, size: Int ): ApiResponse<Page<ProductionDTO>, String> {
+        TODO("Not yet implemented")
     }
 }
