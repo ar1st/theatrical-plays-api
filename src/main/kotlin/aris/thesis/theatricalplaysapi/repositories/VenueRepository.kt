@@ -10,7 +10,7 @@ interface VenueRepository : JpaRepository<Venue, Int>{
 
     @Query(value = "select venue.* " +
             "from venue inner join events on venue.ID = events.VenueID " +
-            "where events.ID = 4956", nativeQuery = true)
+            "where events.ID = :eventId", nativeQuery = true)
     fun findVenueByEventId(eventId: Int): Venue
 
 }
