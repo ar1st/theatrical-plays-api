@@ -2,7 +2,7 @@ package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
 import org.springframework.data.domain.Page
@@ -38,7 +38,7 @@ class PersonController: TheatricalPlaysRestController<PersonActions>() {
     fun getProductionAndRoleByPersonId(@PathVariable("ID") personId: Int,
                                @RequestParam(required = false) page: Int?,
                                @RequestParam(required = false) size: Int?,
-                               response: HttpServletResponse): ApiResponse<Page<ProductionRoleDTO>,String>{
+                               response: HttpServletResponse): ApiResponse<Page<ProductionRoleDTO>, String> {
         return executor.getProductionAndRoleByPersonId(personId,page?: -1 ,size ?: -1,response)
     }
 

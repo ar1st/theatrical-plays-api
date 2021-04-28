@@ -2,7 +2,7 @@ package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.VenueActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.dtos.VenueDTO
 import org.springframework.data.domain.Page

@@ -2,7 +2,7 @@ package aris.thesis.theatricalplaysapi.controllers.actions.def
 
 import aris.thesis.theatricalplaysapi.controllers.actions.ActionExecutor
 import aris.thesis.theatricalplaysapi.controllers.actions.Actions
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
@@ -19,5 +19,4 @@ interface ProductionActions: ActionExecutor<Actions.Production> {
     fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String>
 
     fun getEventsAndVenuesByProduction(productionId: Int): ApiResponse<List<EventVenueDTO>, String>
-    fun getProductionsByEventDate(start: String?, end: String?, page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String>
 }

@@ -1,7 +1,7 @@
 package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
 import aris.thesis.theatricalplaysapi.entities.Person

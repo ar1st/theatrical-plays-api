@@ -2,7 +2,7 @@ package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.ProductionActions
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
@@ -41,7 +41,7 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
 
     @GetMapping("/{productionId}/events")
     fun getEventsAndVenuesByProduction(@PathVariable("productionId") productionId: Int):
-            ApiResponse<List<EventVenueDTO>, String>{
+            ApiResponse<List<EventVenueDTO>, String> {
         return executor.getEventsAndVenuesByProduction(productionId)
     }
 
@@ -51,13 +51,5 @@ class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
                      @RequestParam(required = false) size: Int?,
                      response: HttpServletResponse): ApiResponse<Page<ProductionDTO>, String> {
         return executor.searchProduction(query, page?: -1, size ?: -1, response)
-    }
-
-    @GetMapping("/date")
-    fun getProductionsByEventDate(@RequestParam(required = false) start: String?,
-                                  @RequestParam(required = false) end: String?,
-                                  @RequestParam(required = false) page: Int?,
-                                  @RequestParam(required = false) size: Int? ): ApiResponse<Page<ProductionDTO>, String> {
-        return executor.getProductionsByEventDate(start, end, page ?:-1, size ?: -1)
     }
 }

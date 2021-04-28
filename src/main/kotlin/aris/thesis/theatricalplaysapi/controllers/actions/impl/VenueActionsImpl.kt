@@ -1,7 +1,7 @@
 package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.VenueActions
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.dtos.VenueDTO
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound

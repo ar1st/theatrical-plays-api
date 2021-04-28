@@ -1,7 +1,7 @@
 package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
 import aris.thesis.theatricalplaysapi.controllers.actions.def.ProductionActions
-import aris.thesis.theatricalplaysapi.dtos.ApiResponse
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
@@ -79,9 +79,5 @@ class ProductionActionsImpl: ProductionActions, ModelServiceConsumer6<Production
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
-    }
-
-    override fun getProductionsByEventDate(start: String?, end: String?, page: Int, size: Int ): ApiResponse<Page<ProductionDTO>, String> {
-        TODO("Not yet implemented")
     }
 }
