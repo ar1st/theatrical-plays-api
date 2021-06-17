@@ -1,6 +1,7 @@
 package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
-import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
+import aris.thesis.theatricalplaysapi.controllers.actions.ActionExecutor
+import aris.thesis.theatricalplaysapi.controllers.actions.Actions
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
@@ -20,20 +21,19 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpServletResponse
 
-
 @Component
 @Suppress("unused")
-class PersonActionsImpl : PersonActions,
-    ModelServiceConsumer4<PersonService, ProductionService, RoleService, ImageService>() {
+class PersonActionsImpl : ActionExecutor<Actions.Person>,
+                            ModelServiceConsumer4<PersonService, ProductionService, RoleService, ImageService>() {
 
-    override fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
+    fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
         val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
         val image = fourthService.getByPersonId(personId)
 
         return ApiResponse(PersonDTO(person, image), null, HttpStatus.OK.name)
     }
 
-    override fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
+    fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
         val people = firstService.getAllPeople(page, size)
 
         val allImages = fourthService.getAll()
@@ -45,7 +45,7 @@ class PersonActionsImpl : PersonActions,
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    override fun getPeopleByRole(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
+    fun getPeopleByRole(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
         val peopleByRole = firstService.getPeopleByRole(value, page, size)
 
         val allImages = fourthService.getAll()
@@ -57,8 +57,10 @@ class PersonActionsImpl : PersonActions,
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    override fun getProductionAndRoleByPersonId( personId: Int, page: Int, size: Int,
-                                                 response: HttpServletResponse ): ApiResponse<Page<ProductionRoleDTO>, String> {
+    fun getProductionAndRoleByPersonId(
+        personId: Int, page: Int, size: Int,
+        response: HttpServletResponse
+    ): ApiResponse<Page<ProductionRoleDTO>, String> {
         firstService.getById(personId) ?: notFound("Person", personId.toString())
 
         val contributions = firstService.getContributionsByPersonId(personId, page, size)
@@ -73,8 +75,10 @@ class PersonActionsImpl : PersonActions,
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    override fun searchPeople( query: String, page: Int, size: Int,
-                               response: HttpServletResponse): ApiResponse<Page<PersonDTO>, String> {
+    fun searchPeople(
+        query: String, page: Int, size: Int,
+        response: HttpServletResponse
+    ): ApiResponse<Page<PersonDTO>, String> {
         val parser = PersonSpecificationBuilderParser()
         val builder = parser.parse(query)
 

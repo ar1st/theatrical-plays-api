@@ -1,6 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers
 
-import aris.thesis.theatricalplaysapi.controllers.actions.def.VenueActions
+import aris.thesis.theatricalplaysapi.controllers.actions.impl.VenueActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/venues", produces = [MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8"])
-class VenueController: TheatricalPlaysRestController<VenueActions>() {
+class VenueController: TheatricalPlaysRestController<VenueActionsImpl>() {
 
 //    page minValue = 0, size minValue=1
 //    values less than the aforementioned will return the all the elements

@@ -1,6 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers
 
-import aris.thesis.theatricalplaysapi.controllers.actions.def.PersonActions
+import aris.thesis.theatricalplaysapi.controllers.actions.impl.PersonActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/api/people", produces = [MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8"])
-class PersonController: TheatricalPlaysRestController<PersonActions>() {
+class PersonController: TheatricalPlaysRestController<PersonActionsImpl>() {
 
     @GetMapping("/{ID}")
     fun getById(@PathVariable("ID") personId:Int) : ApiResponse<PersonDTO, String> {

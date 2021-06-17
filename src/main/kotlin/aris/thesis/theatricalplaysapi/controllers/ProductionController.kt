@@ -1,6 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers
 
-import aris.thesis.theatricalplaysapi.controllers.actions.def.ProductionActions
+import aris.thesis.theatricalplaysapi.controllers.actions.impl.ProductionActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/api/productions", produces = [MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8"])
-class ProductionController: TheatricalPlaysRestController<ProductionActions>() {
+class ProductionController: TheatricalPlaysRestController<ProductionActionsImpl>() {
 
     @GetMapping("")
     fun getAll(@RequestParam(required = false) page: Int?,

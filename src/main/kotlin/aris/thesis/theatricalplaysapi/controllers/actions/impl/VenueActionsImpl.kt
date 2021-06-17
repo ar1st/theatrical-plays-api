@@ -1,6 +1,7 @@
 package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
-import aris.thesis.theatricalplaysapi.controllers.actions.def.VenueActions
+import aris.thesis.theatricalplaysapi.controllers.actions.ActionExecutor
+import aris.thesis.theatricalplaysapi.controllers.actions.Actions
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.dtos.VenueDTO
@@ -14,21 +15,21 @@ import org.springframework.stereotype.Component
 
 @Component
 @Suppress("unused")
-class VenueActionsImpl: VenueActions, ModelServiceConsumer2<VenueService, ProductionService>() {
+class VenueActionsImpl: ActionExecutor<Actions.Venue>, ModelServiceConsumer2<VenueService, ProductionService>() {
 
-    override fun getAllVenues(page: Int, size: Int): ApiResponse<Page<VenueDTO>, String> {
+    fun getAllVenues(page: Int, size: Int): ApiResponse<Page<VenueDTO>, String> {
         val venues = firstService.getAllVenues(page, size)
 
         return ApiResponse(venues.map { VenueDTO(it) }, null, HttpStatus.OK.name)
     }
 
-    override fun getVenueById(venueId: Int): ApiResponse<VenueDTO, String> {
+    fun getVenueById(venueId: Int): ApiResponse<VenueDTO, String> {
         val venue = firstService.getVenueById(venueId)?: notFound("Venue", venueId.toString())
 
         return ApiResponse(VenueDTO(venue), null, HttpStatus.OK.name)
     }
 
-    override fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
+    fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
         firstService.getVenueById(venueId)?: notFound("Venue", venueId.toString())
 
         val productionsByVenueId = secondService.getProductionsByVenueId(venueId, page, size)
