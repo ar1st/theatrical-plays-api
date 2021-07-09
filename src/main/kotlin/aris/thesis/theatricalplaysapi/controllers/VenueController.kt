@@ -1,5 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers
 
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants
 import aris.thesis.theatricalplaysapi.controllers.actions.impl.VenueActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
@@ -10,28 +11,28 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/venues", produces = [MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8"])
-class VenueController: TheatricalPlaysRestController<VenueActionsImpl>() {
+@RequestMapping(RestPathConstants.REST_BASE_PATH_VENUES,
+                produces = [MediaType.APPLICATION_JSON_VALUE + RestPathConstants.MEDIA_TYPE_UTF_8])
+class VenueController : TheatricalPlaysRestController<VenueActionsImpl>() {
 
-//    page minValue = 0, size minValue=1
-//    values less than the aforementioned will return the all the elements
+    //page minValue = 0, size minValue=1
+    //values less than the aforementioned will return the all the elements
     @GetMapping("")
     fun getAllVenues(@RequestParam(required = false) page: Int?,
-                     @RequestParam(required = false) size: Int?) : ApiResponse<Page<VenueDTO>, String> {
-        return executor.getAllVenues(page?: -1 ,size?: -1)
+                     @RequestParam(required = false) size: Int?): ApiResponse<Page<VenueDTO>, String> {
+        return executor.getAllVenues(page ?: -1, size ?: -1)
     }
 
-    @GetMapping("/{ID}")
-    fun getById(@PathVariable("ID") venueId: Int) : ApiResponse<VenueDTO, String> {
+    @GetMapping(RestPathConstants.REST_PATH_VENUE_ID)
+    fun getById(@PathVariable("venueId") venueId: Int): ApiResponse<VenueDTO, String> {
         return executor.getVenueById(venueId)
     }
 
     //not yet functional
-    @GetMapping("/{ID}/productions")
-    fun getProductionsByVenueId(@PathVariable("ID") venueId: Int,
+    @GetMapping(RestPathConstants.REST_PATH_VENUE_ID + RestPathConstants.REST_PATH_PRODUCTIONS)
+    fun getProductionsByVenueId(@PathVariable("venueId") venueId: Int,
                                 @RequestParam(required = false) page: Int?,
                                 @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>, String> {
-        return executor.getProductionsByVenueId(venueId, page?: -1, size?: -1)
+        return executor.getProductionsByVenueId(venueId, page ?: -1, size ?: -1)
     }
-
 }
