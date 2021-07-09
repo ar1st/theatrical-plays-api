@@ -35,7 +35,7 @@ class Production {
     @Column(name = "timestamp", nullable = false)
     var timestamp: Date? = null
 
-    @Column(name = "Description", nullable = false)
+    @Column(name = "Description", nullable = false, columnDefinition = "LONGTEXT")
     var description: String? = null
     override fun toString(): String {
         return "Production{" +
