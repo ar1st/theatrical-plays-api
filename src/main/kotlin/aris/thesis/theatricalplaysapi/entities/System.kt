@@ -2,6 +2,7 @@ package aris.thesis.theatricalplaysapi.entities
 
 import javax.persistence.*
 
+
 @Entity
 @Table(name = "system")
 class System {

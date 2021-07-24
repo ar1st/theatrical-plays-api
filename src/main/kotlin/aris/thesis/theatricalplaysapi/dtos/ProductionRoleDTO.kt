@@ -3,7 +3,7 @@ package aris.thesis.theatricalplaysapi.dtos
 import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.entities.Role
 
-class ProductionRoleDTO(production: Production, role: Role): DataTransferObject<Production> {
+class ProductionRoleDTO(production: Production, role: Role): DataTransferObject {
     val productionId = production.id
     val title = production.title
     val url = production.url
