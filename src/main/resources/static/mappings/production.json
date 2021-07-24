@@ -1,0 +1,13 @@
+{
+  "properties" : {
+    "id": {
+      "type": "keyword"
+    },
+    "title": {
+      "type": "keyword"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

@@ -22,6 +22,7 @@ object RestPathConstants {
     const val REST_PATH_EVENTS = "/events"
 
     const val REST_PATH_SEARCH = "/search"
+    const val REST_PATH_ELASTIC_SEARCH = "/elasticsearch"
     const val MEDIA_TYPE_UTF_8 = "; charset=utf-8"
 }
 

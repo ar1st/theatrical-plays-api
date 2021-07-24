@@ -64,40 +64,40 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     private fun createErrorResponse(status: HttpStatus, description: String): RestResponse {
-        val HttpStatusTypeGeneric = 0
-        val HttpStatusTypeInformational = 1
-        val HttpStatusTypeSuccessful = 2
-        val HttpStatusTypeRedirection = 3
-        val HttpStatusTypeClientError = 4
-        val HttpStatusTypeServerError = 5
+        val httpStatusTypeGeneric = 0
+        val httpStatusTypeInformational = 1
+        val httpStatusTypeSuccessful = 2
+        val httpStatusTypeRedirection = 3
+        val httpStatusTypeClientError = 4
+        val httpStatusTypeServerError = 5
 
-        var statusType = HttpStatusTypeGeneric
+        var statusType = httpStatusTypeGeneric
 
         when {
             status.is1xxInformational -> {
-                statusType = HttpStatusTypeInformational
+                statusType = httpStatusTypeInformational
             }
             status.is2xxSuccessful -> {
-                statusType = HttpStatusTypeSuccessful
+                statusType = httpStatusTypeSuccessful
             }
             status.is3xxRedirection -> {
-                statusType = HttpStatusTypeRedirection
+                statusType = httpStatusTypeRedirection
             }
             status.is4xxClientError -> {
-                statusType = HttpStatusTypeClientError
+                statusType = httpStatusTypeClientError
             }
             status.is5xxServerError -> {
-                statusType = HttpStatusTypeServerError
+                statusType = httpStatusTypeServerError
             }
         }
 
 
         val cause = when (statusType) {
-            HttpStatusTypeInformational -> "Unknown. Http Status implied informational status, but an error occurred."
-            HttpStatusTypeSuccessful -> "Unknown. Http Status implied successful status, but an error occurred."
-            HttpStatusTypeRedirection -> "Unknown. Http Status implied redirection status, but an error occurred."
-            HttpStatusTypeClientError -> "Unknown. Generic Client Error."
-            HttpStatusTypeServerError -> "Unknown. Generic Server Error."
+            httpStatusTypeInformational -> "Unknown. Http Status implied informational status, but an error occurred."
+            httpStatusTypeSuccessful -> "Unknown. Http Status implied successful status, but an error occurred."
+            httpStatusTypeRedirection -> "Unknown. Http Status implied redirection status, but an error occurred."
+            httpStatusTypeClientError -> "Unknown. Generic Client Error."
+            httpStatusTypeServerError -> "Unknown. Generic Server Error."
             else -> "Generic unknown."
         }
 

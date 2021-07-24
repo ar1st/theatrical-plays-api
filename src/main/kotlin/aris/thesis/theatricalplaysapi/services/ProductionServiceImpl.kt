@@ -1,5 +1,6 @@
 package aris.thesis.theatricalplaysapi.services
 
+import aris.thesis.theatricalplaysapi.repositories.elastic.ProductionElasticSearchRepository
 import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.repositories.ContributionRepository
@@ -19,6 +20,8 @@ class ProductionServiceImpl: ProductionService {
     lateinit var productionRepository: ProductionRepository
     @Autowired
     lateinit var contributionRepository: ContributionRepository
+    @Autowired
+    lateinit var productionElasticSearchRepository: ProductionElasticSearchRepository
 
     override fun getAllProductions(page: Int, size: Int): Page<Production> {
         return if (page >= 0 && size > 0) {
@@ -62,6 +65,10 @@ class ProductionServiceImpl: ProductionService {
         } else {
             productionRepository.findByVenueId(venueId, Pageable.unpaged())
         }
+    }
+
+    override fun elasticSearch(value: String): List<Production> {
+        return productionElasticSearchRepository.findByDescriptionContainingIgnoreCaseOrTitleContainingIgnoreCase(value, value)
     }
 
 }

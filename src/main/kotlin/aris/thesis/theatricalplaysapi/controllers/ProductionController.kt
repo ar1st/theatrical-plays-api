@@ -3,10 +3,10 @@ package aris.thesis.theatricalplaysapi.controllers
 import aris.thesis.theatricalplaysapi.constants.*
 import aris.thesis.theatricalplaysapi.controllers.actions.impl.ProductionActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
-import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -55,5 +55,10 @@ class ProductionController : TheatricalPlaysRestController<ProductionActionsImpl
                           @RequestParam(required = false) size: Int?,
                           response: HttpServletResponse): ApiResponse<Page<ProductionDTO>, String> {
         return executor.searchProduction(query, page ?: -1, size ?: -1, response)
+    }
+
+    @GetMapping(RestPathConstants.REST_PATH_ELASTIC_SEARCH)
+    fun search(@RequestParam("value") value: String): ApiResponse<List<ProductionDTO>, Nothing> {
+        return executor.elasticSearch(value)
     }
 }

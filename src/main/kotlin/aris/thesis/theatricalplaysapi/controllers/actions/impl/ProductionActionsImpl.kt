@@ -2,7 +2,6 @@ package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
 import aris.thesis.theatricalplaysapi.controllers.actions.ActionExecutor
 import aris.thesis.theatricalplaysapi.controllers.actions.Actions
-import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
@@ -11,8 +10,11 @@ import aris.thesis.theatricalplaysapi.exceptions.error.never
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
 import aris.thesis.theatricalplaysapi.parsers.ProductionSpecificationBuilderParser
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer6
 import aris.thesis.theatricalplaysapi.services.types.*
+import org.elasticsearch.client.RestHighLevelClient
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.http.HttpStatus
@@ -22,6 +24,9 @@ import javax.servlet.http.HttpServletResponse
 @Component
 @Suppress("unused")
 class ProductionActionsImpl: ActionExecutor<Actions.Production>, ModelServiceConsumer6<ProductionService, PersonService, RoleService, ImageService, EventService, VenueService>() {
+
+    @Autowired
+    lateinit var client: RestHighLevelClient
 
     fun getAllProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
         val productions = firstService.getAllProductions(page, size)
@@ -80,5 +85,11 @@ class ProductionActionsImpl: ActionExecutor<Actions.Production>, ModelServiceCon
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
+    }
+
+    fun elasticSearch(value: String): ApiResponse<List<ProductionDTO>, Nothing> {
+        val productions = firstService.elasticSearch(value)
+
+        return ApiResponse(productions.map { ProductionDTO(it) }, null, HttpStatus.OK.name)
     }
 }

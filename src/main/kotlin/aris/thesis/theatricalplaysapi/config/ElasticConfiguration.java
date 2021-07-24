@@ -1,6 +1,7 @@
 package aris.thesis.theatricalplaysapi.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +19,7 @@ public class ElasticConfiguration extends AbstractElasticsearchConfiguration {
     @Value("${elasticsearch.url}")
     public String elasticSearchURL;
 
+    @NotNull
     @Bean
     @Override
     public RestHighLevelClient elasticsearchClient() {

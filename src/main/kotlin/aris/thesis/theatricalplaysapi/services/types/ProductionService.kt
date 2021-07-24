@@ -15,4 +15,5 @@ interface ProductionService: ModelService {
 
     fun getProductionBySpec(spec: Specification<Production>, page: Int, size: Int): Page<Production>
     fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): Page<Production>
+    fun elasticSearch(value: String): List<Production>
 }
