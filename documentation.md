@@ -1,12 +1,12 @@
 # Documentation for Theatrical Plays API
 
-This is the documentation for my thesis. It is about the creation of an API concerning data related to theatrical plays. The main goal is to be used for the implementation of a web-based front end, an Android app and an iOS app.  The API was built using the Spring Framework and the Kotlin programming language. 
+This is the documentation for my thesis. It is about the creation of an API concerning data related to theatrical plays. The main goal is to be used for the implementation of a web-based front end, an Android app and an iOS app.  The API was built using the Spring Framework, the Kotlin programming language and ElasticSearch to index through specific fields. 
 
 ------
 
 ## Api Response
 
-All the responses from the server are being encapsuled with the ApiResponse container object. 
+All the responses from the server are being encapsuled within the ApiResponse container object. 
 It consists of three fields: `data`, `errors` and `status`.
 
 The `data` field contains the requested data.
@@ -27,14 +27,24 @@ Example:
 
 ## Contents
 
-1. [Person](#person)
-2. [Production](#production)
-3. [Venue](#venue)
-4. [Change log](#change-log)
+1. [Configure ElasticSearch](#configure-elasticsearch)
+2. [Person](#person)
+3. [Production](#production)
+4. [Venue](#venue)
+5. [Change log](#change-log)
 
-## Api Requests
+## Configure ElasticSearch
+Before deploying the SpringBoot application, the ElasticSearch Service must be started.
+
+First download [ElasticSearch 7.6.2](https://www.elastic.co/downloads/past-releases/elasticsearch-7-6-2) <br/>
+Unzip file on desired location and then execute *%ELASTIC_HOME%/bin/elasticsearch.bat*  <br/>
+Verify that ElasticSearch has started (http://localhost:9200/) <br/>
+
+You are all set!! You can start the SpringBoot application
 
 ---
+
+## Api Requests
 
 ## Person
 
@@ -243,6 +253,24 @@ This request is used to retrieve all the events linked to a production.
 
 ---
 
+**Search Productions By Title Or Description Using ElasticSearch**
+
+| GET             | /api/productions/elasticsearch                         |
+| --------------- | ------------------------------------------ |
+| **Parameters**  |                                            |
+| *value*         | <u>Request parameter</u>                   |
+|                 | The value to search for                    |
+| *page*          | <u>Request parameter</u>                   |
+|                 | The index of the page to return. Optional  |
+| *size*          | <u>Request parameter</u>                   |
+|                 | The size of the page. Optional             |
+| **Responses**   |                                            |
+| Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
+
+| [:book: Contents](#contents) | [:earth_africa: Production](#production) |
+
+---
+
 ## Venue
 
 This collection contains all the requests regarding a venue.
@@ -303,10 +331,16 @@ This request is used to retrieve all productions located in the given venue.
 
 
 <details>
+    <summary>25/07/2021</summary>
+        <pre>
+1. Add documenetion for /api/productions/elasticsearch
+        </pre>
+</details>
+<details>
     <summary>17/04/2021</summary>
         <pre>
 1. Change log created. 
-2. Added documentation for person, production and some venue actions.
+2. Add documentation for person, production and some venue actions.
     Endpoints added:
         Person:
             GET /api/people/
