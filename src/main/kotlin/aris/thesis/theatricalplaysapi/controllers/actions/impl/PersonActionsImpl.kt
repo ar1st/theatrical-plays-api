@@ -15,6 +15,7 @@ import aris.thesis.theatricalplaysapi.services.types.ImageService
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import aris.thesis.theatricalplaysapi.services.types.RoleService
+import aris.thesis.theatricalplaysapi.utils.asPersonDTO
 import org.springframework.data.domain.Page
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.http.HttpStatus
@@ -30,7 +31,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
         val image = fourthService.getByPersonId(personId)
 
-        return ApiResponse(PersonDTO(person, image), null, HttpStatus.OK.name)
+        return ApiResponse( person.asPersonDTO(image), null, HttpStatus.OK.name)
     }
 
     fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {

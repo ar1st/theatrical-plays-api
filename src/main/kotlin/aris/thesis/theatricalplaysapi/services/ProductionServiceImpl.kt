@@ -67,8 +67,13 @@ class ProductionServiceImpl: ProductionService {
         }
     }
 
-    override fun elasticSearch(value: String): List<Production> {
-        return productionElasticSearchRepository.findByDescriptionContainingIgnoreCaseOrTitleContainingIgnoreCase(value, value)
+    override fun elasticSearch(value: String, page: Int, size: Int): Page<Production> {
+        return if (page >= 0 && size > 0) {
+            productionElasticSearchRepository
+                    .findByDescriptionContainingIgnoreCaseOrTitleContainingIgnoreCase(value, value, PageRequest.of(page, size))
+        } else {
+            productionElasticSearchRepository
+                    .findByDescriptionContainingIgnoreCaseOrTitleContainingIgnoreCase(value, value, Pageable.unpaged())
+        }
     }
-
 }
