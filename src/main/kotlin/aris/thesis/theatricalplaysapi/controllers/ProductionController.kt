@@ -56,11 +56,4 @@ class ProductionController : TheatricalPlaysRestController<ProductionActionsImpl
                           response: HttpServletResponse): ApiResponse<Page<ProductionDTO>, String> {
         return executor.searchProduction(query, page ?: -1, size ?: -1, response)
     }
-
-    @GetMapping(RestPathConstants.REST_PATH_ELASTIC_SEARCH)
-    fun search(@RequestParam("value", required = true) value: String,
-               @RequestParam(required = false) page: Int?,
-               @RequestParam(required = false) size: Int?,): ApiResponse<Page<ProductionDTO>, String> {
-        return executor.elasticSearch(value, page ?: -1, size ?: -1)
-    }
 }

@@ -1,14 +1,10 @@
 package aris.thesis.theatricalplaysapi.entities
 
-import org.springframework.data.elasticsearch.annotations.Document
-import org.springframework.data.elasticsearch.annotations.Field
-import org.springframework.data.elasticsearch.annotations.FieldType
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "production")
-@Document(indexName = "productions")
 class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +36,6 @@ class Production {
     var timestamp: Date? = null
 
     @Column(name = "Description", nullable = false, columnDefinition = "LONGTEXT")
-    @Field(type = FieldType.Text)
     var description: String? = null
     override fun toString(): String {
         return "Production{" +
