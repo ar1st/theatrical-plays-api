@@ -6,5 +6,5 @@ import aris.thesis.theatricalplaysapi.services.proto.ModelService
 interface ImageService: ModelService {
 
     fun getAll(): List<Image>
-    fun getByPersonId(personId: Int): Image?
+    fun getByPersonId(personId: Int): Set<Image>
 }

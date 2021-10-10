@@ -10,8 +10,8 @@ import aris.thesis.theatricalplaysapi.entities.Venue
 import org.springframework.data.domain.Page
 
 //People
-fun Person.asPersonDTO(image: Image?): PersonDTO {
-    return PersonDTO(this, image)
+fun Person.asPersonDTO(images: Set<Image>): PersonDTO {
+    return PersonDTO(this, images)
 }
 
 

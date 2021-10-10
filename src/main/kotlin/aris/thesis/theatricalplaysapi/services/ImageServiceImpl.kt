@@ -16,7 +16,7 @@ class ImageServiceImpl: ImageService {
         return imageRepository.findAll()
     }
 
-    override fun getByPersonId(personId: Int): Image? {
+    override fun getByPersonId(personId: Int): Set<Image> {
         return imageRepository.findByPersonId(personId)
     }
 }

@@ -29,9 +29,9 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
 
     fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
         val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
-        val image = fourthService.getByPersonId(personId)
+        val  images= fourthService.getByPersonId(personId)
 
-        return ApiResponse( person.asPersonDTO(image), null, HttpStatus.OK.name)
+        return ApiResponse( person.asPersonDTO(images), null, HttpStatus.OK.name)
     }
 
     fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
@@ -40,7 +40,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         val allImages = fourthService.getAll()
 
         val dtoToReturn = people.map { person ->
-            PersonDTO(person, allImages.firstOrNull { it.personId == person.id })
+            PersonDTO(person, allImages.filter { it.personId == person.id }.toSet())
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
@@ -52,7 +52,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         val allImages = fourthService.getAll()
 
         val dtoToReturn = peopleByRole.map { person ->
-            PersonDTO(person, allImages.firstOrNull { it.personId == person.id })
+            PersonDTO(person, allImages.filter { it.personId == person.id }.toSet())
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
@@ -90,7 +90,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         val allImages = fourthService.getAll()
 
         val dtoToReturn = peopleBySpec.map { person ->
-            PersonDTO(person, allImages.firstOrNull { it.personId == person.id })
+            PersonDTO(person, allImages.filter { it.personId == person.id }.toSet())
         }
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }

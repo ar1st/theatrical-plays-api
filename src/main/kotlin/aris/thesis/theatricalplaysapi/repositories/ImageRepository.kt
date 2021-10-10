@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ImageRepository: JpaRepository<Image, Int> {
 
-    fun findByPersonId(personId: Int): Image?
+    fun findByPersonId(personId: Int): Set<Image>
 }
