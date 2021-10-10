@@ -60,7 +60,7 @@ This request is used to retrieve a person and their image by the provided identi
 | *ID*           | <u>Path variable</u>                       |
 |                | The identifier of the person to retrieve.  |
 | **Responses**  |                                            |
-| PersonDTO      | {id: Int, fullName: String, image: String} |
+| PersonDTO      | {id: Int, fullName: String, image: List\<String\>} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -78,7 +78,7 @@ This request is used to retrieve all people.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -98,7 +98,7 @@ This request returns people filtered by the provided role.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -138,7 +138,7 @@ This request returns all the productions a person participated in and the corres
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -329,7 +329,14 @@ This request is used to retrieve all productions located in the given venue.
 ---
 ## Change log
 
-
+<details>
+    <summary>10/10/2021</summary>
+        <pre>
+1. Support multiple images per person
+2. Disable elastic search temporarily
+    End point /api/productions/elasticsearch is disabled
+        </pre>
+</details>
 <details>
     <summary>25/07/2021</summary>
         <pre>
