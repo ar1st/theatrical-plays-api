@@ -42,6 +42,14 @@ class PersonServiceImpl : PersonService {
         }
     }
 
+    override fun getPeopleByLetter(value: String, page: Int, size: Int): Page<Person> {
+        return if (page >= 0 && size > 0) {
+            personRepository.findPeopleByLetter(value, PageRequest.of(page, size))
+        } else {
+            personRepository.findPeopleByLetter(value, Pageable.unpaged())
+        }
+    }
+
     override fun getPeopleBySpec(spec: Specification<Person>, page: Int, size: Int): Page<Person> {
         return if (page >= 0 && size > 0) {
             personRepository.findAll(spec, PageRequest.of(page, size))

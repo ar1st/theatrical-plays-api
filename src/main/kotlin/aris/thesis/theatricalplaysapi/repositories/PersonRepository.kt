@@ -2,6 +2,7 @@ package aris.thesis.theatricalplaysapi.repositories
 
 import aris.thesis.theatricalplaysapi.entities.Person
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
@@ -19,11 +20,26 @@ interface PersonRepository : JpaRepository<Person, Int>, JpaSpecificationExecuto
     @Query(value = "select p.*, r.Role " +
                 "from persons p inner join contributions c on p.ID=c.PeopleID " +
                 "inner join roles r on r.ID= c.RoleID " +
-                "where r.Role like :value",
+                "where r.Role like :value " +
+                "group by  p.Fullname",
             countQuery = "select count(*) " +
                 "from persons p inner join contributions c on p.ID=c.PeopleID " +
                 "inner join roles r on r.ID= c.RoleID " +
-                "where r.Role like :value",
+                "where r.Role like :value " +
+                "group by  p.Fullname",
             nativeQuery = true)
     fun findPeopleByRole(value: String, pageable: Pageable): Page<Person>
+
+    @Query(value = "select p.*, r.Role " +
+            "from persons p inner join contributions c on p.ID=c.PeopleID " +
+            "inner join roles r on r.ID= c.RoleID " +
+            "where p.Fullname like :value " +
+            "group by  p.Fullname",
+           countQuery = "select count(*) " +
+                   "from persons p inner join contributions c on p.ID=c.PeopleID " +
+                   "inner join roles r on r.ID= c.RoleID " +
+                   "where p.Fullname like :value " +
+                   "group by  p.Fullname",
+           nativeQuery = true)
+    fun findPeopleByLetter(value: String, pageable: Pageable): Page<Person>
 }

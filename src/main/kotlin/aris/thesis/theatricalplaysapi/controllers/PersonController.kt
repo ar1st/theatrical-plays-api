@@ -36,6 +36,13 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
         return executor.getPeopleByRole(value, page ?: -1, size ?: -1)
     }
 
+    @GetMapping(RestPathConstants.REST_PATH_LETTER)
+    fun getPeopleByLetter(@RequestParam(required = true) value: String,
+                          @RequestParam(required = false) page: Int?,
+                          @RequestParam(required = false) size: Int?): ApiResponse<Page<PersonDTO>, String> {
+        return executor.getPeopleByLetter(value, page ?: -1, size ?: -1)
+    }
+
     @GetMapping(RestPathConstants.REST_PATH_PERSON_ID + RestPathConstants.REST_PATH_PRODUCTIONS)
     fun getProductionAndRoleByPersonId(@PathVariable("personId") personId: Int,
                                        @RequestParam(required = false) page: Int?,

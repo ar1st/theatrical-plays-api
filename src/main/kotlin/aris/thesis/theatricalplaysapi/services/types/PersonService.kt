@@ -13,6 +13,8 @@ interface PersonService: ModelService {
 
     fun getPeopleByRole(value: String, page: Int, size: Int): Page<Person>
 
+    fun getPeopleByLetter(value: String, page: Int, size: Int): Page<Person>
+
     fun getPeopleBySpec(spec: Specification<Person>, page: Int, size: Int): Page<Person>
 
     fun getContributionsByPersonId(personId: Int, page: Int, size: Int): Page<Contribution>

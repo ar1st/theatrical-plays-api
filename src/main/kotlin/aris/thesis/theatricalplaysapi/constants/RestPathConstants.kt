@@ -6,6 +6,7 @@ object RestPathConstants {
     const val REST_PATH_PERSON_ID = "/{personId}"
     const val REST_PATH_PEOPLE = "/people"
     const val REST_PATH_ROLE = "/role"
+    const val REST_PATH_LETTER = "/letter"
 
     //productions
     const val REST_BASE_PATH_PRODUCTIONS = "/api/productions"

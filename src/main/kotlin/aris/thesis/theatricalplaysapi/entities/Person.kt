@@ -27,4 +27,12 @@ class Person {
                 "timestamp=" + timestamp + '\'' +
                 '}'
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Person) {
+            return false;
+        }
+
+        return this.fullName.equals(other.fullName)
+    }
 }
