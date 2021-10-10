@@ -104,6 +104,27 @@ This request returns people filtered by the provided role.
 
 ---
 
+
+**Get People By The First Letter Of Their Name**
+
+This request returns people filtered by the provided letter.
+
+| GET             | /api/people/letter                           |
+| --------------- | ------------------------------------------ |
+| **Parameters**  |                                            |
+| *value*         | <u>Request parameter</u>                   |
+|                 | The letter provided to filter the results    |
+| *page*          | <u>Request parameter</u>                   |
+|                 | The index of the page to return. Optional  |
+| *size*          | <u>Request parameter</u>                   |
+|                 | The size of the page. Optional             |
+| **Responses**   |                                            |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
+
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
+
+---
+
 **Get Production and Role by Person ID**
 
 This request returns all the productions a person participated in and the corresponding role.
@@ -335,6 +356,7 @@ This request is used to retrieve all productions located in the given venue.
 1. Support multiple images per person
 2. Disable elastic search temporarily
     End point /api/productions/elasticsearch is disabled
+3. Add documenetion for GET /api/people/letter
         </pre>
 </details>
 <details>
