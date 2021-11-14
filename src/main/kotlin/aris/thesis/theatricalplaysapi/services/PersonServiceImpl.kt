@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -32,9 +33,9 @@ class PersonServiceImpl : PersonService {
 
     override fun getAllPeople(page: Int, size: Int): Page<Person> {
         return if (page >= 0 && size > 0) {
-            personRepository.findAll(PageRequest.of(page, size))
+            personRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "fullName")))
         } else {
-            personRepository.findAll(Pageable.unpaged())
+            personRepository.findAll(PageRequest.of(0, Int.MAX_VALUE, Sort.by(Sort.Direction.ASC, "fullName")))
         }
     }
 
