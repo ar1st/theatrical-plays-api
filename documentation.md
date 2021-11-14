@@ -349,7 +349,12 @@ This request is used to retrieve all productions located in the given venue.
 
 ---
 ## Change log
-
+<details>
+    <summary>14/11/2021</summary>
+        <pre>
+1. Implement /api/people/id/photos
+        </pre>
+</details>
 <details>
     <summary>10/10/2021</summary>
         <pre>
