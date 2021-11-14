@@ -1,6 +1,7 @@
 package aris.thesis.theatricalplaysapi.services.types
 
 import aris.thesis.theatricalplaysapi.entities.Contribution
+import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.entities.Person
 import aris.thesis.theatricalplaysapi.services.proto.ModelService
 import org.springframework.data.domain.Page
@@ -20,5 +21,7 @@ interface PersonService: ModelService {
     fun getContributionsByPersonId(personId: Int, page: Int, size: Int): Page<Contribution>
 
     fun getByContributionId(contributionId: Int): Person?
+
+    fun getPhotosByPersonId(personId: Int): Set<Image>
 
 }

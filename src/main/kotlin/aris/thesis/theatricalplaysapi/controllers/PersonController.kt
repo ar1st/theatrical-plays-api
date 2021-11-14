@@ -1,11 +1,13 @@
 package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_PHOTOS
 import aris.thesis.theatricalplaysapi.controllers.actions.impl.PersonActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
+import aris.thesis.theatricalplaysapi.entities.Image
 import org.springframework.data.domain.Page
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -60,5 +62,10 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
                      @RequestParam(required = false) size: Int?,
                      response: HttpServletResponse): ApiResponse<Page<PersonDTO>, String> {
         return executor.searchPeople(query, page ?: -1, size ?: -1, response)
+    }
+
+    @GetMapping(RestPathConstants.REST_PATH_PERSON_ID + REST_PATH_PHOTOS)
+    fun getPhotosByPersonId(@PathVariable("personId") personId: Int): ApiResponse<Set<Image>, String> {
+        return executor.getPhotosByPersonId(personId)
     }
 }

@@ -2,14 +2,15 @@ package aris.thesis.theatricalplaysapi.controllers.actions.impl
 
 import aris.thesis.theatricalplaysapi.controllers.actions.ActionExecutor
 import aris.thesis.theatricalplaysapi.controllers.actions.Actions
-import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
+import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.entities.Person
 import aris.thesis.theatricalplaysapi.exceptions.error.never
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.exceptions.error.wrongQuery
 import aris.thesis.theatricalplaysapi.parsers.PersonSpecificationBuilderParser
+import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.services.proto.ModelServiceConsumer4
 import aris.thesis.theatricalplaysapi.services.types.ImageService
 import aris.thesis.theatricalplaysapi.services.types.PersonService
@@ -17,7 +18,6 @@ import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import aris.thesis.theatricalplaysapi.services.types.RoleService
 import aris.thesis.theatricalplaysapi.utils.asPersonDTO
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -60,7 +60,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
     }
 
     fun getPeopleByLetter(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
-        var peopleByLetter = firstService.getPeopleByLetter("$value%", page, size)
+        val peopleByLetter = firstService.getPeopleByLetter("$value%", page, size)
 
 
         val allImages = fourthService.getAll()
@@ -70,14 +70,6 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         }
 
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
-    }
-
-    private fun removeDuplicate(people: MutableList<Person>): List<Person> {
-        val uniquePeople = mutableSetOf<Person>()
-
-        people.forEach { uniquePeople.add(it) }
-
-        return uniquePeople.toList()
     }
 
     fun getProductionAndRoleByPersonId(
@@ -115,5 +107,9 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
             PersonDTO(person, allImages.filter { it.personId == person.id }.toSet())
         }
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
+    }
+
+    fun getPhotosByPersonId(personId: Int): ApiResponse<Set<Image>, String> {
+        return ApiResponse(firstService.getPhotosByPersonId(personId), null, HttpStatus.OK.name)
     }
 }

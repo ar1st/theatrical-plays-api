@@ -1,8 +1,10 @@
 package aris.thesis.theatricalplaysapi.services
 
 import aris.thesis.theatricalplaysapi.entities.Contribution
+import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.entities.Person
 import aris.thesis.theatricalplaysapi.repositories.ContributionRepository
+import aris.thesis.theatricalplaysapi.repositories.ImageRepository
 import aris.thesis.theatricalplaysapi.repositories.PersonRepository
 import aris.thesis.theatricalplaysapi.services.types.PersonService
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,6 +20,8 @@ class PersonServiceImpl : PersonService {
     //repos
     @Autowired
     lateinit var personRepository: PersonRepository
+    @Autowired
+    lateinit var imageRepository: ImageRepository
 
     @Autowired
     lateinit var contributionRepository: ContributionRepository
@@ -69,5 +73,9 @@ class PersonServiceImpl : PersonService {
 
     override fun getByContributionId(contributionId: Int): Person? {
         return personRepository.findByContributionId(contributionId)
+    }
+
+    override fun getPhotosByPersonId(personId: Int): Set<Image> {
+        return imageRepository.findByPersonId(personId)
     }
 }
