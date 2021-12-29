@@ -6,7 +6,7 @@ This is the documentation for my thesis. It is about the creation of an API conc
 
 ## Api Response
 
-All the responses from the server are being encapsuled within the ApiResponse container object. 
+All responses from the server are being encapsuled within the ApiResponse container object. 
 It consists of three fields: `data`, `errors` and `status`.
 
 The `data` field contains the requested data.
