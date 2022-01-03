@@ -165,6 +165,21 @@ This request returns all the productions a person participated in and the corres
 
 ---
 
+**Get Photos by Person ID**
+
+| GET             | /api/people/{ID}/photos                    |
+| --------------- | ------------------------------------------ |
+| **Parameters**  |                                            |
+| *ID*            | <u>Path variable</u>                       |
+|                 | The identifier of the person.              |
+|                 | The size of the page. Optional             |
+| **Responses**   |                                            |
+| Set\<Image\> | {id: Int, imageURL: String, personId: Int} |
+
+| [:book: Contents](#contents) | [:earth_africa: Person](#person) |
+
+---
+
 ## Production
 
 This collection contains all the requests regarding a person.
