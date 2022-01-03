@@ -60,7 +60,7 @@ This request is used to retrieve a person and their image by the provided identi
 | *ID*           | <u>Path variable</u>                       |
 |                | The identifier of the person to retrieve.  |
 | **Responses**  |                                            |
-| PersonDTO      | {id: Int, fullName: String, image: List\<String\>} |
+| PersonDTO      | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -78,7 +78,7 @@ This request is used to retrieve all people.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -98,7 +98,7 @@ This request returns people filtered by the provided role.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -119,7 +119,7 @@ This request returns people filtered by the provided letter.
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
@@ -159,7 +159,7 @@ This request returns all the productions a person participated in and the corres
 | *size*          | <u>Request parameter</u>                   |
 |                 | The size of the page. Optional             |
 | **Responses**   |                                            |
-| Page\<PersonDTO\> | {id: Int, fullName: String, image: List\<String\>} |
+| Page\<PersonDTO\> | {id: Int, fullName: String, image: String} |
 
 | [:book: Contents](#contents) | [:earth_africa: Person](#person) |
 
