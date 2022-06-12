@@ -1,5 +1,6 @@
 package aris.thesis.theatricalplaysapi.metrics;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -13,6 +14,7 @@ public class MetricFilter implements Filter {
 
     private MetricsService metricService;
 
+    @Autowired
     public MetricFilter(MetricsService metricService) {
         this.metricService = metricService;
     }
