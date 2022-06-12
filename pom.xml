@@ -91,7 +91,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>package</goal>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
