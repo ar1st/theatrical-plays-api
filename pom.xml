@@ -10,9 +10,9 @@
     </parent>
     <groupId>aris.thesis</groupId>
     <artifactId>theatrical-plays-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>theatrical-plays-api</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Theatrical Plays API</description>
     <properties>
         <java.version>11</java.version>
         <kotlin.version>1.6.10</kotlin.version>
