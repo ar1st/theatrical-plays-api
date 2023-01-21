@@ -1,5 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers
 
+import aris.thesis.theatricalplaysapi.security.permission.IsAdmin
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_PHOTOS
 import aris.thesis.theatricalplaysapi.controllers.actions.impl.PersonActionsImpl
@@ -26,6 +27,7 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
     //page minValue = 0, size minValue=1
     //values less than the aforementioned will return the all the elements
     @GetMapping("")
+    @IsAdmin
     fun getAllPeople(@RequestParam(required = false) page: Int?,
                      @RequestParam(required = false) size: Int?): ApiResponse<Page<PersonDTO>, String> {
         return executor.getAllPeople(page ?: -1, size ?: -1)

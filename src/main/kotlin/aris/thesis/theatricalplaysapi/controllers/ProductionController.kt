@@ -7,6 +7,7 @@ import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
+import aris.thesis.theatricalplaysapi.security.permission.IsAdminOrUser
 import org.springframework.data.domain.Page
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse
 class ProductionController : TheatricalPlaysRestController<ProductionActionsImpl>() {
 
     @GetMapping("")
+    @IsAdminOrUser
     fun getAll(@RequestParam(required = false) page: Int?,
                @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>, String> {
         return executor.getAllProductions(page ?: -1, size ?: -1)
