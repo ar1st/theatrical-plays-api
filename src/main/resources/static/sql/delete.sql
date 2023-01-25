@@ -1,0 +1,13 @@
+drop table if exists user_authorities ;
+drop table if exists users ;
+drop table if exists authorities ;
+drop table if exists events ;
+drop table if exists venue ;
+drop table if exists contributions;
+drop table if exists images ;
+drop table if exists persons ;
+drop table if exists roles ;
+drop table if exists production ;
+drop table if exists organizer  ;
+drop table if exists changelog ;
+drop table if exists `system` ;
