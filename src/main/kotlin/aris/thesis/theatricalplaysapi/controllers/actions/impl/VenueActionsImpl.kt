@@ -20,19 +20,19 @@ import org.springframework.stereotype.Component
 @Suppress("unused")
 class VenueActionsImpl : ActionExecutor<Actions.Venue>, ModelServiceConsumer2<VenueService, ProductionService>() {
 
-    fun getAllVenues(page: Int, size: Int): ApiResponse<Page<VenueDTO>, String> {
+    fun getAllVenues(page: Int, size: Int): ApiResponse<Page<VenueDTO>> {
         val venues = firstService.getAllVenues(page, size)
 
         return ApiResponse(venues.asPageVenueDTO(), null, HttpStatus.OK.name)
     }
 
-    fun getVenueById(venueId: Int): ApiResponse<VenueDTO, String> {
+    fun getVenueById(venueId: Int): ApiResponse<VenueDTO> {
         val venue = firstService.getVenueById(venueId) ?: notFound("Venue", venueId.toString())
 
         return ApiResponse(venue.asVenueDTO(), null, HttpStatus.OK.name)
     }
 
-    fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
+    fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): ApiResponse<Page<ProductionDTO>> {
         firstService.getVenueById(venueId) ?: notFound("Venue", venueId.toString())
 
         val productionsByVenueId = secondService.getProductionsByVenueId(venueId, page, size)

@@ -9,4 +9,5 @@ object SecurityConstants {
     const val TOKEN_PREFIX = "Bearer "
     const val HEADER_TOKEN = "Authorization"
     const val HEADER_USERNAME = "Username"
+    const val SYSTEM_ID = 10
 }

@@ -1,5 +1,8 @@
 package aris.thesis.theatricalplaysapi.services
 
+import aris.thesis.theatricalplaysapi.curators.DataCurator
+import aris.thesis.theatricalplaysapi.dtos.request.CreatePersonRequest
+import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.entities.Person
@@ -18,14 +21,17 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonServiceImpl : PersonService {
-    //repos
+
     @Autowired
     lateinit var personRepository: PersonRepository
+
     @Autowired
     lateinit var imageRepository: ImageRepository
 
     @Autowired
     lateinit var contributionRepository: ContributionRepository
+
+
 
     override fun getById(personId: Int): Person? {
         return personRepository.findByIdOrNull(personId)
@@ -78,5 +84,20 @@ class PersonServiceImpl : PersonService {
 
     override fun getPhotosByPersonId(personId: Int): Set<Image> {
         return imageRepository.findByPersonId(personId)
+    }
+
+    override fun createPerson(request: CreatePersonRequest): EntityId {
+        val personByFullName = personRepository.findByFullName(request.fullName)
+        val id = EntityId()
+
+        if (personByFullName == null) {
+            DataCurator.curateFullName(request.fullName)
+            val person = personRepository.save(Person(request.fullName))
+            id.newId = person.id
+        } else {
+            id.existingId = personByFullName.id
+        }
+
+        return id
     }
 }

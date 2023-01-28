@@ -4,6 +4,8 @@ import aris.thesis.theatricalplaysapi.controllers.actions.ActionExecutor
 import aris.thesis.theatricalplaysapi.controllers.actions.Actions
 import aris.thesis.theatricalplaysapi.dtos.PersonDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
+import aris.thesis.theatricalplaysapi.dtos.request.CreatePersonRequest
+import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.entities.Person
 import aris.thesis.theatricalplaysapi.exceptions.error.never
@@ -21,6 +23,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import javax.servlet.http.HttpServletResponse
 
 @Component
@@ -28,14 +31,14 @@ import javax.servlet.http.HttpServletResponse
 class PersonActionsImpl : ActionExecutor<Actions.Person>,
                             ModelServiceConsumer4<PersonService, ProductionService, RoleService, ImageService>() {
 
-    fun getPerson(personId: Int): ApiResponse<PersonDTO, String> {
+    fun getPerson(personId: Int): ApiResponse<PersonDTO> {
         val person = firstService.getById(personId) ?: notFound("Person", personId.toString())
         val  images= fourthService.getByPersonId(personId)
 
         return ApiResponse( person.asPersonDTO(images), null, HttpStatus.OK.name)
     }
 
-    fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
+    fun getAllPeople(page: Int, size: Int): ApiResponse<Page<PersonDTO>> {
         val people = firstService.getAllPeople(page, size)
 
         val allImages = fourthService.getAll()
@@ -47,7 +50,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    fun getPeopleByRole(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
+    fun getPeopleByRole(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>> {
         val peopleByRole = firstService.getPeopleByRole(value, page, size)
 
         val allImages = fourthService.getAll()
@@ -59,7 +62,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    fun getPeopleByLetter(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>, String> {
+    fun getPeopleByLetter(value: String, page: Int, size: Int): ApiResponse<Page<PersonDTO>> {
         val peopleByLetter = firstService.getPeopleByLetter("$value%", page, size)
 
 
@@ -75,7 +78,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
     fun getProductionAndRoleByPersonId(
         personId: Int, page: Int, size: Int,
         response: HttpServletResponse
-    ): ApiResponse<Page<ProductionRoleDTO>, String> {
+    ): ApiResponse<Page<ProductionRoleDTO>> {
         firstService.getById(personId) ?: notFound("Person", personId.toString())
 
         val contributions = firstService.getContributionsByPersonId(personId, page, size)
@@ -93,7 +96,7 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
     fun searchPeople(
         query: String, page: Int, size: Int,
         response: HttpServletResponse
-    ): ApiResponse<Page<PersonDTO>, String> {
+    ): ApiResponse<Page<PersonDTO>> {
         val parser = PersonSpecificationBuilderParser()
         val builder = parser.parse(query)
 
@@ -109,7 +112,12 @@ class PersonActionsImpl : ActionExecutor<Actions.Person>,
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    fun getPhotosByPersonId(personId: Int): ApiResponse<Set<Image>, String> {
+    fun getPhotosByPersonId(personId: Int): ApiResponse<Set<Image>> {
         return ApiResponse(firstService.getPhotosByPersonId(personId), null, HttpStatus.OK.name)
+    }
+
+    @Transactional
+    fun createPerson(request: CreatePersonRequest): EntityId {
+        return firstService.createPerson(request)
     }
 }

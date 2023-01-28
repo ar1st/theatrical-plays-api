@@ -15,13 +15,13 @@ class UserController {
     lateinit var userDetailsService: CustomUserDetailsServiceImpl
 
     @PostMapping("register")
-    fun register(@RequestBody user: UserDTO): ApiResponse<String, String> {
+    fun register(@RequestBody user: UserDTO): ApiResponse<String> {
         userDetailsService.save(user)
         return ApiResponse(null, null, HttpStatus.OK.name)
     }
 
     @PostMapping(value = ["/validate"])
-    fun validate(@RequestParam("token") token: String?): ApiResponse<Boolean, String> {
+    fun validate(@RequestParam("token") token: String?): ApiResponse<Boolean> {
         val tokenValid = userDetailsService.isTokenValid(token)
         return ApiResponse(tokenValid, null, HttpStatus.OK.name)
     }

@@ -52,7 +52,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 "/v2/**",
                 "/swagger-resources/**"
             ).permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
             .and()
             .exceptionHandling().authenticationEntryPoint(AuthenticationEntryPointHandler())
             .and()

@@ -41,4 +41,6 @@ interface PersonRepository : JpaRepository<Person, Int>, JpaSpecificationExecuto
                    "group by  p.Fullname",
            nativeQuery = true)
     fun findPeopleByLetter(value: String, pageable: Pageable): Page<Person>
+
+    fun findByFullName(fullName: String): Person?
 }

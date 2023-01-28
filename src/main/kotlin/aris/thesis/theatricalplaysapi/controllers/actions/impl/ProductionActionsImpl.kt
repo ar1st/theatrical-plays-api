@@ -25,26 +25,26 @@ import javax.servlet.http.HttpServletResponse
 @Suppress("unused")
 class ProductionActionsImpl : ActionExecutor<Actions.Production>, ModelServiceConsumer6<ProductionService, PersonService, RoleService, ImageService, EventService, VenueService>() {
 
-    fun getAllProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
+    fun getAllProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>> {
         val productions = firstService.getAllProductions(page, size)
 
         return ApiResponse(productions.asPageProductionDTO(), null, HttpStatus.OK.name)
     }
 
-    fun getProduction(productionId: Int, response: HttpServletResponse): ApiResponse<ProductionDTO, String> {
+    fun getProduction(productionId: Int, response: HttpServletResponse): ApiResponse<ProductionDTO> {
         val production = firstService.getById(productionId) ?: notFound("Production", productionId.toString())
 
         return ApiResponse(production.asProductionDTO(), null, HttpStatus.OK.name)
     }
 
-    fun getLatestProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>, String> {
+    fun getLatestProductions(page: Int, size: Int): ApiResponse<Page<ProductionDTO>> {
         val latestProductions = firstService.getLatestProductions(page, size)
 
         return ApiResponse(latestProductions.asPageProductionDTO(), null, HttpStatus.OK.name)
     }
 
     fun searchProduction(query: String, page: Int, size: Int,
-                         response: HttpServletResponse): ApiResponse<Page<ProductionDTO>, String> {
+                         response: HttpServletResponse): ApiResponse<Page<ProductionDTO>> {
         val parser = ProductionSpecificationBuilderParser()
         val builder = parser.parse(query)
 
@@ -54,7 +54,7 @@ class ProductionActionsImpl : ActionExecutor<Actions.Production>, ModelServiceCo
         return ApiResponse(productionsBySpec.asPageProductionDTO(), null, HttpStatus.OK.name)
     }
 
-    fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>, String> {
+    fun getPeopleByProductionId(productionId: Int): ApiResponse<List<PersonRoleDTO>> {
         firstService.getById(productionId) ?: notFound("Production", productionId.toString())
 
         val contributions = firstService.getContributionsByProductionId(productionId)
@@ -70,7 +70,7 @@ class ProductionActionsImpl : ActionExecutor<Actions.Production>, ModelServiceCo
         return ApiResponse(dtoToReturn, null, HttpStatus.OK.name)
     }
 
-    fun getEventsAndVenuesByProduction(productionId: Int): ApiResponse<List<EventVenueDTO>, String> {
+    fun getEventsAndVenuesByProduction(productionId: Int): ApiResponse<List<EventVenueDTO>> {
         firstService.getById(productionId) ?: notFound("Production", productionId.toString())
 
         val events = fifthService.getEventsByProductionId(productionId)

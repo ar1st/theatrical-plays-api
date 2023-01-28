@@ -19,12 +19,12 @@ class VenueController : TheatricalPlaysRestController<VenueActionsImpl>() {
     //values less than the aforementioned will return the all the elements
     @GetMapping("")
     fun getAllVenues(@RequestParam(required = false) page: Int?,
-                     @RequestParam(required = false) size: Int?): ApiResponse<Page<VenueDTO>, String> {
+                     @RequestParam(required = false) size: Int?): ApiResponse<Page<VenueDTO>> {
         return executor.getAllVenues(page ?: -1, size ?: -1)
     }
 
     @GetMapping(RestPathConstants.REST_PATH_VENUE_ID)
-    fun getById(@PathVariable("venueId") venueId: Int): ApiResponse<VenueDTO, String> {
+    fun getById(@PathVariable("venueId") venueId: Int): ApiResponse<VenueDTO> {
         return executor.getVenueById(venueId)
     }
 
@@ -32,7 +32,7 @@ class VenueController : TheatricalPlaysRestController<VenueActionsImpl>() {
     @GetMapping(RestPathConstants.REST_PATH_VENUE_ID + RestPathConstants.REST_PATH_PRODUCTIONS)
     fun getProductionsByVenueId(@PathVariable("venueId") venueId: Int,
                                 @RequestParam(required = false) page: Int?,
-                                @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>, String> {
+                                @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>> {
         return executor.getProductionsByVenueId(venueId, page ?: -1, size ?: -1)
     }
 }

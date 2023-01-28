@@ -1,38 +1,29 @@
 package aris.thesis.theatricalplaysapi.entities
 
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants
 import java.util.*
 import javax.persistence.*
 
 @Table(name = "persons")
 @Entity
-class Person {
+class Person(
+    @Column(name = "Fullname")
+    val fullName: String? = null,
+
+    @Column(name = "SystemID")
+    val systemID: Int? = null,
+
+    @Column(name = "timestamp")
+    val timestamp: Date? = null,
+
+    @OneToMany(mappedBy = "person", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val images: List<Image>,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    var id: Int? = null
+    val id: Int? = null,
+) {
+    constructor(fullName: String?) : this(fullName, SecurityConstants.SYSTEM_ID, Date(), emptyList())
 
-    @Column(name = "Fullname", nullable = false)
-    var fullName: String? = null
-
-    @Column(name = "SystemID", nullable = false)
-    var systemID: Int? = null
-
-    @Column(name = "timestamp", nullable = false)
-    var timestamp: Date? = null
-    override fun toString(): String {
-        return "Persons{" +
-                "ID=" + id + '\'' +
-                "fullname=" + fullName + '\'' +
-                "systemID=" + systemID + '\'' +
-                "timestamp=" + timestamp + '\'' +
-                '}'
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is Person) {
-            return false;
-        }
-
-        return this.fullName.equals(other.fullName)
-    }
 }

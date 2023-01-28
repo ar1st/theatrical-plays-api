@@ -1,5 +1,7 @@
 package aris.thesis.theatricalplaysapi.services.types
 
+import aris.thesis.theatricalplaysapi.dtos.request.CreatePersonRequest
+import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Image
 import aris.thesis.theatricalplaysapi.entities.Person
@@ -23,5 +25,7 @@ interface PersonService: ModelService {
     fun getByContributionId(contributionId: Int): Person?
 
     fun getPhotosByPersonId(personId: Int): Set<Image>
+
+    fun createPerson(request: CreatePersonRequest): EntityId
 
 }
