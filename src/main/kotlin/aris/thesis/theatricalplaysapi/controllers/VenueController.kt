@@ -6,14 +6,18 @@ import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestContro
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.dtos.VenueDTO
+import aris.thesis.theatricalplaysapi.dtos.request.CreateVenueRequest
+import aris.thesis.theatricalplaysapi.dtos.response.EntityId
+import aris.thesis.theatricalplaysapi.services.types.VenueService
 import org.springframework.data.domain.Page
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(RestPathConstants.REST_BASE_PATH_VENUES,
                 produces = [MediaType.APPLICATION_JSON_VALUE + RestPathConstants.MEDIA_TYPE_UTF_8])
-class VenueController : TheatricalPlaysRestController<VenueActionsImpl>() {
+class VenueController(val venueService: VenueService) : TheatricalPlaysRestController<VenueActionsImpl>() {
 
     //page minValue = 0, size minValue=1
     //values less than the aforementioned will return the all the elements
@@ -35,4 +39,19 @@ class VenueController : TheatricalPlaysRestController<VenueActionsImpl>() {
                                 @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>> {
         return executor.getProductionsByVenueId(venueId, page ?: -1, size ?: -1)
     }
+
+    @PostMapping
+    fun createVenue(@RequestBody request: CreateVenueRequest): ApiResponse<EntityId> {
+        val id = venueService.createVenue(request)
+
+        return ApiResponse(id, null, HttpStatus.OK.name)
+    }
+
+    @DeleteMapping("/{venueId}")
+    fun deleteVenue(@PathVariable venueId: Int): ApiResponse<String?> {
+        venueService.deleteVenue(venueId)
+
+        return ApiResponse(status = HttpStatus.OK.name)
+    }
+
 }

@@ -41,10 +41,7 @@ class RoleServiceImpl(val roleRepository: RoleRepository, val contributionReposi
     @Transactional
     override fun deleteRole(roleId: Int) {
         roleRepository.findByIdOrNull(roleId) ?: notFound("Role", roleId.toString())
-
-        val existsContribution = contributionRepository.existsByRoleID(roleId)
-
-        existsContribution.doIfTrue { illegalDelete() }
+        contributionRepository.existsByRoleID(roleId).doIfTrue { illegalDelete() }
 
         roleRepository.deleteById(roleId)
     }

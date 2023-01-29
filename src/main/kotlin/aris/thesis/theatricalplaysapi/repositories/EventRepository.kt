@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository
 interface EventRepository : JpaRepository<Event, Int> {
 
      fun findEventsByProductionID(productionId: Int): List<Event>
+
+     fun existsByVenueID(venueId: Int): Boolean
+
 }

@@ -21,4 +21,12 @@ object DataCurator {
             invalidFullName(fullName)
         }
     }
+
+    fun curateVenueTitle(title: String) {
+        val isValidName = fullNameRegex.containsMatchIn(title)
+
+        if (!isValidName) {
+            invalidFullName(title)
+        }
+    }
 }

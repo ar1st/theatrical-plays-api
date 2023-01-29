@@ -13,4 +13,6 @@ interface VenueRepository : JpaRepository<Venue, Int>{
             "where events.ID = :eventId", nativeQuery = true)
     fun findVenueByEventId(eventId: Int): Venue
 
+    fun findByTitle(title: String): Venue?
+
 }
