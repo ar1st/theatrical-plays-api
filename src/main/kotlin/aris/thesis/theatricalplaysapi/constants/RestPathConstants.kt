@@ -9,6 +9,7 @@ object RestPathConstants {
     const val REST_PATH_LETTER = "/letter"
     const val REST_PATH_PHOTOS = "/photos"
 
+    const val REST_PATH_IMAGES = "/api/images"
 
     //productions
     const val REST_BASE_PATH_PRODUCTIONS = "/api/productions"

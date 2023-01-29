@@ -9,12 +9,12 @@ class Image(
     @Column(name = "imageURL", nullable = false)
     var imageURL: String? = null,
 
+    @Column(name = "personID")
+    var personId: Int? = null,
+
     @ManyToOne
     @JoinColumn(name = "personID", insertable = false, updatable = false)
-    var person: Person,
-
-    @Column(name = "personID")
-    var personId: Int,
+    var person: Person?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
