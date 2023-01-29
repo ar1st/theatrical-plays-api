@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface OrganizerRepository : JpaRepository<Organizer, Int>
+interface OrganizerRepository : JpaRepository<Organizer, Int> {
+
+    fun findByAfm(afm: String): Organizer?
+}

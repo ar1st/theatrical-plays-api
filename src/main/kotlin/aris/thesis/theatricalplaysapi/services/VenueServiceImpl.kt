@@ -47,6 +47,7 @@ class VenueServiceImpl(val venueRepository: VenueRepository, val eventRepository
             id.newId = venue.id
         } else {
             id.existingId = venueByTitle.id
+            venueByTitle.address = request.address
         }
 
         return id

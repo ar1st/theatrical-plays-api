@@ -35,4 +35,6 @@ interface ProductionRepository : JpaRepository<Production, Int>, JpaSpecificatio
                     "where venue.ID = :venueId",
             nativeQuery = true)
     fun findByVenueId(venueId: Int, pageable: Pageable): Page<Production>
+
+    fun existsByOrganizerID(organizerId: Int): Boolean
 }
