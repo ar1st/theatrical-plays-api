@@ -34,3 +34,10 @@ fun Page<Venue>.asPageVenueDTO(): Page<VenueDTO> {
     return this.map{ it.asVenueDTO() }
 }
 
+fun Boolean.doIfFalse(block: () -> Unit) {
+    if (!this) block()
+}
+
+fun Boolean.doIfTrue(block: () -> Unit) {
+    if (this) block()
+}

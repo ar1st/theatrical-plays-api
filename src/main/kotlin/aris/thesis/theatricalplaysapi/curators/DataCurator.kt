@@ -12,6 +12,13 @@ object DataCurator {
         if (!isValidName) {
             invalidFullName(fullName)
         }
+    }
 
+    fun curateRole(fullName: String) {
+        val isValidName = fullNameRegex.containsMatchIn(fullName)
+
+        if (!isValidName) {
+            invalidFullName(fullName)
+        }
     }
 }

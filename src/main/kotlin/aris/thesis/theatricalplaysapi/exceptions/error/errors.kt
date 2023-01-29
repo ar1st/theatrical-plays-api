@@ -1,9 +1,6 @@
 package aris.thesis.theatricalplaysapi.exceptions.error
 
-import aris.thesis.theatricalplaysapi.exceptions.InvalidFullNameException
-import aris.thesis.theatricalplaysapi.exceptions.QueryParsingException
-import aris.thesis.theatricalplaysapi.exceptions.RestEntityNotFoundException
-import aris.thesis.theatricalplaysapi.exceptions.UnreachableStatementException
+import aris.thesis.theatricalplaysapi.exceptions.*
 
 fun notFound(type: String = "T", id: String = "ID"): Nothing {
     throw RestEntityNotFoundException(type, id)
@@ -19,5 +16,8 @@ fun wrongQuery(): Nothing {
 
 fun invalidFullName(fullName: String): Nothing {
     throw InvalidFullNameException(fullName)
+}
 
+fun illegalDelete(): Nothing {
+    throw IllegalDeleteException()
 }

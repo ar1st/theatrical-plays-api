@@ -12,4 +12,6 @@ interface RoleRepository : JpaRepository<Role, Int> {
             "from roles inner join contributions on roles.ID = contributions.RoleID " +
             "where contributions.ID = :contributionId", nativeQuery = true)
     fun findByContribution(contributionId: Int): Role
+
+    fun findByRole(role: String): Role?
 }

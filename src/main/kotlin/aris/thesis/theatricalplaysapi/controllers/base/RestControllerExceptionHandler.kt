@@ -1,5 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers.base
 
+import aris.thesis.theatricalplaysapi.exceptions.IllegalDeleteException
 import aris.thesis.theatricalplaysapi.exceptions.InvalidFullNameException
 import aris.thesis.theatricalplaysapi.exceptions.RestEntityNotFoundException
 import aris.thesis.theatricalplaysapi.exceptions.error.ErrorCode
@@ -27,8 +28,17 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(RestEntityNotFoundException::class)
     fun handleRestEntityNotFoundException(ex: RestEntityNotFoundException): ApiResponse<String> {
         return ApiResponse(
-            "ela",
+            null,
             ApiError("Entity ${ex.type} with id ${ex.id} not found", ErrorCode.E40401),
+            HttpStatus.BAD_REQUEST.name
+        )
+    }
+
+    @ExceptionHandler(IllegalDeleteException::class)
+    fun handleIllegalDeleteException(ex: IllegalDeleteException): ApiResponse<String> {
+        return ApiResponse(
+            null,
+            ApiError("Tried to delete referenced data", ErrorCode.E40002),
             HttpStatus.BAD_REQUEST.name
         )
     }
