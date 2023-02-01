@@ -1,5 +1,7 @@
 package aris.thesis.theatricalplaysapi.services.types
 
+import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
+import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.services.proto.ModelService
@@ -15,4 +17,6 @@ interface ProductionService: ModelService {
 
     fun getProductionBySpec(spec: Specification<Production>, page: Int, size: Int): Page<Production>
     fun getProductionsByVenueId(venueId: Int, page: Int, size: Int): Page<Production>
+
+    fun createProduction(request: CreateProductionRequest): EntityId
 }

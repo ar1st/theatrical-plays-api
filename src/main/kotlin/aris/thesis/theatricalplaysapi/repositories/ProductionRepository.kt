@@ -37,4 +37,6 @@ interface ProductionRepository : JpaRepository<Production, Int>, JpaSpecificatio
     fun findByVenueId(venueId: Int, pageable: Pageable): Page<Production>
 
     fun existsByOrganizerID(organizerId: Int): Boolean
+
+    fun findByTitle(title: String): Production?
 }

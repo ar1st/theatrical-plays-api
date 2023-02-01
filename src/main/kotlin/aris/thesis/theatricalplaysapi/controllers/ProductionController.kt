@@ -6,9 +6,13 @@ import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestContro
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
+import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
+import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
 import aris.thesis.theatricalplaysapi.security.permission.IsAdminOrUser
+import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import org.springframework.data.domain.Page
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
@@ -16,7 +20,7 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 @RequestMapping(RestPathConstants.REST_BASE_PATH_PRODUCTIONS,
                 produces = [MediaType.APPLICATION_JSON_VALUE + RestPathConstants.MEDIA_TYPE_UTF_8])
-class ProductionController : TheatricalPlaysRestController<ProductionActionsImpl>() {
+class ProductionController(val productionService: ProductionService) : TheatricalPlaysRestController<ProductionActionsImpl>() {
 
     @GetMapping("")
     @IsAdminOrUser
@@ -57,5 +61,12 @@ class ProductionController : TheatricalPlaysRestController<ProductionActionsImpl
                           @RequestParam(required = false) size: Int?,
                           response: HttpServletResponse): ApiResponse<Page<ProductionDTO>> {
         return executor.searchProduction(query, page ?: -1, size ?: -1, response)
+    }
+
+    @PostMapping
+    fun createVenue(@RequestBody request: CreateProductionRequest): ApiResponse<EntityId> {
+        val id = productionService.createProduction(request)
+
+        return ApiResponse(id, null, HttpStatus.OK.name)
     }
 }
