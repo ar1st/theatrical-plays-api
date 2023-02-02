@@ -1,11 +1,14 @@
 package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.constants.*
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_EVENTS
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_PRODUCTION_ID
 import aris.thesis.theatricalplaysapi.controllers.actions.impl.ProductionActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
+import aris.thesis.theatricalplaysapi.dtos.request.CreateEventRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
@@ -68,5 +71,12 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         val id = productionService.createProduction(request)
 
         return ApiResponse(id, null, HttpStatus.OK.name)
+    }
+
+    @PostMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS)
+    fun createEvent(@PathVariable productionId: Int, @RequestBody request: CreateEventRequest): ApiResponse<String> {
+        productionService.createEvent(productionId, request)
+
+        return ApiResponse(status = HttpStatus.OK.name)
     }
 }

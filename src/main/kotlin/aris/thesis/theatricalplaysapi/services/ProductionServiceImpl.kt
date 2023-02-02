@@ -1,24 +1,32 @@
 package aris.thesis.theatricalplaysapi.services
 
 import aris.thesis.theatricalplaysapi.curators.DataCurator
+import aris.thesis.theatricalplaysapi.dtos.request.CreateEventRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.entities.Contribution
+import aris.thesis.theatricalplaysapi.entities.Event
 import aris.thesis.theatricalplaysapi.entities.Production
+import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.repositories.ContributionRepository
+import aris.thesis.theatricalplaysapi.repositories.EventRepository
 import aris.thesis.theatricalplaysapi.repositories.ProductionRepository
+import aris.thesis.theatricalplaysapi.repositories.VenueRepository
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ProductionServiceImpl(
     val productionRepository: ProductionRepository,
-    val contributionRepository: ContributionRepository
+    val contributionRepository: ContributionRepository,
+    val venueRepository: VenueRepository,
+    val eventRepository: EventRepository
 ) : ProductionService {
 
     override fun getAllProductions(page: Int, size: Int): Page<Production> {
@@ -96,4 +104,16 @@ class ProductionServiceImpl(
 
         return id
     }
+
+    override fun createEvent(productionId: Int, request: CreateEventRequest) {
+        productionRepository.findByIdOrNull(productionId)
+            ?: notFound("Production", productionId.toString())
+
+        venueRepository.findByIdOrNull(request.venueId)
+            ?: notFound("Venue", request.venueId.toString())
+
+        eventRepository.save(Event(productionId, request.venueId, request.date, request.priceRange))
+    }
+
+
 }
