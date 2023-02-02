@@ -115,5 +115,15 @@ class ProductionServiceImpl(
         eventRepository.save(Event(productionId, request.venueId, request.date, request.priceRange))
     }
 
+    override fun deleteEvent(productionId: Int, eventId: Int) {
+        productionRepository.findByIdOrNull(productionId)
+            ?: notFound("Production", productionId.toString())
+
+        eventRepository.findByIdOrNull(eventId)
+            ?: notFound("Event", eventId.toString())
+
+        eventRepository.deleteById(eventId)
+    }
+
 
 }

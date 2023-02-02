@@ -2,6 +2,7 @@ package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.constants.*
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_EVENTS
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_EVENT_ID
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_PRODUCTION_ID
 import aris.thesis.theatricalplaysapi.controllers.actions.impl.ProductionActionsImpl
 import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestController
@@ -76,6 +77,13 @@ class ProductionController(val productionService: ProductionService) : Theatrica
     @PostMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS)
     fun createEvent(@PathVariable productionId: Int, @RequestBody request: CreateEventRequest): ApiResponse<String> {
         productionService.createEvent(productionId, request)
+
+        return ApiResponse(status = HttpStatus.OK.name)
+    }
+
+    @DeleteMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS + REST_PATH_EVENT_ID)
+    fun deleteEvent(@PathVariable productionId: Int, @PathVariable eventId: Int): ApiResponse<String> {
+        productionService.deleteEvent(productionId, eventId)
 
         return ApiResponse(status = HttpStatus.OK.name)
     }

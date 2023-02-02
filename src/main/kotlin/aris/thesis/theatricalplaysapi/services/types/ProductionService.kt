@@ -22,4 +22,6 @@ interface ProductionService: ModelService {
     fun createProduction(request: CreateProductionRequest): EntityId
 
     fun createEvent(productionId: Int, request: CreateEventRequest)
+
+    fun deleteEvent(productionId: Int, eventId: Int)
 }
