@@ -11,6 +11,7 @@ import aris.thesis.theatricalplaysapi.dtos.ProductionRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.request.CreatePersonRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.entities.Image
+import aris.thesis.theatricalplaysapi.security.permission.IsAdminOrUser
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse
                 produces = [MediaType.APPLICATION_JSON_VALUE + RestPathConstants.MEDIA_TYPE_UTF_8])
 class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
 
+    @IsAdmin
     @PostMapping
     fun createPerson(@RequestBody request: CreatePersonRequest): ApiResponse<EntityId> {
         val id = executor.createPerson(request)
@@ -29,6 +31,7 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
         return ApiResponse(id, null, HttpStatus.OK.name)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_PERSON_ID)
     fun getById(@PathVariable("personId") personId: Int): ApiResponse<PersonDTO> {
         return executor.getPerson(personId)
@@ -36,12 +39,14 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
 
     //page minValue = 0, size minValue=1
     //values less than the aforementioned will return the all the elements
+    @IsAdminOrUser
     @GetMapping("")
     fun getAllPeople(@RequestParam(required = false) page: Int?,
                      @RequestParam(required = false) size: Int?): ApiResponse<Page<PersonDTO>> {
         return executor.getAllPeople(page ?: -1, size ?: -1)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_ROLE)
     fun getPeopleByRole(@RequestParam(required = true) value: String,
                         @RequestParam(required = false) page: Int?,
@@ -49,6 +54,7 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
         return executor.getPeopleByRole(value, page ?: -1, size ?: -1)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_LETTER)
     fun getPeopleByLetter(@RequestParam(required = true) value: String,
                           @RequestParam(required = false) page: Int?,
@@ -56,6 +62,7 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
         return executor.getPeopleByLetter(value, page ?: -1, size ?: -1)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_PERSON_ID + RestPathConstants.REST_PATH_PRODUCTIONS)
     fun getProductionAndRoleByPersonId(@PathVariable("personId") personId: Int,
                                        @RequestParam(required = false) page: Int?,
@@ -67,6 +74,7 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
     //query: field[:~]value,field2[:~]value2 etc
     //ex q=fullName~μαρια κ,id:1928
     //will search for person where has μαρια in the name AND id=1928
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_SEARCH)
     fun searchPeople(@RequestParam("q") query: String,
                      @RequestParam(required = false) page: Int?,
@@ -75,6 +83,7 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
         return executor.searchPeople(query, page ?: -1, size ?: -1, response)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_PERSON_ID + REST_PATH_PHOTOS)
     fun getPhotosByPersonId(@PathVariable("personId") personId: Int): ApiResponse<Set<Image>> {
         return executor.getPhotosByPersonId(personId)

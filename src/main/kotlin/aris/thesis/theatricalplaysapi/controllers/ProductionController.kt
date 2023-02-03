@@ -16,6 +16,7 @@ import aris.thesis.theatricalplaysapi.dtos.request.CreateEventRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
+import aris.thesis.theatricalplaysapi.security.permission.IsAdmin
 import aris.thesis.theatricalplaysapi.security.permission.IsAdminOrUser
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import org.springframework.data.domain.Page
@@ -29,19 +30,21 @@ import javax.servlet.http.HttpServletResponse
                 produces = [MediaType.APPLICATION_JSON_VALUE + RestPathConstants.MEDIA_TYPE_UTF_8])
 class ProductionController(val productionService: ProductionService) : TheatricalPlaysRestController<ProductionActionsImpl>() {
 
-    @GetMapping("")
     @IsAdminOrUser
+    @GetMapping("")
     fun getAll(@RequestParam(required = false) page: Int?,
                @RequestParam(required = false) size: Int?): ApiResponse<Page<ProductionDTO>> {
         return executor.getAllProductions(page ?: -1, size ?: -1)
     }
 
-    @GetMapping(RestPathConstants.REST_PATH_PRODUCTION_ID)
+    @IsAdminOrUser
+    @GetMapping(REST_PATH_PRODUCTION_ID)
     fun getById(@PathVariable("productionId") productionId: Int,
                 response: HttpServletResponse): ApiResponse<ProductionDTO> {
         return executor.getProduction(productionId, response)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_LATEST)
     fun getLatestProductions(
         @RequestParam(required = false) page: Int?,
@@ -50,18 +53,21 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         return executor.getLatestProductions(page ?: -1, size ?: -1)
     }
 
-    @GetMapping(RestPathConstants.REST_PATH_PRODUCTION_ID + RestPathConstants.REST_PATH_PEOPLE)
+    @IsAdminOrUser
+    @GetMapping(REST_PATH_PRODUCTION_ID + RestPathConstants.REST_PATH_PEOPLE)
     fun getPeopleByProduction(@PathVariable("productionId") productionId: Int):
             ApiResponse<List<PersonRoleDTO>> {
         return executor.getPeopleByProductionId(productionId)
     }
 
-    @GetMapping(RestPathConstants.REST_PATH_PRODUCTION_ID + RestPathConstants.REST_PATH_EVENTS)
+    @IsAdminOrUser
+    @GetMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS)
     fun getEventsAndVenuesByProduction(@PathVariable("productionId") productionId: Int):
             ApiResponse<List<EventVenueDTO>> {
         return executor.getEventsAndVenuesByProduction(productionId)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_SEARCH)
     fun searchProductions(@RequestParam("q") query: String,
                           @RequestParam(required = false) page: Int?,
@@ -70,6 +76,7 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         return executor.searchProduction(query, page ?: -1, size ?: -1, response)
     }
 
+    @IsAdmin
     @PostMapping
     fun createVenue(@RequestBody request: CreateProductionRequest): ApiResponse<EntityId> {
         val id = productionService.createProduction(request)
@@ -77,6 +84,7 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         return ApiResponse(id, null, HttpStatus.OK.name)
     }
 
+    @IsAdmin
     @PostMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS)
     fun createEvent(@PathVariable productionId: Int, @RequestBody request: CreateEventRequest): ApiResponse<String> {
         productionService.createEvent(productionId, request)
@@ -84,6 +92,7 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         return ApiResponse(status = HttpStatus.OK.name)
     }
 
+    @IsAdmin
     @DeleteMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS + REST_PATH_EVENT_ID)
     fun deleteEvent(@PathVariable productionId: Int, @PathVariable eventId: Int): ApiResponse<String> {
         productionService.deleteEvent(productionId, eventId)
@@ -91,6 +100,7 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         return ApiResponse(status = HttpStatus.OK.name)
     }
 
+    @IsAdmin
     @PostMapping(REST_PATH_PRODUCTION_ID + REST_PATH_CONTRIBUTIONS)
     fun createContribution(@PathVariable productionId: Int, @RequestBody request: CreateContributionRequest): ApiResponse<String> {
         productionService.createContribution(productionId, request)
@@ -98,6 +108,7 @@ class ProductionController(val productionService: ProductionService) : Theatrica
         return ApiResponse(status = HttpStatus.OK.name)
     }
 
+    @IsAdmin
     @DeleteMapping(REST_PATH_PRODUCTION_ID + REST_PATH_CONTRIBUTIONS + REST_PATH_CONTRIBUTION_ID)
     fun deleteContribution(@PathVariable productionId: Int, @PathVariable contributionId: Int): ApiResponse<String> {
         productionService.deleteContribution(productionId, contributionId)

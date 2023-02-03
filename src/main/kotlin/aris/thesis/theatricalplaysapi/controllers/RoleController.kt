@@ -4,6 +4,7 @@ import aris.thesis.theatricalplaysapi.constants.RestPathConstants
 import aris.thesis.theatricalplaysapi.dtos.request.CreateRoleRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
+import aris.thesis.theatricalplaysapi.security.permission.IsAdmin
 import aris.thesis.theatricalplaysapi.services.types.RoleService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*
     produces = [MediaType.APPLICATION_JSON_VALUE + RestPathConstants.MEDIA_TYPE_UTF_8])
 class RoleController(val roleService: RoleService) {
 
+    @IsAdmin
     @PostMapping
     fun createRole(@RequestBody request: CreateRoleRequest): ApiResponse<EntityId> {
         val id = roleService.createRole(request)
@@ -22,6 +24,7 @@ class RoleController(val roleService: RoleService) {
         return ApiResponse(id, null, HttpStatus.OK.name)
     }
 
+    @IsAdmin
     @DeleteMapping("/{roleId}")
     fun deleteImage(@PathVariable roleId: Int): ApiResponse<String?> {
         roleService.deleteRole(roleId)

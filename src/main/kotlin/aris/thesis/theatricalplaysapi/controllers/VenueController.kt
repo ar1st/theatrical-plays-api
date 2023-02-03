@@ -8,6 +8,8 @@ import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
 import aris.thesis.theatricalplaysapi.dtos.VenueDTO
 import aris.thesis.theatricalplaysapi.dtos.request.CreateVenueRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
+import aris.thesis.theatricalplaysapi.security.permission.IsAdmin
+import aris.thesis.theatricalplaysapi.security.permission.IsAdminOrUser
 import aris.thesis.theatricalplaysapi.services.types.VenueService
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
@@ -21,18 +23,21 @@ class VenueController(val venueService: VenueService) : TheatricalPlaysRestContr
 
     //page minValue = 0, size minValue=1
     //values less than the aforementioned will return the all the elements
+    @IsAdminOrUser
     @GetMapping("")
     fun getAllVenues(@RequestParam(required = false) page: Int?,
                      @RequestParam(required = false) size: Int?): ApiResponse<Page<VenueDTO>> {
         return executor.getAllVenues(page ?: -1, size ?: -1)
     }
 
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_VENUE_ID)
     fun getById(@PathVariable("venueId") venueId: Int): ApiResponse<VenueDTO> {
         return executor.getVenueById(venueId)
     }
 
     //not yet functional
+    @IsAdminOrUser
     @GetMapping(RestPathConstants.REST_PATH_VENUE_ID + RestPathConstants.REST_PATH_PRODUCTIONS)
     fun getProductionsByVenueId(@PathVariable("venueId") venueId: Int,
                                 @RequestParam(required = false) page: Int?,
@@ -40,6 +45,7 @@ class VenueController(val venueService: VenueService) : TheatricalPlaysRestContr
         return executor.getProductionsByVenueId(venueId, page ?: -1, size ?: -1)
     }
 
+    @IsAdmin
     @PostMapping
     fun createVenue(@RequestBody request: CreateVenueRequest): ApiResponse<EntityId> {
         val id = venueService.createVenue(request)
@@ -47,6 +53,7 @@ class VenueController(val venueService: VenueService) : TheatricalPlaysRestContr
         return ApiResponse(id, null, HttpStatus.OK.name)
     }
 
+    @IsAdmin
     @DeleteMapping("/{venueId}")
     fun deleteVenue(@PathVariable venueId: Int): ApiResponse<String?> {
         venueService.deleteVenue(venueId)

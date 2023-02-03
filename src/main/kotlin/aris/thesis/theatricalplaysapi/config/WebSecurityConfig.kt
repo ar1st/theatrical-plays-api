@@ -2,6 +2,7 @@ package aris.thesis.theatricalplaysapi.config
 
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.HEADER_TOKEN
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.HEADER_USERNAME
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants.SIGN_IN_URL
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.SIGN_UP_URL
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.VALIDATE_USER_URL
 import aris.thesis.theatricalplaysapi.repositories.UserRepository
@@ -43,6 +44,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .cors().and().csrf().disable()
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.POST, SIGN_IN_URL).permitAll()
             .antMatchers(HttpMethod.POST, VALIDATE_USER_URL).permitAll()
             .antMatchers(
                 "/h2-console/**",
@@ -52,7 +54,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 "/v2/**",
                 "/swagger-resources/**"
             ).permitAll()
-            .anyRequest().permitAll()
+            .anyRequest().authenticated()
             .and()
             .exceptionHandling().authenticationEntryPoint(AuthenticationEntryPointHandler())
             .and()
