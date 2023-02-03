@@ -52,7 +52,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 "/swagger-ui.html",
                 "/webjars/**",
                 "/v2/**",
-                "/swagger-resources/**"
+                "/swagger-resources/**",
+                "swagger-ui/**",
+                "/v3/api-docs/**"
             ).permitAll()
             .anyRequest().authenticated()
             .and()
