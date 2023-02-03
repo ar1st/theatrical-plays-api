@@ -1,6 +1,7 @@
 package aris.thesis.theatricalplaysapi.services
 
 import aris.thesis.theatricalplaysapi.curators.DataCurator
+import aris.thesis.theatricalplaysapi.dtos.request.CreateContributionRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateEventRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
@@ -8,10 +9,7 @@ import aris.thesis.theatricalplaysapi.entities.Contribution
 import aris.thesis.theatricalplaysapi.entities.Event
 import aris.thesis.theatricalplaysapi.entities.Production
 import aris.thesis.theatricalplaysapi.exceptions.error.notFound
-import aris.thesis.theatricalplaysapi.repositories.ContributionRepository
-import aris.thesis.theatricalplaysapi.repositories.EventRepository
-import aris.thesis.theatricalplaysapi.repositories.ProductionRepository
-import aris.thesis.theatricalplaysapi.repositories.VenueRepository
+import aris.thesis.theatricalplaysapi.repositories.*
 import aris.thesis.theatricalplaysapi.services.types.ProductionService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -26,7 +24,9 @@ class ProductionServiceImpl(
     val productionRepository: ProductionRepository,
     val contributionRepository: ContributionRepository,
     val venueRepository: VenueRepository,
-    val eventRepository: EventRepository
+    val eventRepository: EventRepository,
+    val personRepository: PersonRepository,
+    val roleRepository: RoleRepository
 ) : ProductionService {
 
     override fun getAllProductions(page: Int, size: Int): Page<Production> {
@@ -123,6 +123,29 @@ class ProductionServiceImpl(
             ?: notFound("Event", eventId.toString())
 
         eventRepository.deleteById(eventId)
+    }
+
+    override fun createContribution(productionId: Int, request: CreateContributionRequest) {
+        productionRepository.findByIdOrNull(productionId)
+            ?: notFound("Production", productionId.toString())
+
+        personRepository.findByIdOrNull(request.personId)
+            ?: notFound("Person", request.personId.toString())
+
+        roleRepository.findByIdOrNull(request.roleId)
+            ?: notFound("Role", request.roleId.toString())
+
+        contributionRepository.save(Contribution(productionId, request.personId, request.roleId, request.subRole))
+    }
+
+    override fun deleteContribution(productionId: Int, contributionId: Int) {
+        productionRepository.findByIdOrNull(productionId)
+            ?: notFound("Production", productionId.toString())
+
+        contributionRepository.findByIdOrNull(contributionId)
+            ?: notFound("Contribution", contributionId.toString())
+
+        contributionRepository.deleteById(contributionId)
     }
 
 

@@ -1,6 +1,8 @@
 package aris.thesis.theatricalplaysapi.controllers
 
 import aris.thesis.theatricalplaysapi.constants.*
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_CONTRIBUTIONS
+import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_CONTRIBUTION_ID
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_EVENTS
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_EVENT_ID
 import aris.thesis.theatricalplaysapi.constants.RestPathConstants.REST_PATH_PRODUCTION_ID
@@ -9,6 +11,7 @@ import aris.thesis.theatricalplaysapi.controllers.base.TheatricalPlaysRestContro
 import aris.thesis.theatricalplaysapi.dtos.EventVenueDTO
 import aris.thesis.theatricalplaysapi.dtos.PersonRoleDTO
 import aris.thesis.theatricalplaysapi.dtos.ProductionDTO
+import aris.thesis.theatricalplaysapi.dtos.request.CreateContributionRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateEventRequest
 import aris.thesis.theatricalplaysapi.dtos.request.CreateProductionRequest
 import aris.thesis.theatricalplaysapi.dtos.response.EntityId
@@ -84,6 +87,20 @@ class ProductionController(val productionService: ProductionService) : Theatrica
     @DeleteMapping(REST_PATH_PRODUCTION_ID + REST_PATH_EVENTS + REST_PATH_EVENT_ID)
     fun deleteEvent(@PathVariable productionId: Int, @PathVariable eventId: Int): ApiResponse<String> {
         productionService.deleteEvent(productionId, eventId)
+
+        return ApiResponse(status = HttpStatus.OK.name)
+    }
+
+    @PostMapping(REST_PATH_PRODUCTION_ID + REST_PATH_CONTRIBUTIONS)
+    fun createContribution(@PathVariable productionId: Int, @RequestBody request: CreateContributionRequest): ApiResponse<String> {
+        productionService.createContribution(productionId, request)
+
+        return ApiResponse(status = HttpStatus.OK.name)
+    }
+
+    @DeleteMapping(REST_PATH_PRODUCTION_ID + REST_PATH_CONTRIBUTIONS + REST_PATH_CONTRIBUTION_ID)
+    fun deleteContribution(@PathVariable productionId: Int, @PathVariable contributionId: Int): ApiResponse<String> {
+        productionService.deleteContribution(productionId, contributionId)
 
         return ApiResponse(status = HttpStatus.OK.name)
     }

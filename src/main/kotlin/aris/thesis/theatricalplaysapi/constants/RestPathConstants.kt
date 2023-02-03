@@ -28,6 +28,10 @@ object RestPathConstants {
     const val REST_PATH_EVENTS = "/events"
     const val REST_PATH_EVENT_ID = "/{eventId}"
 
+    //contributions
+    const val REST_PATH_CONTRIBUTIONS = "/contributions"
+    const val REST_PATH_CONTRIBUTION_ID = "/{contributionId}"
+
     const val REST_PATH_SEARCH = "/search"
     const val MEDIA_TYPE_UTF_8 = "; charset=utf-8"
 }
