@@ -1,83 +1,70 @@
-package aris.thesis.theatricalplaysapi.security.filter;
+package aris.thesis.theatricalplaysapi.security.filter
 
-import aris.thesis.theatricalplaysapi.entities.User;
-import aris.thesis.theatricalplaysapi.repositories.UserRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants.EXPIRATION_TIME
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants.HEADER_TOKEN
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants.SECRET
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants.SIGN_IN_URL
+import aris.thesis.theatricalplaysapi.constants.SecurityConstants.TOKEN_PREFIX
+import aris.thesis.theatricalplaysapi.repositories.UserRepository
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import java.util.*
+import java.util.stream.Collectors
+import javax.servlet.FilterChain
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static aris.thesis.theatricalplaysapi.constants.SecurityConstants.*;
-
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
-    private final UserRepository userRepository;
-
-    private final AuthenticationManager authenticationManager;
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        setFilterProcessesUrl(SIGN_IN_URL);
+class JWTAuthenticationFilter(private val authenticationManager: AuthenticationManager,
+                              private val userRepository: UserRepository)
+    : UsernamePasswordAuthenticationFilter() {
+    init {
+        setFilterProcessesUrl(SIGN_IN_URL)
     }
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+    override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
+        val email = request.getParameter("email")
+        val password = request.getParameter("password")
 
-        if(email == null) {
+        if (email == null) {
 //            throw ApiExceptionFactory.getApiException(ApiExceptionType.BAD_REQUEST, "username");
-            throw new RuntimeException();
+            throw RuntimeException()
         }
 
-        if(password == null) {
-            throw new RuntimeException();
-//            throw ApiExceptionFactory.getApiException(ApiExceptionType.BAD_REQUEST, "password");
+        if (password == null) {
+            throw RuntimeException()
+            //            throw ApiExceptionFactory.getApiException(ApiExceptionType.BAD_REQUEST, "password");
         }
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
-
-        return authenticationManager.authenticate(authentication);
+        val authentication: Authentication = UsernamePasswordAuthenticationToken(email, password)
+        return authenticationManager.authenticate(authentication)
     }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
+    override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse,
+                                          chain: FilterChain, authResult: Authentication) {
+        val user = authResult.principal as User
+        val currentUser = userRepository.findByEmail(user.username)
+            ?: //            throw ApiExceptionFactory.getApiException(ApiExceptionType.NOT_FOUND, "user");
+            throw RuntimeException()
 
-        org.springframework.security.core.userdetails.User user = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal());
+        val roles = user.authorities
+            .stream()
+            .map { obj: GrantedAuthority -> obj.authority }
+            .collect(Collectors.toList())
 
-        User currentUser = userRepository.findByEmail(user.getUsername());
+        val token: String = Jwts.builder()
+            .signWith(SignatureAlgorithm.HS512, SECRET.toByteArray())
+            .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
+            .claim("role", roles)
+            .claim("email", currentUser.email)
+            .claim("id", currentUser.id)
+            .compact()
 
-        if(currentUser == null) {
-//            throw ApiExceptionFactory.getApiException(ApiExceptionType.NOT_FOUND, "user");
-            throw new RuntimeException();
-        }
-
-        List<String> roles = user.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-        String token = Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .claim("role", roles)
-                .claim("email", currentUser.getEmail())
-                .claim("id", currentUser.getId())
-                .compact();
-
-        response.addHeader(HEADER_TOKEN, TOKEN_PREFIX + token);
-        //response.addHeader(HEADER_USERNAME, user.getUsername());
+        response.addHeader(HEADER_TOKEN, TOKEN_PREFIX + token)
     }
-
 }
