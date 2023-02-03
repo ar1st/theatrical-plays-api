@@ -37,7 +37,6 @@ class PersonController : TheatricalPlaysRestController<PersonActionsImpl>() {
     //page minValue = 0, size minValue=1
     //values less than the aforementioned will return the all the elements
     @GetMapping("")
-    @IsAdmin
     fun getAllPeople(@RequestParam(required = false) page: Int?,
                      @RequestParam(required = false) size: Int?): ApiResponse<Page<PersonDTO>> {
         return executor.getAllPeople(page ?: -1, size ?: -1)

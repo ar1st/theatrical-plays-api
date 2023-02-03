@@ -16,14 +16,10 @@ class Person(
     @Column(name = "timestamp")
     val timestamp: Date? = null,
 
-    @OneToMany(mappedBy = "person", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val images: List<Image>,
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     val id: Int? = null,
 ) {
-    constructor(fullName: String?) : this(fullName, SecurityConstants.SYSTEM_ID, Date(), emptyList())
-
+    constructor(fullName: String?) : this(fullName, SecurityConstants.SYSTEM_ID, Date())
 }

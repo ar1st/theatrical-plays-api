@@ -12,10 +12,6 @@ class Image(
     @Column(name = "personID")
     var personId: Int? = null,
 
-    @ManyToOne
-    @JoinColumn(name = "personID", insertable = false, updatable = false)
-    var person: Person?,
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
