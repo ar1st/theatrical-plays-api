@@ -21,3 +21,7 @@ fun invalidFullName(fullName: String): Nothing {
 fun illegalDelete(): Nothing {
     throw IllegalDeleteException()
 }
+
+fun missingParameter(parameter: String): Nothing {
+    throw MissingRequestParameterException(parameter)
+}

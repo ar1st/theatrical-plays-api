@@ -5,6 +5,8 @@ import aris.thesis.theatricalplaysapi.constants.SecurityConstants.HEADER_TOKEN
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.SECRET
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.SIGN_IN_URL
 import aris.thesis.theatricalplaysapi.constants.SecurityConstants.TOKEN_PREFIX
+import aris.thesis.theatricalplaysapi.exceptions.error.missingParameter
+import aris.thesis.theatricalplaysapi.exceptions.error.notFound
 import aris.thesis.theatricalplaysapi.repositories.UserRepository
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -32,13 +34,11 @@ class JWTAuthenticationFilter(private val authenticationManager: AuthenticationM
         val password = request.getParameter("password")
 
         if (email == null) {
-//            throw ApiExceptionFactory.getApiException(ApiExceptionType.BAD_REQUEST, "username");
-            throw RuntimeException()
+            missingParameter("email")
         }
 
         if (password == null) {
-            throw RuntimeException()
-            //            throw ApiExceptionFactory.getApiException(ApiExceptionType.BAD_REQUEST, "password");
+            missingParameter("password")
         }
 
         val authentication: Authentication = UsernamePasswordAuthenticationToken(email, password)
@@ -49,8 +49,7 @@ class JWTAuthenticationFilter(private val authenticationManager: AuthenticationM
                                           chain: FilterChain, authResult: Authentication) {
         val user = authResult.principal as User
         val currentUser = userRepository.findByEmail(user.username)
-            ?: //            throw ApiExceptionFactory.getApiException(ApiExceptionType.NOT_FOUND, "user");
-            throw RuntimeException()
+            ?: notFound("User", user.username)
 
         val roles = user.authorities
             .stream()

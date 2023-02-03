@@ -1,8 +1,6 @@
 package aris.thesis.theatricalplaysapi.controllers.base
 
-import aris.thesis.theatricalplaysapi.exceptions.IllegalDeleteException
-import aris.thesis.theatricalplaysapi.exceptions.InvalidFullNameException
-import aris.thesis.theatricalplaysapi.exceptions.RestEntityNotFoundException
+import aris.thesis.theatricalplaysapi.exceptions.*
 import aris.thesis.theatricalplaysapi.exceptions.error.ErrorCode
 import aris.thesis.theatricalplaysapi.rest.ApiError
 import aris.thesis.theatricalplaysapi.rest.ApiResponse
@@ -39,6 +37,24 @@ class RestControllerExceptionHandler : ResponseEntityExceptionHandler() {
         return ApiResponse(
             null,
             ApiError("Tried to delete referenced data", ErrorCode.E40002),
+            HttpStatus.BAD_REQUEST.name
+        )
+    }
+
+    @ExceptionHandler(QueryParsingException::class)
+    fun handleQueryParsingException(ex: QueryParsingException): ApiResponse<String> {
+        return ApiResponse(
+            null,
+            ApiError("Invalid query", ErrorCode.E40003),
+            HttpStatus.BAD_REQUEST.name
+        )
+    }
+
+    @ExceptionHandler(MissingRequestParameterException::class)
+    fun handleMissingRequestParameterException(ex: MissingRequestParameterException): ApiResponse<String> {
+        return ApiResponse(
+            null,
+            ApiError("Parameter ${ex.parameter} is missing from request", ErrorCode.E40004),
             HttpStatus.BAD_REQUEST.name
         )
     }
